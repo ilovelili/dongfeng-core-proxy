@@ -1,0 +1,12 @@
+package: github.com/ilovelili/dongfeng/core-proxy
+ignore:
+- github.com/ilovelili/dongfeng
+import:
+- package: github.com/golang/protobuf
+  version: v1.1.0
+  subpackages:
+  - proto
+- package: github.com/micro/go-micro
+  subpackages:
+  - client
+  - server
