@@ -3,11 +3,10 @@ package handlers
 import (
 	"github.com/boj/redistore"
 	restful "github.com/emicklei/go-restful"
-	"github.com/ilovelili/dongfeng/sharedlib"
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
+	protobuf "github.com/ilovelili/dongfeng-protobuf"
+	"github.com/ilovelili/dongfeng-shared-lib"
 	"github.com/micro/go-micro/metadata"
-
-	api "github.com/ilovelili/dongfeng/core-proxy/services/proto"
-	"github.com/ilovelili/dongfeng/core-proxy/services/utils"
 )
 
 // sessionkey string used as Redis session store key
@@ -36,7 +35,7 @@ func Login(req *restful.Request, rsp *restful.Response) {
 		sharedlib.MetaDataJwks:  jwks,
 	})
 
-	response, err := newclient().Login(ctx, &api.LoginRequest{})
+	response, err := newclient().Login(ctx, &protobuf.LoginRequest{})
 	if err != nil {
 		rsp.WriteEntity(err)
 	} else {

@@ -1,12 +1,11 @@
 # Core Proxy
 
-Core is the microservice architecture interacts with frontend.
+Core proxy is the JSON-RPC reverse proxy layer microservice architecture interacts with frontend.
 
 ## Dependencies
 
 - [Go 1.10](https://golang.org/) aka Golang
 - [Micro](https://micro.mu/) Microservice toolkit written in Go
-- [Glide](https://glide.sh/) Package management for Go
 - [NATS](http://nats.io/) High performance message broker
 - [Redis](https://redis.io/) Cache server meanwhile saves session
 - [MySQL](https://www.mysql.com/) RDBMS to save core business data
@@ -18,22 +17,6 @@ Core is the microservice architecture interacts with frontend.
 
 ### Public packages
 
-- Please check `glide.yaml`
-
-## Spinup
-
-Step 1. Start local services
-
-```bash
-cd local && run.sh
-```
-
-Step 2. Start core
-
-```bash
-cd core && run.sh
-```
-
-[Git Bash](https://git-scm.com/downloads) for Windows
+- Please check `Gopkg.toml`
 
 ## Endpoints (TBD)

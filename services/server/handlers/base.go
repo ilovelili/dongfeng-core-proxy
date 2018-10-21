@@ -3,9 +3,8 @@ package handlers
 import (
 	"sync"
 
-	api "github.com/ilovelili/dongfeng/core-proxy/services/proto"
-	"github.com/ilovelili/dongfeng/core-proxy/services/utils"
-
+	api "github.com/ilovelili/dongfeng-core-proxy/services/proto"
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	"github.com/micro/go-micro/client"
 )
 

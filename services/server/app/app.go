@@ -1,8 +1,7 @@
 package app
 
 import (
-	"github.com/ilovelili/dongfeng/core-proxy/services/utils"
-	// k8s registry plugin
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils" // k8s registry plugin
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 	web "github.com/micro/go-web"
 )

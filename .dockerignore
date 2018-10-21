@@ -10,3 +10,9 @@ debug.test
 
 # kubernetes manifests
 k8s
+
+# bash scripts
+scripts
+
+# go dep
+Gopkg.*

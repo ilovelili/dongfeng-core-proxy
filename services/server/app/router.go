@@ -3,9 +3,9 @@ package app
 import (
 	"net/http"
 
-	"github.com/emicklei/go-restful"
-	"github.com/ilovelili/dongfeng/core-proxy/services/proxy/handlers"
-	middleware "github.com/ilovelili/dongfeng/core-proxy/services/proxy/middlewares"
+	restful "github.com/emicklei/go-restful"
+	"github.com/ilovelili/dongfeng-core-proxy/services/server/handlers"
+	middleware "github.com/ilovelili/dongfeng-core-proxy/services/server/middlewares"
 )
 
 // Router restful router wrapper

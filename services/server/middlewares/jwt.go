@@ -5,8 +5,8 @@ import (
 
 	"github.com/boj/redistore"
 	restful "github.com/emicklei/go-restful"
-	"github.com/ilovelili/dongfeng/core-proxy/services/utils"
-	"github.com/ilovelili/dongfeng/sharedlib"
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
+	"github.com/ilovelili/dongfeng-shared-lib"
 )
 
 // sessionkey string used as Redis session store key
