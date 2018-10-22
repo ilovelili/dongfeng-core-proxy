@@ -6,12 +6,11 @@ metadata:
   namespace: dongfeng-back
   name: dongfeng-core-proxy
 spec:
-  # https://stackoverflow.com/questions/35884643/kubernetes-external-load-balancer-service-on-digitalocean
-  # We can create a nginx ingress controller
-  clusterIP: None
+  type: ClusterIP
   ports:
-  - name: headless
-    port: 55551
-    targetPort: 0
+  - name: api-port
+    port: 80
+    targetPort: "api-port"
+    protocol: TCP
   selector:    
-    app: dongfeng-core-proxy
+      app: dongfeng-core-proxy
