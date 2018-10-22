@@ -6,7 +6,7 @@ metadata:
   namespace: dongfeng-back
   name: dongfeng-core-proxy
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: api-port
     port: 80
