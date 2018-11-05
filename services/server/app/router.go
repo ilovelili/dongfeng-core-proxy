@@ -5,7 +5,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/server/handlers"
-	middleware "github.com/ilovelili/dongfeng-core-proxy/services/server/middlewares"
+	"github.com/ilovelili/dongfeng-core-proxy/services/server/middlewares"
 )
 
 // Router restful router wrapper
@@ -30,8 +30,8 @@ func (r *Router) Route() http.Handler {
 		Produces(restful.MIME_JSON)
 
 	webservice.Route(webservice.GET("/").To(handlers.HealthCheck))
-	webservice.Route(webservice.POST("/login").Filter(middleware.JwtAuthenticate).To(handlers.Login))
-	webservice.Route(webservice.POST("/logout").Filter(middleware.JwtAuthenticate).To(handlers.Logout))
+	webservice.Route(webservice.POST("/login").Filter(middlewares.JwtAuthenticate).To(handlers.Login))
+	webservice.Route(webservice.POST("/logout").Filter(middlewares.JwtAuthenticate).To(handlers.Logout))
 
 	container.Add(webservice)
 
