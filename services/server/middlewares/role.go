@@ -23,7 +23,7 @@ func UserRoleAuthenticate(req *restful.Request, rsp *restful.Response, chain *re
 type Role []string
 
 type user struct {
-	RoleSettings string `json:"https://moneyhatch.com/role"`
+	RoleSettings string `json:"http://dongfeng.edu/role"`
 }
 
 var (
