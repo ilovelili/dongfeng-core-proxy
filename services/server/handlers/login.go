@@ -4,38 +4,24 @@ import (
 	"github.com/boj/redistore"
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
+	errorcode "github.com/ilovelili/dongfeng-error-code"
 	protobuf "github.com/ilovelili/dongfeng-protobuf"
-	"github.com/ilovelili/dongfeng-shared-lib"
-	"github.com/micro/go-micro/metadata"
 )
 
 // sessionkey string used as Redis session store key
 const sessionkey = "blacklisttoken"
 
 var (
-	config       *utils.Config
 	sessionstore *redistore.RediStore
 )
 
 func init() {
-	config = utils.GetConfig()
 	sessionstore, _ = redistore.NewRediStore(config.Redis.GetMaxConnectionCount(), "tcp", config.Redis.Host, config.Redis.Password, []byte("session-store"))
 }
 
 // Login login
 func Login(req *restful.Request, rsp *restful.Response) {
-	idtoken, _ := utils.ResolveIDToken(req)
-	ip := sharedlib.ResolveRemoteIP(req.Request)
-	jwks := config.Auth.JWKS
-
-	// Set arbitrary headers in context
-	ctx := metadata.NewContext(req.Request.Context(), map[string]string{
-		sharedlib.MetaDataToken: idtoken,
-		sharedlib.MetaDataIP:    ip,
-		sharedlib.MetaDataJwks:  jwks,
-	})
-
-	response, err := newclient().Login(ctx, &protobuf.LoginRequest{})
+	response, err := newclient().Login(ctx(req), &protobuf.LoginRequest{})
 	if err != nil {
 		rsp.WriteEntity(err)
 	} else {
@@ -51,14 +37,14 @@ func Logout(req *restful.Request, rsp *restful.Response) {
 	// Get a session.
 	session, err := sessionstore.Get(req.Request, "login-session")
 	if err != nil {
-		rsp.WriteError(500, err)
+		writeError(rsp, errorcode.CoreProxyFailedToGetSession)
 		return
 	}
 
 	// Add flash
 	session.AddFlash(idtoken, sessionkey)
 	if err = session.Save(req.Request, rsp.ResponseWriter); err != nil {
-		rsp.WriteError(500, err)
+		writeError(rsp, errorcode.CoreProxyFailedToSaveSession)
 	} else {
 		rsp.Write([]byte("OK"))
 	}
