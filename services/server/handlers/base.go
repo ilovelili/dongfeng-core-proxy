@@ -7,6 +7,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	api "github.com/ilovelili/dongfeng-core-proxy/services/proto"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
+	errorcode "github.com/ilovelili/dongfeng-error-code"
 	sharedlib "github.com/ilovelili/dongfeng-shared-lib"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
@@ -68,6 +69,6 @@ func ctx(req *restful.Request) context.Context {
 }
 
 func writeError(rsp *restful.Response, errorcode *errorcode.Error, detail ...string) {
-	e := util.NewError(errorcode, detail...)
+	e := utils.NewError(errorcode, detail...)
 	rsp.WriteError(int(errorcode.Code), e)
 }

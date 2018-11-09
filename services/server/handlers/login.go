@@ -23,9 +23,9 @@ func init() {
 func Login(req *restful.Request, rsp *restful.Response) {
 	response, err := newclient().Login(ctx(req), &protobuf.LoginRequest{})
 	if err != nil {
-		rsp.WriteEntity(err)
+		writeError(rsp, errorcode.Pipe, err.Error())
 	} else {
-		rsp.WriteEntity(response)
+		rsp.WriteAsJson(response)
 	}
 }
 
