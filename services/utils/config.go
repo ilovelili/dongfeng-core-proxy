@@ -65,9 +65,24 @@ type Redis struct {
 	Size     int    `json:"maxconnectioncount"`
 }
 
+// Spaces spaces config
+type Spaces struct {
+	APIKey     string `json:"api_key"`
+	APISecret  string `json:"api_secret"`
+	Region     string `json:"region"`
+	Endpoint   string `json:"endpoint"`
+	BucketName string `json:"bucket_name"`
+}
+
+// DigitalOcean digital ocean sevices
+type DigitalOcean struct {
+	Spaces `json:"spaces"`
+}
+
 // Services external services like Mysql
 type Services struct {
-	Redis `json:"redis"`
+	Redis        `json:"redis"`
+	DigitalOcean `json:"digitalocean"`
 }
 
 // ServiceNames servicename config

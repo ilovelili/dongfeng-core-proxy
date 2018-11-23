@@ -1,16 +1,13 @@
 package middlewares
 
 import (
-	"github.com/boj/redistore"
+	"fmt"
+
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
 	"github.com/ilovelili/dongfeng-shared-lib"
 )
-
-func init() {
-	sessionstore, _ = redistore.NewRediStore(config.Redis.GetMaxConnectionCount(), "tcp", config.Redis.Host, config.Redis.Password, []byte("session-store"))
-}
 
 // JwtAuthenticate JWT auth middleware. go-restful has poor support for middleware injection
 func JwtAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful.FilterChain) {
@@ -21,15 +18,14 @@ func JwtAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful
 	}
 
 	// check if idtoken in blacklist
-	session, err := sessionstore.Get(req.Request, "login-session")
+	exist, err := redisclient.Exists(fmt.Sprintf("%s_%s", sessionkeyprefix, idtoken)).Result()
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyFailedToGetSession)
 		return
 	}
-	flashes := session.Flashes(sessionkey)
 
 	// token in blacklist
-	if containString(flashes, idtoken) {
+	if exist > 0 {
 		writeError(rsp, errorcode.GenericNotAuthorized)
 		return
 	}

@@ -2,12 +2,6 @@
 
 
 [[projects]]
-  name = "github.com/boj/redistore"
-  packages = ["."]
-  revision = "fc113767cd6b051980f260d6dbe84b2740c46ab0"
-  version = "v1.2"
-
-[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
@@ -20,22 +14,34 @@
   version = "v3.2.0"
 
 [[projects]]
+  name = "github.com/dustin/go-humanize"
+  packages = ["."]
+  revision = "9f541cc9db5d55bce703bd99987c9d5cb8eea45e"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/emicklei/go-restful"
   packages = [".","log"]
   revision = "3eb9738c1697594ea6e71a7156a9bb32ed216cf0"
   version = "v2.8.0"
 
 [[projects]]
-  name = "github.com/garyburd/redigo"
-  packages = ["internal","redis"]
-  revision = "a69d19351219b6dd56f274f96d85a7014a2ec34e"
-  version = "v1.6.0"
+  name = "github.com/go-ini/ini"
+  packages = ["."]
+  revision = "9c8236e659b76e87bf02044d06fde8683008ff3e"
+  version = "v1.39.0"
 
 [[projects]]
   name = "github.com/go-log/log"
   packages = [".","log"]
   revision = "37e2e1f19306361e1fc152a1839f1236149cb4e4"
   version = "v0.1.0"
+
+[[projects]]
+  name = "github.com/go-redis/redis"
+  packages = [".","internal","internal/consistenthash","internal/hashtag","internal/pool","internal/proto","internal/singleflight","internal/util"]
+  revision = "b3d9bf10f6666b2ee5100a6f3f84f4caf3b4e37d"
+  version = "v6.14.2"
 
 [[projects]]
   name = "github.com/golang/protobuf"
@@ -46,32 +52,14 @@
 [[projects]]
   name = "github.com/google/uuid"
   packages = ["."]
-  revision = "d460ce9f8df2e77fb1ba55ca87fafed96c607494"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/gorilla/context"
-  packages = ["."]
-  revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
-  version = "v1.1.1"
-
-[[projects]]
-  name = "github.com/gorilla/securecookie"
-  packages = ["."]
-  revision = "e59506cc896acb7f7bf732d4fdf5e25f7ccd8983"
-  version = "v1.1.1"
-
-[[projects]]
-  name = "github.com/gorilla/sessions"
-  packages = ["."]
-  revision = "f57b7e2d29c6211d16ffa52a0998272f75799030"
-  version = "v1.1.3"
+  revision = "9b3b1e0f5f99ae461456d768e7d301a7acdaa2d8"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/hashicorp/consul"
   packages = ["api","watch"]
-  revision = "e8757838a49feeb682c7e6ad6b78694a78b2096b"
-  version = "v1.3.0"
+  revision = "0bddfa23a2ebe3c0773d917fc104f53d74f7a5ec"
+  version = "v1.4.0"
 
 [[projects]]
   name = "github.com/hashicorp/go-cleanhttp"
@@ -93,9 +81,15 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/ilovelili/digital-ocean-client"
+  packages = ["."]
+  revision = "bd991f89b0746f5cbc055ec4b1930d323c87490c"
+
+[[projects]]
+  branch = "master"
   name = "github.com/ilovelili/dongfeng-error-code"
   packages = ["."]
-  revision = "c12bb23007c8a746dab71ed93655ad99b1e494c6"
+  revision = "97b8b5673d69efc118053480c8f86155491ba9a3"
 
 [[projects]]
   branch = "master"
@@ -107,7 +101,7 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-protobuf"
   packages = ["."]
-  revision = "169df7924cfa16cb819dd976c0904b1304f328f8"
+  revision = "69fcce106c64518b4c96f7563be03b264e622734"
 
 [[projects]]
   branch = "master"
@@ -154,14 +148,14 @@
 [[projects]]
   name = "github.com/micro/go-micro"
   packages = ["broker","broker/codec","broker/codec/json","broker/http","client","cmd","codec","codec/jsonrpc","codec/protorpc","errors","metadata","registry","registry/consul","registry/mdns","selector","selector/cache","server","server/debug","server/debug/proto","transport","transport/codec","transport/http"]
-  revision = "4cee1f19f6748700518a8ca647e26ab3ad7f2a2f"
-  version = "v0.12.0"
+  revision = "4dc593eca385b58eabb350bbac8b5917ab1307c6"
+  version = "v0.14.1"
 
 [[projects]]
   name = "github.com/micro/go-plugins"
   packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
-  revision = "f3fcfcdf77392b4e053c8d5b361abfabc0c623d3"
-  version = "v0.15.0"
+  revision = "27e02eff71790966536e17a1749388c62cb69a1e"
+  version = "v0.16.1"
 
 [[projects]]
   branch = "master"
@@ -176,6 +170,12 @@
   version = "v0.4.0"
 
 [[projects]]
+  name = "github.com/micro/h2c"
+  packages = ["."]
+  revision = "b2f7b8ee5ff4fd7a8af036ecda297deb1c584460"
+  version = "v1.0.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/micro/mdns"
   packages = ["."]
@@ -185,13 +185,19 @@
   branch = "master"
   name = "github.com/micro/util"
   packages = ["go/lib/addr","go/lib/http","go/lib/net","go/lib/tls"]
-  revision = "4b7ed83e8520ab8fe6e5ef61fa2ede94b32f8602"
+  revision = "2d4f591dc5383712927e372348c0885478402595"
 
 [[projects]]
   name = "github.com/miekg/dns"
   packages = ["."]
   revision = "7064f7248f5fa5fd79382a76328b4e200b79e4ae"
   version = "v1.0.15"
+
+[[projects]]
+  name = "github.com/minio/minio-go"
+  packages = [".","pkg/credentials","pkg/encrypt","pkg/s3signer","pkg/s3utils","pkg/set"]
+  revision = "58544e3da4936b7ce1fe90ddbcd59581d3cad6db"
+  version = "v6.0.10"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
@@ -236,6 +242,12 @@
   version = "v0.8.0"
 
 [[projects]]
+  name = "github.com/segmentio/ksuid"
+  packages = ["."]
+  revision = "ffd9a8aaaf8f40792e055371eba06542348e991e"
+  version = "v1.0.2"
+
+[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   revision = "bcd833dfe83d3cebad139e4a29ed79cb2318bf95"
@@ -244,24 +256,30 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["ed25519","ed25519/internal/edwards25519","ssh/terminal"]
-  revision = "e4dc69e5b2fd71dcaf8bd5d054eb936deb78d1fa"
+  packages = ["argon2","blake2b","ed25519","ed25519/internal/edwards25519","ssh/terminal"]
+  revision = "3d3f9f413869b949e48070b5bc593aa22cc2b8f2"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = ["bpf","context","internal/iana","internal/socket","ipv4","ipv6"]
-  revision = "03003ca0c849e57b6ea29a4bab8d3cb6e4d568fe"
+  packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6"]
+  revision = "adae6a3d119ae4890b46832a2e88a95adc62b8e7"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = ["unix","windows"]
-  revision = "66b7b1311ac80bbafcd2daeef9a5e6e2cd1e2399"
+  packages = ["cpu","unix","windows"]
+  revision = "62eef0e2fa9b2c385f7b2778e763486da6880d37"
+
+[[projects]]
+  name = "golang.org/x/text"
+  packages = ["collate","collate/build","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","language","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable"]
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0e02c9eaf7c8800b36803cd1ec55b55ebf113dcda7f19b8103bacff0e045a6a4"
+  inputs-digest = "cc39e065db506bc25974e162a6f76a025c1c97fa2e41da77c936b5ec2d5627d5"
   solver-name = "gps-cdcl"
   solver-version = 1

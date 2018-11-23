@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/go-redis/redis"
 	api "github.com/ilovelili/dongfeng-core-proxy/services/proto"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
@@ -24,10 +25,17 @@ func NewResponse(message string) *Response {
 }
 
 var (
-	instance *Client
-	once     sync.Once
-	config   = utils.GetConfig()
+	instance    *Client
+	once        sync.Once
+	config      = utils.GetConfig()
+	redisclient = redis.NewClient(&redis.Options{
+		Addr:     config.Redis.Host,
+		Password: config.Redis.Password,
+	})
 )
+
+// sessionkey string used as Redis session store key
+const sessionkeyprefix = "session"
 
 // Client struct represents InvastBroker API client
 type Client struct {
@@ -54,17 +62,15 @@ func newclient() api.ApiService {
 }
 
 func ctx(req *restful.Request) context.Context {
-	idtoken, _ := utils.ResolveIDToken(req)
 	ip := sharedlib.ResolveRemoteIP(req.Request)
 	jwks := config.Auth.JWKS
 	ua := req.HeaderParameter("user-agent")
 
 	// Set arbitrary headers in context
 	return metadata.NewContext(req.Request.Context(), map[string]string{
-		sharedlib.MetaDataToken: idtoken,
-		sharedlib.MetaDataIP:    ip,
-		sharedlib.MetaDataJwks:  jwks,
-		sharedlib.UserAgent:     ua,
+		sharedlib.MetaDataIP:   ip,
+		sharedlib.MetaDataJwks: jwks,
+		sharedlib.UserAgent:    ua,
 	})
 }
 

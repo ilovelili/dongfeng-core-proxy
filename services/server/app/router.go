@@ -32,6 +32,7 @@ func (r *Router) Route() http.Handler {
 	webservice.Route(webservice.GET("/").To(handlers.HealthCheck))
 	webservice.Route(webservice.POST("/login").Filter(middlewares.JwtAuthenticate).To(handlers.Login))
 	webservice.Route(webservice.POST("/logout").Filter(middlewares.JwtAuthenticate).To(handlers.Logout))
+	webservice.Route(webservice.POST("/user/upload").Consumes("multipart/form-data").Filter(middlewares.JwtAuthenticate).To(handlers.UploadAvatar))
 
 	container.Add(webservice)
 
