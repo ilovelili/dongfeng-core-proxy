@@ -59,7 +59,7 @@
 
 [[constraint]]
   name = "github.com/micro/go-plugins"
-  version = "0.16.1"
+  version = "0.16.2"
 
 [[constraint]]
   name = "github.com/micro/go-web"
@@ -68,3 +68,7 @@
 [[constraint]]
   name = "github.com/segmentio/ksuid"
   version = "1.0.2"
+
+[[override]]
+  branch = "master"
+  name = "github.com/golang/protobuf"

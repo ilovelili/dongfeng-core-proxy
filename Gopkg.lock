@@ -44,10 +44,10 @@
   version = "v6.14.2"
 
 [[projects]]
+  branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
-  version = "v1.2.0"
+  revision = "1d3f30b51784bec5aad268e59fd3c2fc1c2fe73f"
 
 [[projects]]
   name = "github.com/google/uuid"
@@ -89,7 +89,7 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-error-code"
   packages = ["."]
-  revision = "97b8b5673d69efc118053480c8f86155491ba9a3"
+  revision = "c5ce148844de409a3cab9acb3b316ed316d2fe51"
 
 [[projects]]
   branch = "master"
@@ -101,13 +101,13 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-protobuf"
   packages = ["."]
-  revision = "69fcce106c64518b4c96f7563be03b264e622734"
+  revision = "d1426f7a310fa24eadd3bd7490a683360921224d"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-shared-lib"
   packages = ["."]
-  revision = "953f46cb10754ac8de18bb1625c6f8fc24db32ee"
+  revision = "86e10310bde009b7897e68bc77fa0bea38e18720"
 
 [[projects]]
   name = "github.com/json-iterator/go"
@@ -154,8 +154,8 @@
 [[projects]]
   name = "github.com/micro/go-plugins"
   packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
-  revision = "27e02eff71790966536e17a1749388c62cb69a1e"
-  version = "v0.16.1"
+  revision = "d3d26cc3683734d0329b4c65760041807ea80eb2"
+  version = "v0.16.2"
 
 [[projects]]
   branch = "master"
@@ -179,7 +179,7 @@
   branch = "master"
   name = "github.com/micro/mdns"
   packages = ["."]
-  revision = "cdf30746f9f70dc7a366d3d885792a092fd83102"
+  revision = "9c3770d4057a5adca108c15ca317fee54766f9f7"
 
 [[projects]]
   branch = "master"
@@ -190,14 +190,14 @@
 [[projects]]
   name = "github.com/miekg/dns"
   packages = ["."]
-  revision = "7064f7248f5fa5fd79382a76328b4e200b79e4ae"
-  version = "v1.0.15"
+  revision = "a220737569d8137d4c610f80bd33f1dc762522e5"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/minio/minio-go"
   packages = [".","pkg/credentials","pkg/encrypt","pkg/s3signer","pkg/s3utils","pkg/set"]
-  revision = "58544e3da4936b7ce1fe90ddbcd59581d3cad6db"
-  version = "v6.0.10"
+  revision = "39381cf62425050629c7264228fc2f9e0c6616f6"
+  version = "v6.0.11"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
@@ -257,19 +257,19 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["argon2","blake2b","ed25519","ed25519/internal/edwards25519","ssh/terminal"]
-  revision = "3d3f9f413869b949e48070b5bc593aa22cc2b8f2"
+  revision = "eb0de9b17e854e9b1ccd9963efafc79862359959"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6"]
-  revision = "adae6a3d119ae4890b46832a2e88a95adc62b8e7"
+  revision = "351d144fa1fc0bd934e2408202be0c29f25e35a0"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["cpu","unix","windows"]
-  revision = "62eef0e2fa9b2c385f7b2778e763486da6880d37"
+  revision = "4ed8d59d0b35e1e29334a206d1b3f38b1e5dfb31"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -280,6 +280,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "cc39e065db506bc25974e162a6f76a025c1c97fa2e41da77c936b5ec2d5627d5"
+  inputs-digest = "5c1733489a276c531493dfbac2eb72bcbc4bbd534f567569358b9e98d3bb4cbb"
   solver-name = "gps-cdcl"
   solver-version = 1

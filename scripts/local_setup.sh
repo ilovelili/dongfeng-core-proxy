@@ -10,10 +10,10 @@ if ! [ -x "$(command -v dep)" ]; then
     go get -u github.com/golang/dep/cmd/dep
 fi
 
-rm -f Gopkg.lock Gopkg.toml
+rm -f Gopkg.lock
 rm -rf ./vendor
 
-dep init
+dep ensure
 
 # compile protobuf
 make proto

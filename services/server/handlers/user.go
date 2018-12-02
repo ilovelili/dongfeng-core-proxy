@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -9,10 +10,17 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	do "github.com/ilovelili/digital-ocean-client"
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
 	protobuf "github.com/ilovelili/dongfeng-protobuf"
 	"github.com/segmentio/ksuid"
 )
+
+// UpdateRequest user update request
+type UpdateRequest struct {
+	Name   string `json:"name"`
+	Avatar string `json:"avatar"`
+}
 
 // UploadAvatar upload user avatar
 func UploadAvatar(req *restful.Request, rsp *restful.Response) {
@@ -63,6 +71,31 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(&protobuf.UploadAvatarResponse{
 		Uri: uploadresp.Location,
 	})
+}
+
+// UpdateUser update user
+func UpdateUser(req *restful.Request, rsp *restful.Response) {
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *UpdateRequest
+	err := decoder.Decode(&updatereq)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidUpdateUserRequestBody)
+		return
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newclient().UpdateUser(ctx(req), &protobuf.UpdateUserRequest{
+		Token:  idtoken,
+		Name:   updatereq.Name,
+		Avatar: updatereq.Avatar,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
 }
 
 // supportedMimeType only images are supported
