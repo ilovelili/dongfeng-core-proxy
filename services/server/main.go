@@ -14,7 +14,7 @@ func main() {
 	if err := app.Bootstarp(); err != nil {
 		errorlog := &logger.Log{
 			Category: "ErrorLog",
-			Content:  fmt.Sprintf("Core server bootstrap failed: %s\n", err.Error()),
+			Content:  fmt.Sprintf("Core proxy bootstrap failed: %s\n", err.Error()),
 			Time:     time.Now(),
 		}
 

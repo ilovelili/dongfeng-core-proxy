@@ -48,7 +48,7 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 	}
 	io.Copy(localfile, file)
 
-	if !supportedMimeType(handler.Header["Content-Type"]) {
+	if !supportedImageMimeType(handler.Header["Content-Type"]) {
 		writeError(rsp, errorcode.CoreProxyUnsupportedMimeType)
 		return
 	}
@@ -98,9 +98,9 @@ func UpdateUser(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-// supportedMimeType only images are supported
-func supportedMimeType(contenttype []string) bool {
-	r, _ := regexp.Compile("image/(png|jpeg|gif)")
+// supportedImageMimeType check if uploaded file is image
+func supportedImageMimeType(contenttype []string) bool {
+	r := regexp.MustCompile("image/(png|jpeg|gif)")
 	for _, ct := range contenttype {
 		if r.MatchString(ct) {
 			return true
