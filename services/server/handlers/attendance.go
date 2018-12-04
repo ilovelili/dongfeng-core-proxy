@@ -52,6 +52,14 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 				// }
 
 			}
+
+			if rindex == 3 {
+				dates, err := parseDates(row)
+				if err != nil {
+					writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
+				}
+				fmt.Println(dates)
+			}
 		}
 	}
 }
@@ -84,6 +92,22 @@ func parseYearMonthClass(row []string) (year, month int32, class string, err err
 		month = int32(_month)
 	} else {
 		err = fmt.Errorf("invalid row")
+	}
+
+	return
+}
+
+func parseDates(row []string) (dates []int, err error) {
+	dates = make([]int, 0)
+	for _, col := range row {
+		if col == "0" {
+			return
+		}
+
+		date, err := strconv.Atoi(col)
+		if err == nil {
+			dates = append(dates, date)
+		}
 	}
 
 	return
