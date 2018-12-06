@@ -8,7 +8,9 @@ import (
 
 	excelize "github.com/360EntSecGroup-Skylar/excelize"
 	restful "github.com/emicklei/go-restful"
+	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
+	protobuf "github.com/ilovelili/dongfeng-protobuf"
 )
 
 // UploadAttendance upload attenance list
@@ -31,36 +33,59 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	// attendancereq := &protobuf.AttendanceRequest{}
+	classattendances := make([]*protobuf.ClassAttendance, 0)
 	for _, sheet := range excel.WorkBook.Sheets.Sheet {
 		rows := excel.GetRows(sheet.Name)
+
+		var year, month int32
+		var class string
+		var dates []int32
+
 		for rindex, row := range rows {
 			if rindex == 1 {
-				year, month, class, err := parseYearMonthClass(row)
+				year, month, class, err = parseYearMonthClass(row)
 				if err != nil {
 					writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
 				}
 
-				fmt.Println(year)
-				fmt.Println(month)
-				fmt.Println(class)
-
-				// attendance := &protobuf.ClassAttendance{
-				// 	Year:  year,
-				// 	Month: month,
-				// 	Class: class,
-				// }
-
-			}
-
-			if rindex == 3 {
-				dates, err := parseDates(row)
+			} else if rindex == 3 {
+				dates, err = parseDates(row)
 				if err != nil {
 					writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
 				}
-				fmt.Println(dates)
+
+			} else if rindex > 3 {
+				// starts with number
+				if _, err := strconv.Atoi(row[0]); err == nil {
+					name, attendances, err := parseNameAttendences(row, dates)
+					if err != nil {
+						writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
+					}
+
+					if name != "" && len(attendances) > 0 && year > 0 && month > 0 && class != "" {
+						classattendances = append(classattendances, &protobuf.ClassAttendance{
+							Year:        year,
+							Month:       month,
+							Name:        name,
+							Class:       class,
+							Attendances: attendances,
+						})
+					}
+				}
 			}
 		}
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newclient().UpdateAttendance(ctx(req), &protobuf.AttendanceRequest{
+		Token:       idtoken,
+		Attendances: classattendances,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+	} else {
+		rsp.WriteAsJson(response)
 	}
 }
 
@@ -90,6 +115,9 @@ func parseYearMonthClass(row []string) (year, month int32, class string, err err
 			return
 		}
 		month = int32(_month)
+
+		class = matches[3]
+
 	} else {
 		err = fmt.Errorf("invalid row")
 	}
@@ -97,16 +125,40 @@ func parseYearMonthClass(row []string) (year, month int32, class string, err err
 	return
 }
 
-func parseDates(row []string) (dates []int, err error) {
-	dates = make([]int, 0)
+func parseDates(row []string) (dates []int32, err error) {
+	dates = make([]int32, 0)
 	for _, col := range row {
 		if col == "0" {
 			return
 		}
 
-		date, err := strconv.Atoi(col)
+		date, err := strconv.ParseInt(col, 10, 32)
 		if err == nil {
-			dates = append(dates, date)
+			dates = append(dates, int32(date))
+		}
+	}
+
+	return
+}
+
+func parseNameAttendences(row []string, dates []int32) (name string, attendances []int32, err error) {
+	if len(dates) == 0 {
+		err = fmt.Errorf("invalid parsed dates")
+		return
+	}
+
+	attendances = make([]int32, 0)
+	for i, col := range row {
+		if i == 1 {
+			if col != "" && col != "0" {
+				name = col
+			} else {
+				continue
+			}
+		} else if i > 1 {
+			if col == "O" && i < len(dates)+2 {
+				attendances = append(attendances, dates[i-2] /*since i starts from 2*/)
+			}
 		}
 	}
 

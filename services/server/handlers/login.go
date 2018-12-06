@@ -23,7 +23,6 @@ func Login(req *restful.Request, rsp *restful.Response) {
 // Logout logout
 func Logout(req *restful.Request, rsp *restful.Response) {
 	idtoken, _ := utils.ResolveIDToken(req)
-
 	// save token to blacklist
 	err := redisclient.Set(fmt.Sprintf("%s_%s", sessionkeyprefix, idtoken), "_" /*value does not matter*/, 0 /* no ttl */).Err()
 	if err != nil {

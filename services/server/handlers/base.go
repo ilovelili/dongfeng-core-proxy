@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"sync"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-redis/redis"
@@ -25,8 +24,6 @@ func NewResponse(message string) *Response {
 }
 
 var (
-	instance    *Client
-	once        sync.Once
 	config      = utils.GetConfig()
 	redisclient = redis.NewClient(&redis.Options{
 		Addr:     config.Redis.Host,
@@ -37,28 +34,8 @@ var (
 // sessionkey string used as Redis session store key
 const sessionkeyprefix = "session"
 
-// Client struct represents InvastBroker API client
-type Client struct {
-	ServiceName string
-	client      api.ApiService
-}
-
-// creates a new rpc client
-func new() *Client {
-	once.Do(func() {
-		config := utils.GetConfig()
-		servicename := config.ServiceNames.CoreServer
-		instance = &Client{
-			ServiceName: servicename,
-			client:      api.NewApiService(servicename, client.DefaultClient), // rpc client
-		}
-	})
-
-	return instance
-}
-
 func newclient() api.ApiService {
-	return new().client
+	return api.NewApiService(config.ServiceNames.CoreServer, client.DefaultClient) // rpc client
 }
 
 func ctx(req *restful.Request) context.Context {
