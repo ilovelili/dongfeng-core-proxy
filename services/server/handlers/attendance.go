@@ -32,9 +32,10 @@ func GetAttendance(req *restful.Request, rsp *restful.Response) {
 
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
-	} else {
-		rsp.WriteAsJson(response)
+		return
 	}
+
+	rsp.WriteAsJson(response)
 }
 
 // UploadAttendance upload attenance list
@@ -70,12 +71,14 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 				year, month, class, err = parseYearMonthClass(row)
 				if err != nil {
 					writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
+					return
 				}
 
 			} else if rindex == 3 {
 				dates, err = parseDates(row)
 				if err != nil {
 					writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
+					return
 				}
 
 			} else if rindex > 3 {
@@ -84,6 +87,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 					name, attendances, err := parseNameAttendences(row, dates)
 					if err != nil {
 						writeError(rsp, errorcode.CoreProxyBadFormatAttendanceFile)
+						return
 					}
 
 					if name != "" && len(attendances) > 0 && year > 0 && month > 0 && class != "" {
@@ -108,9 +112,10 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
-	} else {
-		rsp.WriteAsJson(response)
+		return
 	}
+
+	rsp.WriteAsJson(response)
 }
 
 func parseYearMonthClass(row []string) (year, month int32, class string, err error) {

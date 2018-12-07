@@ -10,4 +10,5 @@ service api {
     rpc UpdateUser(dongfeng.protobuf.UpdateUserRequest) returns(dongfeng.protobuf.UpdateUserResponse) {};
     rpc GetAttendance(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};
     rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
+    rpc UpdatePhysique(dongfeng.protobuf.UpdatePhysiqueRequest) returns(dongfeng.protobuf.UpdatePhysiqueResponse) {};
 }

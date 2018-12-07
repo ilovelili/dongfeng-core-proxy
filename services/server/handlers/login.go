@@ -15,9 +15,10 @@ func Login(req *restful.Request, rsp *restful.Response) {
 	response, err := newclient().Login(ctx(req), &protobuf.LoginRequest{Token: idtoken})
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
-	} else {
-		rsp.WriteAsJson(response)
+		return
 	}
+
+	rsp.WriteAsJson(response)
 }
 
 // Logout logout
@@ -29,6 +30,7 @@ func Logout(req *restful.Request, rsp *restful.Response) {
 		writeError(rsp, errorcode.CoreProxyFailedToSaveSession)
 		return
 	}
+
 	rsp.WriteAsJson(struct {
 		Succeed bool `json:"succeed"`
 	}{true})

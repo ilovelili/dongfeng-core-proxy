@@ -26,7 +26,7 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-var _ = dongfeng_protobuf.UpdateAttendanceResponse{}
+var _ = dongfeng_protobuf.UpdatePhysiqueResponse{}
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -47,6 +47,7 @@ type ApiService interface {
 	UpdateUser(ctx context.Context, in *dongfeng_protobuf.UpdateUserRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateUserResponse, error)
 	GetAttendance(ctx context.Context, in *dongfeng_protobuf.GetAttendanceRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetAttendanceResponse, error)
 	UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateAttendanceResponse, error)
+	UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error)
 }
 
 type apiService struct {
@@ -117,6 +118,16 @@ func (c *apiService) UpdateAttendance(ctx context.Context, in *dongfeng_protobuf
 	return out, nil
 }
 
+func (c *apiService) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdatePhysique", in)
+	out := new(dongfeng_protobuf.UpdatePhysiqueResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Api service
 
 type ApiHandler interface {
@@ -125,6 +136,7 @@ type ApiHandler interface {
 	UpdateUser(context.Context, *dongfeng_protobuf.UpdateUserRequest, *dongfeng_protobuf.UpdateUserResponse) error
 	GetAttendance(context.Context, *dongfeng_protobuf.GetAttendanceRequest, *dongfeng_protobuf.GetAttendanceResponse) error
 	UpdateAttendance(context.Context, *dongfeng_protobuf.UpdateAttendanceRequest, *dongfeng_protobuf.UpdateAttendanceResponse) error
+	UpdatePhysique(context.Context, *dongfeng_protobuf.UpdatePhysiqueRequest, *dongfeng_protobuf.UpdatePhysiqueResponse) error
 }
 
 func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.HandlerOption) {
@@ -134,6 +146,7 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		UpdateUser(ctx context.Context, in *dongfeng_protobuf.UpdateUserRequest, out *dongfeng_protobuf.UpdateUserResponse) error
 		GetAttendance(ctx context.Context, in *dongfeng_protobuf.GetAttendanceRequest, out *dongfeng_protobuf.GetAttendanceResponse) error
 		UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, out *dongfeng_protobuf.UpdateAttendanceResponse) error
+		UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error
 	}
 	type Api struct {
 		api
@@ -164,4 +177,8 @@ func (h *apiHandler) GetAttendance(ctx context.Context, in *dongfeng_protobuf.Ge
 
 func (h *apiHandler) UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, out *dongfeng_protobuf.UpdateAttendanceResponse) error {
 	return h.ApiHandler.UpdateAttendance(ctx, in, out)
+}
+
+func (h *apiHandler) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error {
+	return h.ApiHandler.UpdatePhysique(ctx, in, out)
 }
