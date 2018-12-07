@@ -35,7 +35,8 @@ var (
 const sessionkeyprefix = "session"
 
 func newclient() api.ApiService {
-	return api.NewApiService(config.ServiceNames.CoreServer, client.DefaultClient) // rpc client
+	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
+	return api.NewApiService(config.ServiceNames.CoreServer, cli) // rpc client
 }
 
 func ctx(req *restful.Request) context.Context {

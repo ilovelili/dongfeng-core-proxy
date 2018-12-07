@@ -24,6 +24,7 @@
     "servicemeta": {
         "registry_ttl": 30,
         "registry_heartbeat": 10,
-        "api_version": "0.0.1"
+        "api_version": "0.0.1",
+        "default_request_timeout_sec": 3600
     }
 }

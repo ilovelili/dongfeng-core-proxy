@@ -93,9 +93,10 @@ type ServiceNames struct {
 
 // ServiceMeta service meta data including service discovery specs
 type ServiceMeta struct {
-	RegistryTTL       int    `json:"registry_ttl"`
-	RegistryHeartbeat int    `json:"registry_heartbeat"`
-	Version           string `json:"api_version"`
+	RegistryTTL           int    `json:"registry_ttl"`
+	RegistryHeartbeat     int    `json:"registry_heartbeat"`
+	Version               string `json:"api_version"`
+	DefaultRequestTimeout int    `json:"default_request_timeout_sec"`
 }
 
 // Config config entry
@@ -135,4 +136,13 @@ func (s *ServiceMeta) GetRegistryHeartbeat() time.Duration {
 // GetVersion get api version
 func (s *ServiceMeta) GetVersion() string {
 	return s.Version
+}
+
+// GetDefaultRequestTimeout get default request time out
+func (s *ServiceMeta) GetDefaultRequestTimeout() time.Duration {
+	if s.DefaultRequestTimeout == 0 {
+		return 5 * time.Second
+	}
+
+	return time.Duration(s.DefaultRequestTimeout) * time.Second
 }

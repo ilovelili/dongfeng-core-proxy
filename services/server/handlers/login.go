@@ -29,5 +29,7 @@ func Logout(req *restful.Request, rsp *restful.Response) {
 		writeError(rsp, errorcode.CoreProxyFailedToSaveSession)
 		return
 	}
-	rsp.Write([]byte("OK"))
+	rsp.WriteAsJson(struct {
+		Succeed bool `json:"succeed"`
+	}{true})
 }
