@@ -13,6 +13,30 @@ import (
 	protobuf "github.com/ilovelili/dongfeng-protobuf"
 )
 
+// GetAttendance get attenance list
+func GetAttendance(req *restful.Request, rsp *restful.Response) {
+	class, from, to, name := req.QueryParameter("class"), req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("name")
+	if from != "" && to != "" && from > to {
+		writeError(rsp, errorcode.CoreProxyInvalidAttendanceRequest)
+		return
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newclient().GetAttendance(ctx(req), &protobuf.GetAttendanceRequest{
+		Token: idtoken,
+		From:  from,
+		To:    to,
+		Class: class,
+		Name:  name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+	} else {
+		rsp.WriteAsJson(response)
+	}
+}
+
 // UploadAttendance upload attenance list
 func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	if err := req.Request.ParseMultipartForm(32 << 20); err != nil {
@@ -77,7 +101,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().UpdateAttendance(ctx(req), &protobuf.AttendanceRequest{
+	response, err := newclient().UpdateAttendance(ctx(req), &protobuf.UpdateAttendanceRequest{
 		Token:       idtoken,
 		Attendances: classattendances,
 	})
