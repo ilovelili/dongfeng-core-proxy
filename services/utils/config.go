@@ -87,8 +87,10 @@ type Services struct {
 
 // ServiceNames servicename config
 type ServiceNames struct {
-	CoreProxy  string `json:"core_proxy"`
-	CoreServer string `json:"core_server"`
+	CoreProxy        string `json:"core_proxy"`
+	CoreServer       string `json:"core_server"`
+	AttendanceServer string `json:"attendance_server"`
+	PhysiqueServer   string `json:"physique_server"`
 }
 
 // ServiceMeta service meta data including service discovery specs

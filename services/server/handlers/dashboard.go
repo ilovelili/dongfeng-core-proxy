@@ -10,7 +10,7 @@ import (
 // Dashboard dashboard
 func Dashboard(req *restful.Request, rsp *restful.Response) {
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().Dashboard(ctx(req), &protobuf.DashboardRequest{Token: idtoken})
+	response, err := newcoreclient().Dashboard(ctx(req), &protobuf.DashboardRequest{Token: idtoken})
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
 	} else {

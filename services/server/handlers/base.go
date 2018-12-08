@@ -34,9 +34,19 @@ var (
 // sessionkey string used as Redis session store key
 const sessionkeyprefix = "session"
 
-func newclient() api.ApiService {
+func newcoreclient() api.ApiService {
 	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
 	return api.NewApiService(config.ServiceNames.CoreServer, cli) // rpc client
+}
+
+func newattendanceclient() api.ApiService {
+	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
+	return api.NewApiService(config.ServiceNames.AttendanceServer, cli)
+}
+
+func newphysiqueclient() api.ApiService {
+	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
+	return api.NewApiService(config.ServiceNames.PhysiqueServer, cli)
 }
 
 func ctx(req *restful.Request) context.Context {

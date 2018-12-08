@@ -12,7 +12,7 @@ import (
 // Login login
 func Login(req *restful.Request, rsp *restful.Response) {
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().Login(ctx(req), &protobuf.LoginRequest{Token: idtoken})
+	response, err := newcoreclient().Login(ctx(req), &protobuf.LoginRequest{Token: idtoken})
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
 		return

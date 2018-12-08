@@ -22,7 +22,7 @@ func GetAttendance(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().GetAttendance(ctx(req), &protobuf.GetAttendanceRequest{
+	response, err := newattendanceclient().GetAttendance(ctx(req), &protobuf.GetAttendanceRequest{
 		Token: idtoken,
 		From:  from,
 		To:    to,
@@ -105,7 +105,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().UpdateAttendance(ctx(req), &protobuf.UpdateAttendanceRequest{
+	response, err := newattendanceclient().UpdateAttendance(ctx(req), &protobuf.UpdateAttendanceRequest{
 		Token:       idtoken,
 		Attendances: classattendances,
 	})

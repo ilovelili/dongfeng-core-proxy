@@ -96,7 +96,7 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newclient().UpdatePhysique(ctx(req), &protobuf.UpdatePhysiqueRequest{
+	response, err := newphysiqueclient().UpdatePhysique(ctx(req), &protobuf.UpdatePhysiqueRequest{
 		Token:     idtoken,
 		Physiques: physiques,
 	})

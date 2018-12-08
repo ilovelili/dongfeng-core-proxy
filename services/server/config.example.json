@@ -19,7 +19,9 @@
     },
     "servicenames": {
         "core_proxy": "dongfeng.svc.core.proxy.api",
-        "core_server": "dongfeng.svc.core.server.api"
+        "core_server": "dongfeng.svc.core.server.api",
+        "attendance_server": "dongfeng.svc.attendance.server.api",
+        "physique_server": "dongfeng.svc.physique.server.api"
     },
     "servicemeta": {
         "registry_ttl": 30,
