@@ -34,8 +34,8 @@
 [[projects]]
   name = "github.com/go-ini/ini"
   packages = ["."]
-  revision = "9c8236e659b76e87bf02044d06fde8683008ff3e"
-  version = "v1.39.0"
+  revision = "f55231ca73a76c1d61eb05fe0d64a1ccebf93cba"
+  version = "v1.39.3"
 
 [[projects]]
   name = "github.com/go-log/log"
@@ -95,25 +95,25 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-error-code"
   packages = ["."]
-  revision = "c5ce148844de409a3cab9acb3b316ed316d2fe51"
+  revision = "29db057929785660af44a5c729ead8f2675850ed"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-logger"
   packages = ["."]
-  revision = "e508c36b17cddc7f21175913b304ed83a916e8f6"
+  revision = "17d3a5464f0dcf3e152dc32971687cf514486a52"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-protobuf"
   packages = ["."]
-  revision = "d1426f7a310fa24eadd3bd7490a683360921224d"
+  revision = "1e44c24de705be8d52ed0dcd8419225d177ed517"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-shared-lib"
   packages = ["."]
-  revision = "86e10310bde009b7897e68bc77fa0bea38e18720"
+  revision = "48e7f6f77f8309e8b653341e93bd7021a8c3651a"
 
 [[projects]]
   name = "github.com/json-iterator/go"
@@ -196,8 +196,8 @@
 [[projects]]
   name = "github.com/miekg/dns"
   packages = ["."]
-  revision = "a220737569d8137d4c610f80bd33f1dc762522e5"
-  version = "v1.1.0"
+  revision = "7586a3cbe8ccfc63f82de3ab2ceeb08c9939af72"
+  version = "v1.1.1"
 
 [[projects]]
   name = "github.com/minio/minio-go"
@@ -269,19 +269,19 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["argon2","blake2b","ed25519","ed25519/internal/edwards25519","ssh/terminal"]
-  revision = "eb0de9b17e854e9b1ccd9963efafc79862359959"
+  revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6"]
-  revision = "351d144fa1fc0bd934e2408202be0c29f25e35a0"
+  revision = "e147a9138326bc0e9d4e179541ffd8af41cff8a9"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["cpu","unix","windows"]
-  revision = "4ed8d59d0b35e1e29334a206d1b3f38b1e5dfb31"
+  revision = "074acd46bca67915925527c07849494d115e7c43"
 
 [[projects]]
   name = "golang.org/x/text"

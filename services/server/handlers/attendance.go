@@ -90,7 +90,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 						return
 					}
 
-					if name != "" && len(attendances) > 0 && year > 0 && month > 0 && class != "" {
+					if name != "" && year > 0 && month > 0 && class != "" {
 						classattendances = append(classattendances, &protobuf.ClassAttendance{
 							Year:        year,
 							Month:       month,
