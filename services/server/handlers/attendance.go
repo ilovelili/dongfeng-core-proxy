@@ -62,9 +62,9 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	for _, sheet := range excel.WorkBook.Sheets.Sheet {
 		rows := excel.GetRows(sheet.Name)
 
-		var year, month int32
+		var year, month int64
 		var class string
-		var dates []int32
+		var dates []int64
 
 		for rindex, row := range rows {
 			if rindex == 1 {
@@ -118,7 +118,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-func parseYearMonthClass(row []string) (year, month int32, class string, err error) {
+func parseYearMonthClass(row []string) (year, month int64, class string, err error) {
 	// filter out empty
 	var sb strings.Builder
 	for _, col := range row {
@@ -136,14 +136,14 @@ func parseYearMonthClass(row []string) (year, month int32, class string, err err
 			err = parserr
 			return
 		}
-		year = int32(_year)
+		year = _year
 
 		_month, parserr := strconv.ParseInt(matches[2], 10, 32)
 		if err != nil {
 			err = parserr
 			return
 		}
-		month = int32(_month)
+		month = _month
 
 		class = matches[3]
 
@@ -154,8 +154,8 @@ func parseYearMonthClass(row []string) (year, month int32, class string, err err
 	return
 }
 
-func parseDates(row []string) (dates []int32, err error) {
-	dates = make([]int32, 0)
+func parseDates(row []string) (dates []int64, err error) {
+	dates = make([]int64, 0)
 	for _, col := range row {
 		if col == "0" {
 			return
@@ -163,20 +163,20 @@ func parseDates(row []string) (dates []int32, err error) {
 
 		date, err := strconv.ParseInt(col, 10, 32)
 		if err == nil {
-			dates = append(dates, int32(date))
+			dates = append(dates, date)
 		}
 	}
 
 	return
 }
 
-func parseNameAttendences(row []string, dates []int32) (name string, attendances []int32, err error) {
+func parseNameAttendences(row []string, dates []int64) (name string, attendances []int64, err error) {
 	if len(dates) == 0 {
 		err = fmt.Errorf("invalid parsed dates")
 		return
 	}
 
-	attendances = make([]int32, 0)
+	attendances = make([]int64, 0)
 	for i, col := range row {
 		if i == 1 {
 			if col != "" && col != "0" {
