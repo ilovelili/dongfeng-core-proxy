@@ -95,7 +95,7 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-error-code"
   packages = ["."]
-  revision = "5d20c5ae268dac9840c0f9b9b97daeb0afc01a8d"
+  revision = "b31eb7310aaa99f6351557b29fb5e50894a6c26b"
 
 [[projects]]
   branch = "master"
@@ -113,7 +113,7 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-shared-lib"
   packages = ["."]
-  revision = "48e7f6f77f8309e8b653341e93bd7021a8c3651a"
+  revision = "4093ff764c362cef1cd69c45d15fd365d7ff1758"
 
 [[projects]]
   name = "github.com/json-iterator/go"
@@ -275,13 +275,13 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6"]
-  revision = "927f97764cc334a6575f4b7a1584a147864d5723"
+  revision = "45ffb0cd1ba084b73e26dee67e667e1be5acce83"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["cpu","unix","windows"]
-  revision = "badf5585203e739f88c2c6cd34188a6f54b5d619"
+  revision = "20be8e55dc7b4b7a1b1660728164a8509d8c9209"
 
 [[projects]]
   name = "golang.org/x/text"

@@ -90,6 +90,7 @@ type ServiceNames struct {
 	CoreProxy        string `json:"core_proxy"`
 	CoreServer       string `json:"core_server"`
 	AttendanceServer string `json:"attendance_server"`
+	NutritionServer  string `json:"nutrition_server"`
 	PhysiqueServer   string `json:"physique_server"`
 }
 

@@ -56,7 +56,7 @@ func (r *Role) roleAuthenticate(req *restful.Request, rsp *restful.Response, cha
 		return
 	}
 
-	if !containString(r.resolveRole(), userprofile.RoleSettings) {
+	if !sharedlib.ContainString(r.resolveRole(), userprofile.RoleSettings) {
 		writeError(rsp, errorcode.GenericInsufficientPrivileges)
 		return
 	}
@@ -64,8 +64,8 @@ func (r *Role) roleAuthenticate(req *restful.Request, rsp *restful.Response, cha
 	chain.ProcessFilter(req, rsp)
 }
 
-func (r *Role) resolveRole() []interface{} {
-	result := make([]interface{}, 0)
+func (r *Role) resolveRole() []string {
+	result := make([]string, 0)
 	for _, role := range *r {
 		result = append(result, role)
 	}

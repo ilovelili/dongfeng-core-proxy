@@ -12,4 +12,5 @@ service api {
     rpc GetNamelist(dongfeng.protobuf.GetNamelistRequest) returns(dongfeng.protobuf.GetNamelistResponse) {};
     rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
     rpc UpdatePhysique(dongfeng.protobuf.UpdatePhysiqueRequest) returns(dongfeng.protobuf.UpdatePhysiqueResponse) {};
+    rpc UpdateRecipe(dongfeng.protobuf.UpdateRecipeRequest) returns(dongfeng.protobuf.UpdateRecipeResponse) {};
 }

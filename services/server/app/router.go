@@ -41,6 +41,7 @@ func (r *Router) Route() http.Handler {
 	webservice.Route(webservice.GET("/attendance").Filter(middlewares.JwtAuthenticate).To(handlers.GetAttendance))
 	webservice.Route(webservice.GET("/namelist").Filter(middlewares.JwtAuthenticate).To(handlers.GetNamelist))
 	webservice.Route(webservice.POST("/physique").Consumes("multipart/form-data").Filter(middlewares.JwtAuthenticate).To(handlers.UploadPhysique))
+	webservice.Route(webservice.POST("/recipe").Consumes("multipart/form-data").Filter(middlewares.JwtAuthenticate).To(handlers.UploadRecipe))
 
 	container.Add(webservice)
 

@@ -23,12 +23,3 @@ func writeError(rsp *restful.Response, errorcode *errorcode.Error, detail ...str
 	e := utils.NewError(errorcode, detail...)
 	rsp.WriteError(int(errorcode.Code), e)
 }
-
-func containString(s []interface{}, e string) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}

@@ -49,6 +49,11 @@ func newphysiqueclient() api.ApiService {
 	return api.NewApiService(config.ServiceNames.PhysiqueServer, cli)
 }
 
+func newnutritionclient() api.ApiService {
+	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
+	return api.NewApiService(config.ServiceNames.NutritionServer, cli)
+}
+
 func ctx(req *restful.Request) context.Context {
 	ip := sharedlib.ResolveRemoteIP(req.Request)
 	jwks := config.Auth.JWKS
