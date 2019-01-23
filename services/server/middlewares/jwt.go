@@ -9,7 +9,7 @@ import (
 	"github.com/ilovelili/dongfeng-shared-lib"
 )
 
-// JwtAuthenticate JWT auth middleware. go-restful has poor support for middleware injection
+// JwtAuthenticate JWT auth middleware.
 func JwtAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful.FilterChain) {
 	idtoken, valid := utils.ResolveIDToken(req)
 	if !valid {

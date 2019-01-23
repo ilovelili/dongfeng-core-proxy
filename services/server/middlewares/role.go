@@ -33,7 +33,7 @@ var (
 	UserRole Role = []string{"user", ""}
 )
 
-// JwtAuthenticate JWT auth middleware. go-restful has poor support for middleware injection
+// JwtAuthenticate JWT auth middleware.
 func (r *Role) roleAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful.FilterChain) {
 	idtoken, valid := utils.ResolveIDToken(req)
 	if !valid {
