@@ -1,80 +1,72 @@
 package handlers
 
 import (
-	excelize "github.com/360EntSecGroup-Skylar/excelize"
+	"encoding/json"
+
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
-	protobuf "github.com/ilovelili/dongfeng-protobuf"
-	sharedlib "github.com/ilovelili/dongfeng-shared-lib"
+	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// UploadRecipe upload recipe list
-func UploadRecipe(req *restful.Request, rsp *restful.Response) {
-	if err := req.Request.ParseMultipartForm(32 << 20); err != nil {
-		writeError(rsp, errorcode.CoreProxyFailedToReadRecipeFile)
-		return
-	}
+// RecipeNutrition recipe nutrition
+type RecipeNutrition struct {
+	Carbohydrate float64 `json:"carbohydrate"`
+	Dietaryfiber float64 `json:"dietaryfiber"`
+	Protein      float64 `json:"protein"`
+	Fat          float64 `json:"fat"`
+	Heat         float64 `json:"heat"`
+}
 
-	file, _, err := req.Request.FormFile("recipe")
-	defer file.Close()
+// UpdateRecipeRequest recipe update request
+type UpdateRecipeRequest struct {
+	Recipe          string   `json:"recipe"`
+	Ingredients     []string `json:"ingredients"`
+	RecipeNutrition `json:"nutrition"`
+}
+
+// GetRecipe get recipes
+func GetRecipe(req *restful.Request, rsp *restful.Response) {
+	recipename := req.PathParameter("recipe")
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newnutritionclient().GetRecipe(ctx(req), &proto.GetRecipeRequest{
+		Token:  idtoken,
+		Recipe: recipename,
+	})
+
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyFailedToReadRecipeFile)
+		writeError(rsp, errorcode.Pipe, err.Error())
 		return
 	}
 
-	excel, err := excelize.OpenReader(file)
+	rsp.WriteAsJson(response)
+}
+
+// UpdateRecipe update recipe
+func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *UpdateRecipeRequest
+	err := decoder.Decode(&updatereq)
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyUnsupportedMimeType)
+		writeError(rsp, errorcode.CoreProxyInvalidUpdateRecipeRequestBody)
 		return
 	}
 
-	recipeingredientmap := make(map[string][]string)
-	for _, sheet := range excel.WorkBook.Sheets.Sheet {
-		// get the "原料" sheet
-		if sheet.Name != "原料" {
-			continue
-		}
-
-		rows := excel.GetRows(sheet.Name)
-		recipecolindex, ingredientcolindex := 0, 0
-		for rindex, row := range rows {
-			if rindex == 0 {
-				for cindex, col := range row {
-					if col == "菜品名称" {
-						recipecolindex = cindex
-					} else if col == "原料名称" {
-						ingredientcolindex = cindex
-					}
-				}
-			} else {
-				if recipecolindex == 0 && ingredientcolindex == 0 {
-					writeError(rsp, errorcode.CoreProxyBadFormatRecipeFile)
-					return
-				}
-
-				recipe, ingredient := row[recipecolindex], row[ingredientcolindex]
-				if v, ok := recipeingredientmap[recipe]; !ok {
-					recipeingredientmap[recipe] = []string{ingredient}
-				} else {
-					if !sharedlib.ContainString(v, ingredient) {
-						recipeingredientmap[recipe] = append(v, ingredient)
-					}
-				}
-			}
-		}
-	}
-
-	recipes := make([]*protobuf.Recipe, 0)
-	for k, v := range recipeingredientmap {
-		recipes = append(recipes, &protobuf.Recipe{
-			Recipe:      k,
-			Ingredients: v,
-		})
-	}
+	rn := updatereq.RecipeNutrition
+	recipes := []*proto.Recipe{&proto.Recipe{
+		Recipe:      updatereq.Recipe,
+		Ingredients: updatereq.Ingredients,
+		Nutrition: &proto.RecipeNutrition{
+			Carbohydrate: rn.Carbohydrate,
+			Dietaryfiber: rn.Dietaryfiber,
+			Protein:      rn.Protein,
+			Fat:          rn.Fat,
+			Heat:         rn.Heat,
+		},
+	}}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().UpdateRecipe(ctx(req), &protobuf.UpdateRecipeRequest{
+	response, err := newnutritionclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
 		Token:   idtoken,
 		Recipes: recipes,
 	})

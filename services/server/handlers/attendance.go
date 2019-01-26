@@ -10,7 +10,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
-	protobuf "github.com/ilovelili/dongfeng-protobuf"
+	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
 // GetAttendance get attenance list
@@ -22,7 +22,7 @@ func GetAttendance(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newattendanceclient().GetAttendance(ctx(req), &protobuf.GetAttendanceRequest{
+	response, err := newattendanceclient().GetAttendance(ctx(req), &proto.GetAttendanceRequest{
 		Token: idtoken,
 		From:  from,
 		To:    to,
@@ -58,7 +58,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	classattendances := make([]*protobuf.ClassAttendance, 0)
+	classattendances := make([]*proto.ClassAttendance, 0)
 	for _, sheet := range excel.WorkBook.Sheets.Sheet {
 		rows := excel.GetRows(sheet.Name)
 
@@ -91,7 +91,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 					}
 
 					if name != "" && year > 0 && month > 0 && class != "" {
-						classattendances = append(classattendances, &protobuf.ClassAttendance{
+						classattendances = append(classattendances, &proto.ClassAttendance{
 							Year:        year,
 							Month:       month,
 							Name:        name,
@@ -105,7 +105,7 @@ func UploadAttendance(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newattendanceclient().UpdateAttendance(ctx(req), &protobuf.UpdateAttendanceRequest{
+	response, err := newattendanceclient().UpdateAttendance(ctx(req), &proto.UpdateAttendanceRequest{
 		Token:       idtoken,
 		Attendances: classattendances,
 	})

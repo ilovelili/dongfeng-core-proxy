@@ -8,9 +8,13 @@ service api {
     rpc Login(dongfeng.protobuf.LoginRequest) returns(dongfeng.protobuf.LoginResponse) {};
     rpc Dashboard(dongfeng.protobuf.DashboardRequest) returns(dongfeng.protobuf.DashboardResponse) {};
     rpc UpdateUser(dongfeng.protobuf.UpdateUserRequest) returns(dongfeng.protobuf.UpdateUserResponse) {};
-    rpc GetAttendance(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};
-    rpc GetNamelist(dongfeng.protobuf.GetNamelistRequest) returns(dongfeng.protobuf.GetNamelistResponse) {};
+    rpc GetAttendance(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};    
     rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
+    rpc GetNamelist(dongfeng.protobuf.GetNamelistRequest) returns(dongfeng.protobuf.GetNamelistResponse) {};
     rpc UpdatePhysique(dongfeng.protobuf.UpdatePhysiqueRequest) returns(dongfeng.protobuf.UpdatePhysiqueResponse) {};
+    rpc GetRecipe(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};
     rpc UpdateRecipe(dongfeng.protobuf.UpdateRecipeRequest) returns(dongfeng.protobuf.UpdateRecipeResponse) {};
+    rpc GetIngredient(dongfeng.protobuf.GetIngredientRequest) returns(dongfeng.protobuf.GetIngredientResponse) {};
+    rpc UpdateIngredient(dongfeng.protobuf.UpdateIngredientRequest) returns(dongfeng.protobuf.UpdateIngredientResponse) {};
+    rpc GetMenu(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};
 }

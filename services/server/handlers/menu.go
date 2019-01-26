@@ -7,15 +7,19 @@ import (
 	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// GetNamelist get name list
-func GetNamelist(req *restful.Request, rsp *restful.Response) {
-	class, year := req.QueryParameter("class"), req.QueryParameter("year")
+// GetMenu get menu
+func GetMenu(req *restful.Request, rsp *restful.Response) {
+	from, to := req.PathParameter("from"), req.PathParameter("to")
+	if from > to {
+		writeError(rsp, errorcode.CoreProxyInvalidGetMenuRequest)
+		return
+	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().GetNamelist(ctx(req), &proto.GetNamelistRequest{
+	response, err := newnutritionclient().GetMenu(ctx(req), &proto.GetMenuRequest{
 		Token: idtoken,
-		Year:  year,
-		Class: class,
+		From:  from,
+		To:    to,
 	})
 
 	if err != nil {

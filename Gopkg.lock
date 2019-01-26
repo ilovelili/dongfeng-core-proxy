@@ -8,6 +8,12 @@
   version = "v1.4.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/armon/go-metrics"
+  packages = ["."]
+  revision = "f0300d1749da6fa982027e449ec0c7a145510c3c"
+
+[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
@@ -64,8 +70,8 @@
 [[projects]]
   name = "github.com/hashicorp/consul"
   packages = ["api","watch"]
-  revision = "0bddfa23a2ebe3c0773d917fc104f53d74f7a5ec"
-  version = "v1.4.0"
+  revision = "65d2c9b51d02e6b14db3da3cb8424ef72e046780"
+  version = "v1.4.1"
 
 [[projects]]
   name = "github.com/hashicorp/go-cleanhttp"
@@ -74,16 +80,28 @@
   version = "v0.5.0"
 
 [[projects]]
+  name = "github.com/hashicorp/go-immutable-radix"
+  packages = ["."]
+  revision = "27df80928bb34bb1b0d6d0e01b9e679902e7a6b5"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/hashicorp/go-rootcerts"
   packages = ["."]
   revision = "63503fb4e1eca22f9ae0f90b49c5d5538a0e87eb"
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/hashicorp/golang-lru"
+  packages = ["simplelru"]
+  revision = "20f1fb78b0740ba8c3cb143a61e86ba5c8669768"
+  version = "v0.5.0"
+
+[[projects]]
   name = "github.com/hashicorp/serf"
   packages = ["coordinate"]
-  revision = "d6574a5bb1226678d7010325fb6c985db20ee458"
-  version = "v0.8.1"
+  revision = "b89a09ebd4b1b570e0076d5097272e67c10ac4f6"
+  version = "v0.8.2"
 
 [[projects]]
   branch = "master"
@@ -95,19 +113,19 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-error-code"
   packages = ["."]
-  revision = "b9252dc5ef1e58f652297f8edb3b5415cad30052"
+  revision = "f8cd8693392c117f198d1c1da7b0475e698a07af"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-logger"
   packages = ["."]
-  revision = "17d3a5464f0dcf3e152dc32971687cf514486a52"
+  revision = "d26a6184d0e2064306a4ccf4c1e678ab25fd81e5"
 
 [[projects]]
   branch = "master"
   name = "github.com/ilovelili/dongfeng-protobuf"
   packages = ["."]
-  revision = "5d215358cc6bfb1f15a55b3a26213a098d92c87d"
+  revision = "a993bdba9d040cb53bb145e2ce1af2f0f4040138"
 
 [[projects]]
   branch = "master"
@@ -202,8 +220,8 @@
 [[projects]]
   name = "github.com/minio/minio-go"
   packages = [".","pkg/credentials","pkg/encrypt","pkg/s3signer","pkg/s3utils","pkg/set"]
-  revision = "e6694bcc4a6b0c1756797be85b8458635a65924e"
-  version = "v6.0.13"
+  revision = "0be3a44757352b6e617ef00eb47829bce29baab1"
+  version = "v6.0.14"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
@@ -275,13 +293,13 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6","publicsuffix"]
-  revision = "ed066c81e75eba56dd9bd2139ade88125b855585"
+  revision = "d26f9f9a57f3fab6a695bec0d84433c2c50f8bbf"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["cpu","unix","windows"]
-  revision = "c6b37f3e92850b723493d63fd35aad34e19e048d"
+  revision = "b90733256f2e882e81d52f9126de08df5615afd9"
 
 [[projects]]
   name = "golang.org/x/text"

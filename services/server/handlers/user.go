@@ -12,12 +12,12 @@ import (
 	do "github.com/ilovelili/digital-ocean-client"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
-	protobuf "github.com/ilovelili/dongfeng-protobuf"
+	proto "github.com/ilovelili/dongfeng-protobuf"
 	"github.com/segmentio/ksuid"
 )
 
-// UpdateRequest user update request
-type UpdateRequest struct {
+// UpdateUserRequest user update request
+type UpdateUserRequest struct {
 	Name   string `json:"name"`
 	Avatar string `json:"avatar"`
 }
@@ -68,7 +68,7 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	rsp.WriteAsJson(&protobuf.UploadAvatarResponse{
+	rsp.WriteAsJson(&proto.UploadAvatarResponse{
 		Uri: uploadresp.Location,
 	})
 }
@@ -76,7 +76,7 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 // UpdateUser update user
 func UpdateUser(req *restful.Request, rsp *restful.Response) {
 	decoder := json.NewDecoder(req.Request.Body)
-	var updatereq *UpdateRequest
+	var updatereq *UpdateUserRequest
 	err := decoder.Decode(&updatereq)
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyInvalidUpdateUserRequestBody)
@@ -84,7 +84,7 @@ func UpdateUser(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdateUser(ctx(req), &protobuf.UpdateUserRequest{
+	response, err := newcoreclient().UpdateUser(ctx(req), &proto.UpdateUserRequest{
 		Token:  idtoken,
 		Name:   updatereq.Name,
 		Avatar: updatereq.Avatar,

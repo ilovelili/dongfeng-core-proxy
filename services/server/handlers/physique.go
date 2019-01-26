@@ -10,7 +10,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
-	protobuf "github.com/ilovelili/dongfeng-protobuf"
+	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
 // physiqueItem for excel parsing
@@ -44,10 +44,10 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 	}
 
 	var class string
-	physiques := make([]*protobuf.Physique, 0)
+	physiques := make([]*proto.Physique, 0)
 
 	for _, sheet := range excel.WorkBook.Sheets.Sheet {
-		physiqueitems := make([]*protobuf.PhysiqueItem, 0)
+		physiqueitems := make([]*proto.PhysiqueItem, 0)
 		rows := excel.GetRows(sheet.Name)
 
 		for rindex, row := range rows {
@@ -76,7 +76,7 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 							return
 						}
 
-						physiqueitems = append(physiqueitems, &protobuf.PhysiqueItem{
+						physiqueitems = append(physiqueitems, &proto.PhysiqueItem{
 							Name:      physiqueitem.name,
 							Gender:    gender,
 							BirthDate: physiqueitem.birthdate,
@@ -89,14 +89,14 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 			}
 		}
 
-		physiques = append(physiques, &protobuf.Physique{
+		physiques = append(physiques, &proto.Physique{
 			Class: class,
 			Items: physiqueitems,
 		})
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newphysiqueclient().UpdatePhysique(ctx(req), &protobuf.UpdatePhysiqueRequest{
+	response, err := newphysiqueclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
 		Token:     idtoken,
 		Physiques: physiques,
 	})
@@ -158,14 +158,14 @@ func parsePhysiqueItem(row []string) (item *physiqueItem, err error) {
 	return
 }
 
-func resolveGender(gender string) (g protobuf.PhysiqueItem_Gender, err error) {
+func resolveGender(gender string) (g proto.PhysiqueItem_Gender, err error) {
 	if gender == "女" {
-		g = protobuf.PhysiqueItem_F
+		g = proto.PhysiqueItem_F
 		return
 	}
 
 	if gender == "男" {
-		g = protobuf.PhysiqueItem_M
+		g = proto.PhysiqueItem_M
 		return
 	}
 
