@@ -20,6 +20,11 @@ type RecipeNutrition struct {
 
 // UpdateRecipeRequest recipe update request
 type UpdateRecipeRequest struct {
+	Recipes []*UpdateRecipeItem `json:"recipes"`
+}
+
+// UpdateRecipeItem update recipe item
+type UpdateRecipeItem struct {
 	Recipe          string   `json:"recipe"`
 	Ingredients     []string `json:"ingredients"`
 	RecipeNutrition `json:"nutrition"`
@@ -52,18 +57,21 @@ func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	rn := updatereq.RecipeNutrition
-	recipes := []*proto.Recipe{&proto.Recipe{
-		Recipe:      updatereq.Recipe,
-		Ingredients: updatereq.Ingredients,
-		Nutrition: &proto.RecipeNutrition{
-			Carbohydrate: rn.Carbohydrate,
-			Dietaryfiber: rn.Dietaryfiber,
-			Protein:      rn.Protein,
-			Fat:          rn.Fat,
-			Heat:         rn.Heat,
-		},
-	}}
+	recipes := make([]*proto.Recipe, 0)
+	for _, r := range updatereq.Recipes {
+		rn := r.RecipeNutrition
+		recipes = append(recipes, &proto.Recipe{
+			Recipe:      r.Recipe,
+			Ingredients: r.Ingredients,
+			Nutrition: &proto.RecipeNutrition{
+				Carbohydrate: rn.Carbohydrate,
+				Dietaryfiber: rn.Dietaryfiber,
+				Protein:      rn.Protein,
+				Fat:          rn.Fat,
+				Heat:         rn.Heat,
+			},
+		})
+	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newnutritionclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
