@@ -9,6 +9,12 @@ import (
 	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
+// IngredientUnitAmount ingredient unit amount
+type IngredientUnitAmount struct {
+	Ingredient string  `json:"ingredient"`
+	UnitAmount float64 `json:"unit_amount,omitempty"`
+}
+
 // RecipeNutrition recipe nutrition
 type RecipeNutrition struct {
 	Carbohydrate float64 `json:"carbohydrate"`
@@ -25,8 +31,8 @@ type UpdateRecipeRequest struct {
 
 // UpdateRecipeItem update recipe item
 type UpdateRecipeItem struct {
-	Recipe          string   `json:"recipe"`
-	Ingredients     []string `json:"ingredients"`
+	Recipe          string                  `json:"recipe"`
+	Ingredients     []*IngredientUnitAmount `json:"ingredients"`
 	RecipeNutrition `json:"nutrition"`
 }
 
@@ -60,9 +66,17 @@ func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
 	recipes := make([]*proto.Recipe, 0)
 	for _, r := range updatereq.Recipes {
 		rn := r.RecipeNutrition
+		ingredientunitamounts := make([]*proto.IngredientUnitAmount, 0)
+		for _, ua := range r.Ingredients {
+			ingredientunitamounts = append(ingredientunitamounts, &proto.IngredientUnitAmount{
+				Ingredient: ua.Ingredient,
+				UnitAmount: ua.UnitAmount,
+			})
+		}
+
 		recipes = append(recipes, &proto.Recipe{
 			Recipe:      r.Recipe,
-			Ingredients: r.Ingredients,
+			Ingredients: ingredientunitamounts,
 			Nutrition: &proto.RecipeNutrition{
 				Carbohydrate: rn.Carbohydrate,
 				Dietaryfiber: rn.Dietaryfiber,

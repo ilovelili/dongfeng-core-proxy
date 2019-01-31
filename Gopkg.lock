@@ -38,12 +38,6 @@
   version = "v2.8.1"
 
 [[projects]]
-  name = "github.com/go-ini/ini"
-  packages = ["."]
-  revision = "6ed8d5f64cd79a498d1f3fab5880cc376ce41bbe"
-  version = "v1.41.0"
-
-[[projects]]
   name = "github.com/go-log/log"
   packages = [".","log"]
   revision = "37e2e1f19306361e1fc152a1839f1236149cb4e4"
@@ -70,8 +64,8 @@
 [[projects]]
   name = "github.com/hashicorp/consul"
   packages = ["api","watch"]
-  revision = "65d2c9b51d02e6b14db3da3cb8424ef72e046780"
-  version = "v1.4.1"
+  revision = "c97c712e96e0e53308054d5e1180289fe02dce38"
+  version = "v1.4.2"
 
 [[projects]]
   name = "github.com/hashicorp/go-cleanhttp"
@@ -125,7 +119,7 @@
   branch = "master"
   name = "github.com/ilovelili/dongfeng-protobuf"
   packages = ["."]
-  revision = "a993bdba9d040cb53bb145e2ce1af2f0f4040138"
+  revision = "0344f3b01d3963a437c231499673f9bed256bf3a"
 
 [[projects]]
   branch = "master"
@@ -158,16 +152,16 @@
   revision = "39f9a71bcabe9432cbdfe4d3d33f41988acd2ce6"
 
 [[projects]]
-  branch = "master"
   name = "github.com/micro/cli"
   packages = ["."]
-  revision = "1b0c9793c30063c75054ac3a245ef8f7f5154229"
+  revision = "bef92b8564e931cfd32870e52be76880ce358235"
+  version = "v0.1.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/micro/go-log"
   packages = ["."]
-  revision = "cbfa9447f9b655f8e66583237e51f40ca9bff860"
+  revision = "5cb7bb4413f4ae8de0d7e826aa2854861d3a6c31"
+  version = "v0.1.0"
 
 [[projects]]
   name = "github.com/micro/go-micro"
@@ -182,10 +176,10 @@
   version = "v0.16.2"
 
 [[projects]]
-  branch = "master"
   name = "github.com/micro/go-rcache"
   packages = ["."]
-  revision = "a581a57b513351792b9f21fc8b95d87b1c5a95da"
+  revision = "0ce6738e29729b9682b05dd828cfae9d3063e341"
+  version = "v0.1.0"
 
 [[projects]]
   name = "github.com/micro/go-web"
@@ -200,34 +194,34 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/micro/mdns"
   packages = ["."]
-  revision = "9c3770d4057a5adca108c15ca317fee54766f9f7"
+  revision = "3a29b6675e7404722eed4d4dde532c2e103007a7"
+  version = "v0.1.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/micro/util"
   packages = ["go/lib/addr","go/lib/http","go/lib/net","go/lib/tls"]
-  revision = "2d4f591dc5383712927e372348c0885478402595"
+  revision = "77fba40c3c49cc7f12e111d3901a9a710a1854c1"
+  version = "v0.1.0"
 
 [[projects]]
   name = "github.com/miekg/dns"
   packages = ["."]
-  revision = "56be65265e34e731425e0269a301774938827c60"
-  version = "v1.1.3"
+  revision = "8fc2e5773bbd308ca2fcc962fd8d25c1bd0f6743"
+  version = "v1.1.4"
 
 [[projects]]
   name = "github.com/minio/minio-go"
   packages = [".","pkg/credentials","pkg/encrypt","pkg/s3signer","pkg/s3utils","pkg/set"]
-  revision = "0be3a44757352b6e617ef00eb47829bce29baab1"
-  version = "v6.0.14"
+  revision = "3a5de8b1cf046bb419d1e35a1e725945603ff70c"
+  version = "v6.0.15"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
-  revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
-  version = "v1.0.0"
+  revision = "af06845cf3004701891bf4fdb884bfe4920b3727"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/mitchellh/hashstructure"
@@ -287,7 +281,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["argon2","blake2b","ed25519","ed25519/internal/edwards25519","ssh/terminal"]
-  revision = "057139ce5d2bdbe6fe73c53679e24e9cf007f637"
+  revision = "b01c7a72566457eb1420261cdafef86638fc3861"
 
 [[projects]]
   branch = "master"
@@ -299,13 +293,19 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["cpu","unix","windows"]
-  revision = "b90733256f2e882e81d52f9126de08df5615afd9"
+  revision = "aca44879d5644da7c5b8ec6a1115e9b6ea6c40d9"
 
 [[projects]]
   name = "golang.org/x/text"
   packages = ["collate","collate/build","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","language","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable"]
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
+
+[[projects]]
+  name = "gopkg.in/ini.v1"
+  packages = ["."]
+  revision = "6ed8d5f64cd79a498d1f3fab5880cc376ce41bbe"
+  version = "v1.41.0"
 
 [solve-meta]
   analyzer-name = "dep"
