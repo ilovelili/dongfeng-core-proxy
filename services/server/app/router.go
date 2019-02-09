@@ -126,6 +126,15 @@ func (r *Router) Route() http.Handler {
 			Param(webservice.PathParameter("from", "date from").DataType("string")).
 			Param(webservice.PathParameter("to", "date to").DataType("string")))
 
+	webservice.Route(
+		webservice.
+			GET("/procurement/{from}/{to}/{id}").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetProcurement).
+			Param(webservice.PathParameter("from", "from").DataType("string")).
+			Param(webservice.PathParameter("to", "to").DataType("string")).
+			Param(webservice.PathParameter("id", "meal id").DataType("int")))
+
 	container.Add(webservice)
 
 	// Add container filter to respond to OPTIONS

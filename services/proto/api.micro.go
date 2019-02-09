@@ -26,7 +26,7 @@ import (
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-var _ = dongfeng_protobuf.GetMenuResponse{}
+var _ = dongfeng_protobuf.GetProcurementResponse{}
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -54,6 +54,7 @@ type ApiService interface {
 	GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetIngredientResponse, error)
 	UpdateIngredient(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateIngredientResponse, error)
 	GetMenu(ctx context.Context, in *dongfeng_protobuf.GetMenuRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetMenuResponse, error)
+	GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
 }
 
 type apiService struct {
@@ -194,6 +195,16 @@ func (c *apiService) GetMenu(ctx context.Context, in *dongfeng_protobuf.GetMenuR
 	return out, nil
 }
 
+func (c *apiService) GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetProcurement", in)
+	out := new(dongfeng_protobuf.GetProcurementResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Api service
 
 type ApiHandler interface {
@@ -209,6 +220,7 @@ type ApiHandler interface {
 	GetIngredient(context.Context, *dongfeng_protobuf.GetIngredientRequest, *dongfeng_protobuf.GetIngredientResponse) error
 	UpdateIngredient(context.Context, *dongfeng_protobuf.UpdateIngredientRequest, *dongfeng_protobuf.UpdateIngredientResponse) error
 	GetMenu(context.Context, *dongfeng_protobuf.GetMenuRequest, *dongfeng_protobuf.GetMenuResponse) error
+	GetProcurement(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
 }
 
 func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.HandlerOption) {
@@ -225,6 +237,7 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, out *dongfeng_protobuf.GetIngredientResponse) error
 		UpdateIngredient(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error
 		GetMenu(ctx context.Context, in *dongfeng_protobuf.GetMenuRequest, out *dongfeng_protobuf.GetMenuResponse) error
+		GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
 	}
 	type Api struct {
 		api
@@ -283,4 +296,8 @@ func (h *apiHandler) UpdateIngredient(ctx context.Context, in *dongfeng_protobuf
 
 func (h *apiHandler) GetMenu(ctx context.Context, in *dongfeng_protobuf.GetMenuRequest, out *dongfeng_protobuf.GetMenuResponse) error {
 	return h.ApiHandler.GetMenu(ctx, in, out)
+}
+
+func (h *apiHandler) GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error {
+	return h.ApiHandler.GetProcurement(ctx, in, out)
 }

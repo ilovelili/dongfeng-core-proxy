@@ -17,4 +17,5 @@ service api {
     rpc GetIngredient(dongfeng.protobuf.GetIngredientRequest) returns(dongfeng.protobuf.GetIngredientResponse) {};
     rpc UpdateIngredient(dongfeng.protobuf.UpdateIngredientRequest) returns(dongfeng.protobuf.UpdateIngredientResponse) {};
     rpc GetMenu(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};
+    rpc GetProcurement(dongfeng.protobuf.GetProcurementRequest) returns(dongfeng.protobuf.GetProcurementResponse) {};
 }
