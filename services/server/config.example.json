@@ -1,6 +1,6 @@
 {
     "auth": {
-        "jwks": "https://min.auth0.com/.well-known/jwks.json"
+        "jwks": "https://mju.auth0.com/.well-known/jwks.json"
     },
     "services": {  
         "redis": {            
