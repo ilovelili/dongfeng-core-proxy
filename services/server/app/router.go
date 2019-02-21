@@ -68,6 +68,12 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			POST("/notifications").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateNotifications))
+
+	webservice.Route(
+		webservice.
 			GET("/attendance").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetAttendance))
