@@ -2,8 +2,10 @@ package app
 
 import (
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils" // k8s registry plugin
+	"github.com/micro/go-plugins/micro/cors"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 	web "github.com/micro/go-web"
+	"github.com/micro/micro/plugin"
 )
 
 // App app. They call me God Object so I guess I am cool
@@ -26,6 +28,8 @@ func (app *App) Bootstarp() error {
 
 // init init the app
 func (app *App) init() (application *App, err error) {
+	plugin.Register(cors.NewPlugin())
+
 	if application, err = app.initializeRouter(); err != nil {
 		return app, err
 	}
