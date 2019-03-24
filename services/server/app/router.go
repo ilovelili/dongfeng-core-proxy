@@ -143,19 +143,6 @@ func (r *Router) Route() http.Handler {
 
 	container.Add(webservice)
 
-	// Add container filter to enable CORS
-	cors := restful.CrossOriginResourceSharing{
-		AllowedDomains: []string{"*"},
-		AllowedHeaders: []string{"Origin, Authorization, X-Requested-With, Content-Type, Accept"},
-		AllowedMethods: []string{"GET", "PUT", "POST", "OPTIONS"},
-		CookiesAllowed: false,
-		Container:      container,
-	}
-	container.Filter(cors.Filter)
-
-	// Add container filter to respond to OPTIONS
-	// container.Filter(container.OPTIONSFilter)
-
 	// Add container filter to respond to OPTIONS
 	container.Filter(container.OPTIONSFilter)
 	return container
