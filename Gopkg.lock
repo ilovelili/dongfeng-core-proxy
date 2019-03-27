@@ -51,6 +51,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/gocarina/gocsv"
+  packages = ["."]
+  revision = "c075544dca88eab28b482c6bcdb41725fd260916"
+
+[[projects]]
+  branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "c823c79ea1570fb5ff454033735a8e68575d1d0f"
@@ -171,7 +177,7 @@
 
 [[projects]]
   name = "github.com/micro/go-plugins"
-  packages = ["micro/cors","registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
+  packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
   revision = "d3d26cc3683734d0329b4c65760041807ea80eb2"
   version = "v0.16.2"
 
@@ -198,12 +204,6 @@
   packages = ["."]
   revision = "3a29b6675e7404722eed4d4dde532c2e103007a7"
   version = "v0.1.0"
-
-[[projects]]
-  name = "github.com/micro/micro"
-  packages = ["plugin"]
-  revision = "fbae5434e682bd2d8fca84d5e2cca19af7c2b85e"
-  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/micro/util"
@@ -272,12 +272,6 @@
   version = "v0.8.1"
 
 [[projects]]
-  name = "github.com/rs/cors"
-  packages = ["."]
-  revision = "9a47f48565a795472d43519dd49aac781f3034fb"
-  version = "v1.6.0"
-
-[[projects]]
   name = "github.com/segmentio/ksuid"
   packages = ["."]
   revision = "ffd9a8aaaf8f40792e055371eba06542348e991e"
@@ -322,6 +316,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "af3c0ca4d007fc08fa2ff4b63ff2ea84314f3e849f3243301eb03e79dc392208"
+  inputs-digest = "e4f56c761925090448d5396844e19f0e92016715bb0b2f0f512ef43b62fef848"
   solver-name = "gps-cdcl"
   solver-version = 1

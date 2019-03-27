@@ -49,6 +49,7 @@ type ApiService interface {
 	UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateAttendanceResponse, error)
 	UpdateNotification(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNotificationsResponse, error)
 	GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetNamelistResponse, error)
+	UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNamelistResponse, error)
 	UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error)
 	GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error)
 	UpdateRecipe(ctx context.Context, in *dongfeng_protobuf.UpdateRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateRecipeResponse, error)
@@ -146,6 +147,16 @@ func (c *apiService) GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetN
 	return out, nil
 }
 
+func (c *apiService) UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNamelistResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdateNamelist", in)
+	out := new(dongfeng_protobuf.UpdateNamelistResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *apiService) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error) {
 	req := c.c.NewRequest(c.name, "Api.UpdatePhysique", in)
 	out := new(dongfeng_protobuf.UpdatePhysiqueResponse)
@@ -226,6 +237,7 @@ type ApiHandler interface {
 	UpdateAttendance(context.Context, *dongfeng_protobuf.UpdateAttendanceRequest, *dongfeng_protobuf.UpdateAttendanceResponse) error
 	UpdateNotification(context.Context, *dongfeng_protobuf.UpdateNotificationsRequest, *dongfeng_protobuf.UpdateNotificationsResponse) error
 	GetNamelist(context.Context, *dongfeng_protobuf.GetNamelistRequest, *dongfeng_protobuf.GetNamelistResponse) error
+	UpdateNamelist(context.Context, *dongfeng_protobuf.UpdateNamelistRequest, *dongfeng_protobuf.UpdateNamelistResponse) error
 	UpdatePhysique(context.Context, *dongfeng_protobuf.UpdatePhysiqueRequest, *dongfeng_protobuf.UpdatePhysiqueResponse) error
 	GetRecipe(context.Context, *dongfeng_protobuf.GetRecipeRequest, *dongfeng_protobuf.GetRecipeResponse) error
 	UpdateRecipe(context.Context, *dongfeng_protobuf.UpdateRecipeRequest, *dongfeng_protobuf.UpdateRecipeResponse) error
@@ -244,6 +256,7 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, out *dongfeng_protobuf.UpdateAttendanceResponse) error
 		UpdateNotification(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error
 		GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, out *dongfeng_protobuf.GetNamelistResponse) error
+		UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, out *dongfeng_protobuf.UpdateNamelistResponse) error
 		UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error
 		GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error
 		UpdateRecipe(ctx context.Context, in *dongfeng_protobuf.UpdateRecipeRequest, out *dongfeng_protobuf.UpdateRecipeResponse) error
@@ -289,6 +302,10 @@ func (h *apiHandler) UpdateNotification(ctx context.Context, in *dongfeng_protob
 
 func (h *apiHandler) GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, out *dongfeng_protobuf.GetNamelistResponse) error {
 	return h.ApiHandler.GetNamelist(ctx, in, out)
+}
+
+func (h *apiHandler) UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, out *dongfeng_protobuf.UpdateNamelistResponse) error {
+	return h.ApiHandler.UpdateNamelist(ctx, in, out)
 }
 
 func (h *apiHandler) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error {

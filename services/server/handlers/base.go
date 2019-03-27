@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"context"
+	"encoding/csv"
+	"io"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-redis/redis"
+	"github.com/gocarina/gocsv"
 	api "github.com/ilovelili/dongfeng-core-proxy/services/proto"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
@@ -70,4 +73,14 @@ func ctx(req *restful.Request) context.Context {
 func writeError(rsp *restful.Response, errorcode *errorcode.Error, detail ...string) {
 	e := utils.NewError(errorcode, detail...)
 	rsp.WriteError(int(errorcode.Code), e)
+}
+
+func init() {
+	gocsv.SetCSVReader(func(in io.Reader) gocsv.CSVReader {
+		// If GBK encoding needed
+		// r := csv.NewReader(transform.NewReader(in, simplifiedchinese.GBK.NewEncoder()))
+		r := csv.NewReader(in)
+		r.LazyQuotes = true
+		return r // Allows use dot as delimiter and use quotes in CSV
+	})
 }

@@ -93,6 +93,13 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			POST("/namelist").
+			Consumes("multipart/form-data").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateNamelist))
+
+	webservice.Route(
+		webservice.
 			POST("/physique").
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
