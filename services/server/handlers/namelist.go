@@ -51,13 +51,17 @@ func UpdateNamelist(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	namelistmap := make(map[string] /*year_class*/ []string /*namelist*/)
+	namelistmap := make(map[string] /*year_class*/ []*proto.NameItem /*namelist*/)
 	for _, name := range names {
 		key := name.Year + "_" + name.Class
 		if v, ok := namelistmap[key]; ok {
-			namelistmap[key] = append(v, name.Name)
+			namelistmap[key] = append(v, &proto.NameItem{
+				Name: name.Name,
+			})
 		} else {
-			namelistmap[key] = []string{name.Name}
+			namelistmap[key] = []*proto.NameItem{&proto.NameItem{
+				Name: name.Name,
+			}}
 		}
 	}
 
