@@ -12,7 +12,7 @@ import (
 
 // NamelistRequestItem namelist request
 type NamelistRequestItem struct {
-	Year  string `csv:"年度"`
+	Year  string `csv:"学年"`
 	Class string `csv:"班级"`
 	Name  string `csv:"姓名"`
 }

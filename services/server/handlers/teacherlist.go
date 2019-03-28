@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"strings"
-
 	restful "github.com/emicklei/go-restful"
 	"github.com/gocarina/gocsv"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -12,10 +10,10 @@ import (
 
 // TeacherlistRequestItem teacherlist request
 type TeacherlistRequestItem struct {
-	Year  string `csv:"年度"`
+	Year  string `csv:"学年"`
 	Name  string `csv:"姓名"`
 	Class string `csv:"指导班级"`
-	Email string `csv:"邮件"`
+	Email string `csv:"邮箱"`
 	Role  string `csv:"权限"`
 }
 
@@ -59,14 +57,14 @@ func UpdateTeacherlist(req *restful.Request, rsp *restful.Response) {
 		if v, ok := teacherlistmap[key]; ok {
 			teacherlistmap[key] = append(v, &proto.TeacherItem{
 				Name:  teacher.Name,
-				Class: resolveClass(teacher.Class),
+				Class: teacher.Class,
 				Email: teacher.Email,
 				Role:  resolveRole(teacher.Role),
 			})
 		} else {
 			teacherlistmap[key] = []*proto.TeacherItem{&proto.TeacherItem{
 				Name:  teacher.Name,
-				Class: resolveClass(teacher.Class),
+				Class: teacher.Class,
 				Email: teacher.Email,
 				Role:  resolveRole(teacher.Role),
 			}}
@@ -95,12 +93,8 @@ func UpdateTeacherlist(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-func resolveClass(rawclass string) []string {
-	return strings.Split(rawclass, "|")
-}
-
 func resolveRole(rawrole string) string {
-	if rawrole == "管理者" {
+	if rawrole == "管理员" {
 		return "admin"
 	}
 	return "teacher"
