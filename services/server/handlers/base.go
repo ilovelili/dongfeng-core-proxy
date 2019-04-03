@@ -42,11 +42,6 @@ func newcoreclient() api.ApiService {
 	return api.NewApiService(config.ServiceNames.CoreServer, cli) // rpc client
 }
 
-func newattendanceclient() api.ApiService {
-	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
-	return api.NewApiService(config.ServiceNames.AttendanceServer, cli)
-}
-
 func newphysiqueclient() api.ApiService {
 	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))
 	return api.NewApiService(config.ServiceNames.PhysiqueServer, cli)

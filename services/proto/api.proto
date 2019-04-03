@@ -11,6 +11,8 @@ service api {
     rpc GetAttendance(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};    
     rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
     rpc UpdateNotification(dongfeng.protobuf.UpdateNotificationsRequest) returns(dongfeng.protobuf.UpdateNotificationsResponse) {};
+    rpc GetClasslist(dongfeng.protobuf.GetClasslistRequest) returns(dongfeng.protobuf.GetClasslistResponse) {};
+    rpc UpdateClasslist(dongfeng.protobuf.UpdateClasslistRequest) returns(dongfeng.protobuf.UpdateClasslistResponse) {};
     rpc GetNamelist(dongfeng.protobuf.GetNamelistRequest) returns(dongfeng.protobuf.GetNamelistResponse) {};
     rpc UpdateNamelist(dongfeng.protobuf.UpdateNamelistRequest) returns(dongfeng.protobuf.UpdateNamelistResponse) {};
     rpc GetTeacherlist(dongfeng.protobuf.GetTeacherlistRequest) returns(dongfeng.protobuf.GetTeacherlistResponse) {};

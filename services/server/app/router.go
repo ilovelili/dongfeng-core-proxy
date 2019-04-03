@@ -74,16 +74,16 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/attendance").
+			GET("/classlist").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetAttendance))
+			To(handlers.GetClasslist))
 
 	webservice.Route(
 		webservice.
-			POST("/attendance").
+			POST("/classlist").
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UploadAttendance))
+			To(handlers.UpdateClasslist))
 
 	webservice.Route(
 		webservice.

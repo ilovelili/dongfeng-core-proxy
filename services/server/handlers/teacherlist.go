@@ -40,14 +40,14 @@ func GetTeacherlist(req *restful.Request, rsp *restful.Response) {
 func UpdateTeacherlist(req *restful.Request, rsp *restful.Response) {
 	file, _, err := req.Request.FormFile("file")
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidTeacherNameFile)
+		writeError(rsp, errorcode.CoreProxyInvalidTeacherListFile)
 		return
 	}
 	defer file.Close()
 
 	teachers := []*TeacherlistRequestItem{}
 	if err := gocsv.Unmarshal(file, &teachers); err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidTeacherNameFile)
+		writeError(rsp, errorcode.CoreProxyInvalidTeacherListFile)
 		return
 	}
 

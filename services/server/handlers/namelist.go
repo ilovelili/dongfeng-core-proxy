@@ -40,14 +40,14 @@ func GetNamelist(req *restful.Request, rsp *restful.Response) {
 func UpdateNamelist(req *restful.Request, rsp *restful.Response) {
 	file, _, err := req.Request.FormFile("file")
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidClassNameFile)
+		writeError(rsp, errorcode.CoreProxyInvalidClassNamelistFile)
 		return
 	}
 	defer file.Close()
 
 	names := []*NamelistRequestItem{}
 	if err := gocsv.Unmarshal(file, &names); err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidClassNameFile)
+		writeError(rsp, errorcode.CoreProxyInvalidClassNamelistFile)
 		return
 	}
 
@@ -69,7 +69,7 @@ func UpdateNamelist(req *restful.Request, rsp *restful.Response) {
 	for k, v := range namelistmap {
 		segment := strings.Split(k, "_")
 		if len(segment) != 2 {
-			writeError(rsp, errorcode.CoreProxyInvalidClassNameFile)
+			writeError(rsp, errorcode.CoreProxyInvalidClassNamelistFile)
 			return
 		}
 
