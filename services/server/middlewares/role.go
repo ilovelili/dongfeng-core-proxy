@@ -65,7 +65,7 @@ func (r *Role) roleAuthenticate(req *restful.Request, rsp *restful.Response, cha
 }
 
 func (r *Role) resolveRole() []string {
-	result := make([]string, 0)
+	result := []string{}
 	for _, role := range *r {
 		result = append(result, role)
 	}

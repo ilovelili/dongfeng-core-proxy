@@ -8,15 +8,15 @@ import (
 	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// ClasslistRequestItem classlist request
-type ClasslistRequestItem struct {
+// ClassRequestItem class request
+type ClassRequestItem struct {
 	Name string `csv:"班级"`
 }
 
-// GetClasslist get class list
-func GetClasslist(req *restful.Request, rsp *restful.Response) {
+// GetClasses get class list
+func GetClasses(req *restful.Request, rsp *restful.Response) {
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().GetClasslist(ctx(req), &proto.GetClasslistRequest{
+	response, err := newcoreclient().GetClasses(ctx(req), &proto.GetClassRequest{
 		Token: idtoken,
 	})
 
@@ -28,32 +28,32 @@ func GetClasslist(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-// UpdateClasslist update class list
-func UpdateClasslist(req *restful.Request, rsp *restful.Response) {
+// UpdateClasses update classes
+func UpdateClasses(req *restful.Request, rsp *restful.Response) {
 	file, _, err := req.Request.FormFile("file")
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidClassListFile)
+		writeError(rsp, errorcode.CoreProxyInvalidClassUploadFile)
 		return
 	}
 	defer file.Close()
 
-	classes := []*ClasslistRequestItem{}
+	classes := []*ClassRequestItem{}
 	if err := gocsv.Unmarshal(file, &classes); err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidClassListFile)
+		writeError(rsp, errorcode.CoreProxyInvalidClassUploadFile)
 		return
 	}
 
-	classlistitems := make([]*proto.ClassItem, 0)
+	_classes := []*proto.Class{}
 	for _, class := range classes {
-		classlistitems = append(classlistitems, &proto.ClassItem{
+		_classes = append(_classes, &proto.Class{
 			Name: class.Name,
 		})
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdateClasslist(ctx(req), &proto.UpdateClasslistRequest{
-		Token: idtoken,
-		Items: classlistitems,
+	response, err := newcoreclient().UpdateClasses(ctx(req), &proto.UpdateClassRequest{
+		Token:   idtoken,
+		Classes: _classes,
 	})
 
 	if err != nil {

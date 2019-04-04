@@ -48,12 +48,12 @@ type ApiService interface {
 	GetAttendance(ctx context.Context, in *dongfeng_protobuf.GetAttendanceRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetAttendanceResponse, error)
 	UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateAttendanceResponse, error)
 	UpdateNotification(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNotificationsResponse, error)
-	GetClasslist(ctx context.Context, in *dongfeng_protobuf.GetClasslistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetClasslistResponse, error)
-	UpdateClasslist(ctx context.Context, in *dongfeng_protobuf.UpdateClasslistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateClasslistResponse, error)
-	GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetNamelistResponse, error)
-	UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNamelistResponse, error)
-	GetTeacherlist(ctx context.Context, in *dongfeng_protobuf.GetTeacherlistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetTeacherlistResponse, error)
-	UpdateTeacherlist(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherlistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherlistResponse, error)
+	GetClasses(ctx context.Context, in *dongfeng_protobuf.GetClassRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetClassResponse, error)
+	UpdateClasses(ctx context.Context, in *dongfeng_protobuf.UpdateClassRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateClassResponse, error)
+	GetPupils(ctx context.Context, in *dongfeng_protobuf.GetPupilRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPupilResponse, error)
+	UpdatePupils(ctx context.Context, in *dongfeng_protobuf.UpdatePupilRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePupilResponse, error)
+	GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetTeacherResponse, error)
+	UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherResponse, error)
 	UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error)
 	GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error)
 	UpdateRecipe(ctx context.Context, in *dongfeng_protobuf.UpdateRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateRecipeResponse, error)
@@ -141,9 +141,9 @@ func (c *apiService) UpdateNotification(ctx context.Context, in *dongfeng_protob
 	return out, nil
 }
 
-func (c *apiService) GetClasslist(ctx context.Context, in *dongfeng_protobuf.GetClasslistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetClasslistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetClasslist", in)
-	out := new(dongfeng_protobuf.GetClasslistResponse)
+func (c *apiService) GetClasses(ctx context.Context, in *dongfeng_protobuf.GetClassRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetClassResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetClasses", in)
+	out := new(dongfeng_protobuf.GetClassResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -151,9 +151,9 @@ func (c *apiService) GetClasslist(ctx context.Context, in *dongfeng_protobuf.Get
 	return out, nil
 }
 
-func (c *apiService) UpdateClasslist(ctx context.Context, in *dongfeng_protobuf.UpdateClasslistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateClasslistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.UpdateClasslist", in)
-	out := new(dongfeng_protobuf.UpdateClasslistResponse)
+func (c *apiService) UpdateClasses(ctx context.Context, in *dongfeng_protobuf.UpdateClassRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateClassResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdateClasses", in)
+	out := new(dongfeng_protobuf.UpdateClassResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -161,9 +161,9 @@ func (c *apiService) UpdateClasslist(ctx context.Context, in *dongfeng_protobuf.
 	return out, nil
 }
 
-func (c *apiService) GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetNamelistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetNamelist", in)
-	out := new(dongfeng_protobuf.GetNamelistResponse)
+func (c *apiService) GetPupils(ctx context.Context, in *dongfeng_protobuf.GetPupilRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPupilResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetPupils", in)
+	out := new(dongfeng_protobuf.GetPupilResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -171,9 +171,9 @@ func (c *apiService) GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetN
 	return out, nil
 }
 
-func (c *apiService) UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNamelistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.UpdateNamelist", in)
-	out := new(dongfeng_protobuf.UpdateNamelistResponse)
+func (c *apiService) UpdatePupils(ctx context.Context, in *dongfeng_protobuf.UpdatePupilRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePupilResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdatePupils", in)
+	out := new(dongfeng_protobuf.UpdatePupilResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -181,9 +181,9 @@ func (c *apiService) UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.U
 	return out, nil
 }
 
-func (c *apiService) GetTeacherlist(ctx context.Context, in *dongfeng_protobuf.GetTeacherlistRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetTeacherlistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetTeacherlist", in)
-	out := new(dongfeng_protobuf.GetTeacherlistResponse)
+func (c *apiService) GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetTeacherResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetTeachers", in)
+	out := new(dongfeng_protobuf.GetTeacherResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -191,9 +191,9 @@ func (c *apiService) GetTeacherlist(ctx context.Context, in *dongfeng_protobuf.G
 	return out, nil
 }
 
-func (c *apiService) UpdateTeacherlist(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherlistRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherlistResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.UpdateTeacherlist", in)
-	out := new(dongfeng_protobuf.UpdateTeacherlistResponse)
+func (c *apiService) UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdateTeachers", in)
+	out := new(dongfeng_protobuf.UpdateTeacherResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -280,12 +280,12 @@ type ApiHandler interface {
 	GetAttendance(context.Context, *dongfeng_protobuf.GetAttendanceRequest, *dongfeng_protobuf.GetAttendanceResponse) error
 	UpdateAttendance(context.Context, *dongfeng_protobuf.UpdateAttendanceRequest, *dongfeng_protobuf.UpdateAttendanceResponse) error
 	UpdateNotification(context.Context, *dongfeng_protobuf.UpdateNotificationsRequest, *dongfeng_protobuf.UpdateNotificationsResponse) error
-	GetClasslist(context.Context, *dongfeng_protobuf.GetClasslistRequest, *dongfeng_protobuf.GetClasslistResponse) error
-	UpdateClasslist(context.Context, *dongfeng_protobuf.UpdateClasslistRequest, *dongfeng_protobuf.UpdateClasslistResponse) error
-	GetNamelist(context.Context, *dongfeng_protobuf.GetNamelistRequest, *dongfeng_protobuf.GetNamelistResponse) error
-	UpdateNamelist(context.Context, *dongfeng_protobuf.UpdateNamelistRequest, *dongfeng_protobuf.UpdateNamelistResponse) error
-	GetTeacherlist(context.Context, *dongfeng_protobuf.GetTeacherlistRequest, *dongfeng_protobuf.GetTeacherlistResponse) error
-	UpdateTeacherlist(context.Context, *dongfeng_protobuf.UpdateTeacherlistRequest, *dongfeng_protobuf.UpdateTeacherlistResponse) error
+	GetClasses(context.Context, *dongfeng_protobuf.GetClassRequest, *dongfeng_protobuf.GetClassResponse) error
+	UpdateClasses(context.Context, *dongfeng_protobuf.UpdateClassRequest, *dongfeng_protobuf.UpdateClassResponse) error
+	GetPupils(context.Context, *dongfeng_protobuf.GetPupilRequest, *dongfeng_protobuf.GetPupilResponse) error
+	UpdatePupils(context.Context, *dongfeng_protobuf.UpdatePupilRequest, *dongfeng_protobuf.UpdatePupilResponse) error
+	GetTeachers(context.Context, *dongfeng_protobuf.GetTeacherRequest, *dongfeng_protobuf.GetTeacherResponse) error
+	UpdateTeachers(context.Context, *dongfeng_protobuf.UpdateTeacherRequest, *dongfeng_protobuf.UpdateTeacherResponse) error
 	UpdatePhysique(context.Context, *dongfeng_protobuf.UpdatePhysiqueRequest, *dongfeng_protobuf.UpdatePhysiqueResponse) error
 	GetRecipe(context.Context, *dongfeng_protobuf.GetRecipeRequest, *dongfeng_protobuf.GetRecipeResponse) error
 	UpdateRecipe(context.Context, *dongfeng_protobuf.UpdateRecipeRequest, *dongfeng_protobuf.UpdateRecipeResponse) error
@@ -303,12 +303,12 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetAttendance(ctx context.Context, in *dongfeng_protobuf.GetAttendanceRequest, out *dongfeng_protobuf.GetAttendanceResponse) error
 		UpdateAttendance(ctx context.Context, in *dongfeng_protobuf.UpdateAttendanceRequest, out *dongfeng_protobuf.UpdateAttendanceResponse) error
 		UpdateNotification(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error
-		GetClasslist(ctx context.Context, in *dongfeng_protobuf.GetClasslistRequest, out *dongfeng_protobuf.GetClasslistResponse) error
-		UpdateClasslist(ctx context.Context, in *dongfeng_protobuf.UpdateClasslistRequest, out *dongfeng_protobuf.UpdateClasslistResponse) error
-		GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, out *dongfeng_protobuf.GetNamelistResponse) error
-		UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, out *dongfeng_protobuf.UpdateNamelistResponse) error
-		GetTeacherlist(ctx context.Context, in *dongfeng_protobuf.GetTeacherlistRequest, out *dongfeng_protobuf.GetTeacherlistResponse) error
-		UpdateTeacherlist(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherlistRequest, out *dongfeng_protobuf.UpdateTeacherlistResponse) error
+		GetClasses(ctx context.Context, in *dongfeng_protobuf.GetClassRequest, out *dongfeng_protobuf.GetClassResponse) error
+		UpdateClasses(ctx context.Context, in *dongfeng_protobuf.UpdateClassRequest, out *dongfeng_protobuf.UpdateClassResponse) error
+		GetPupils(ctx context.Context, in *dongfeng_protobuf.GetPupilRequest, out *dongfeng_protobuf.GetPupilResponse) error
+		UpdatePupils(ctx context.Context, in *dongfeng_protobuf.UpdatePupilRequest, out *dongfeng_protobuf.UpdatePupilResponse) error
+		GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, out *dongfeng_protobuf.GetTeacherResponse) error
+		UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, out *dongfeng_protobuf.UpdateTeacherResponse) error
 		UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error
 		GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error
 		UpdateRecipe(ctx context.Context, in *dongfeng_protobuf.UpdateRecipeRequest, out *dongfeng_protobuf.UpdateRecipeResponse) error
@@ -352,28 +352,28 @@ func (h *apiHandler) UpdateNotification(ctx context.Context, in *dongfeng_protob
 	return h.ApiHandler.UpdateNotification(ctx, in, out)
 }
 
-func (h *apiHandler) GetClasslist(ctx context.Context, in *dongfeng_protobuf.GetClasslistRequest, out *dongfeng_protobuf.GetClasslistResponse) error {
-	return h.ApiHandler.GetClasslist(ctx, in, out)
+func (h *apiHandler) GetClasses(ctx context.Context, in *dongfeng_protobuf.GetClassRequest, out *dongfeng_protobuf.GetClassResponse) error {
+	return h.ApiHandler.GetClasses(ctx, in, out)
 }
 
-func (h *apiHandler) UpdateClasslist(ctx context.Context, in *dongfeng_protobuf.UpdateClasslistRequest, out *dongfeng_protobuf.UpdateClasslistResponse) error {
-	return h.ApiHandler.UpdateClasslist(ctx, in, out)
+func (h *apiHandler) UpdateClasses(ctx context.Context, in *dongfeng_protobuf.UpdateClassRequest, out *dongfeng_protobuf.UpdateClassResponse) error {
+	return h.ApiHandler.UpdateClasses(ctx, in, out)
 }
 
-func (h *apiHandler) GetNamelist(ctx context.Context, in *dongfeng_protobuf.GetNamelistRequest, out *dongfeng_protobuf.GetNamelistResponse) error {
-	return h.ApiHandler.GetNamelist(ctx, in, out)
+func (h *apiHandler) GetPupils(ctx context.Context, in *dongfeng_protobuf.GetPupilRequest, out *dongfeng_protobuf.GetPupilResponse) error {
+	return h.ApiHandler.GetPupils(ctx, in, out)
 }
 
-func (h *apiHandler) UpdateNamelist(ctx context.Context, in *dongfeng_protobuf.UpdateNamelistRequest, out *dongfeng_protobuf.UpdateNamelistResponse) error {
-	return h.ApiHandler.UpdateNamelist(ctx, in, out)
+func (h *apiHandler) UpdatePupils(ctx context.Context, in *dongfeng_protobuf.UpdatePupilRequest, out *dongfeng_protobuf.UpdatePupilResponse) error {
+	return h.ApiHandler.UpdatePupils(ctx, in, out)
 }
 
-func (h *apiHandler) GetTeacherlist(ctx context.Context, in *dongfeng_protobuf.GetTeacherlistRequest, out *dongfeng_protobuf.GetTeacherlistResponse) error {
-	return h.ApiHandler.GetTeacherlist(ctx, in, out)
+func (h *apiHandler) GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, out *dongfeng_protobuf.GetTeacherResponse) error {
+	return h.ApiHandler.GetTeachers(ctx, in, out)
 }
 
-func (h *apiHandler) UpdateTeacherlist(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherlistRequest, out *dongfeng_protobuf.UpdateTeacherlistResponse) error {
-	return h.ApiHandler.UpdateTeacherlist(ctx, in, out)
+func (h *apiHandler) UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, out *dongfeng_protobuf.UpdateTeacherResponse) error {
+	return h.ApiHandler.UpdateTeachers(ctx, in, out)
 }
 
 func (h *apiHandler) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error {

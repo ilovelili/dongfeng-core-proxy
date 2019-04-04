@@ -63,10 +63,10 @@ func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	recipes := make([]*proto.Recipe, 0)
+	recipes := []*proto.Recipe{}
 	for _, r := range updatereq.Recipes {
 		rn := r.RecipeNutrition
-		ingredientunitamounts := make([]*proto.IngredientUnitAmount, 0)
+		ingredientunitamounts := []*proto.IngredientUnitAmount{}
 		for _, ua := range r.Ingredients {
 			ingredientunitamounts = append(ingredientunitamounts, &proto.IngredientUnitAmount{
 				Ingredient: ua.Ingredient,

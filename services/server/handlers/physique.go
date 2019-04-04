@@ -44,10 +44,10 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 	}
 
 	var class string
-	physiques := make([]*proto.Physique, 0)
+	physiques := []*proto.Physique{}
 
 	for _, sheet := range excel.WorkBook.Sheets.Sheet {
-		physiqueitems := make([]*proto.PhysiqueItem, 0)
+		physiqueitems := []*proto.PhysiqueItem{}
 		rows := excel.GetRows(sheet.Name)
 
 		for rindex, row := range rows {

@@ -74,42 +74,42 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/classlist").
+			GET("/classes").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetClasslist))
+			To(handlers.GetClasses))
 
 	webservice.Route(
 		webservice.
-			POST("/classlist").
+			POST("/classes").
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UpdateClasslist))
+			To(handlers.UpdateClasses))
 
 	webservice.Route(
 		webservice.
-			GET("/namelist").
+			GET("/pupils").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetNamelist))
+			To(handlers.GetPupils))
 
 	webservice.Route(
 		webservice.
-			POST("/namelist").
+			POST("/pupils").
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UpdateNamelist))
+			To(handlers.UpdatePupils))
 
 	webservice.Route(
 		webservice.
-			GET("/teacherlist").
+			GET("/teachers").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetTeacherlist))
+			To(handlers.GetTeachers))
 
 	webservice.Route(
 		webservice.
-			POST("/teacherlist").
+			POST("/teachers").
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UpdateTeacherlist))
+			To(handlers.UpdateTeachers))
 
 	webservice.Route(
 		webservice.
