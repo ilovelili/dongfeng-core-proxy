@@ -9,7 +9,7 @@ import (
 	"regexp"
 
 	restful "github.com/emicklei/go-restful"
-	do "github.com/ilovelili/digital-ocean-client"
+	oss "github.com/ilovelili/aliyun-client/oss"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
 	proto "github.com/ilovelili/dongfeng-protobuf"
@@ -53,23 +53,22 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	spaceservice := do.NewSpaceService(config.Services.APIKey, config.Services.APISecret)
-	spaceservice.SetRegion(config.Services.Region)
-	spaceservice.SetEndPoint(config.Services.Endpoint)
-	spaceservice.SetBucket(config.Services.BucketName)
-
-	uploadopts := &do.UploadOptions{
+	aliyunsvc := oss.NewService(config.OSS.APIKey, config.OSS.APISecret)
+	aliyunsvc.SetEndPoint(config.OSS.Endpoint)
+	aliyunsvc.SetBucket(config.OSS.BucketName)
+	opts := &oss.UploadOptions{
 		Public:   true,
 		FileName: localfilename,
 	}
-	uploadresp := spaceservice.Upload(uploadopts)
-	if uploadresp.Error != nil {
+
+	resp := aliyunsvc.Upload(opts)
+	if resp.Error != nil {
 		writeError(rsp, errorcode.CoreProxyFailedToUploadAvatar)
 		return
 	}
 
 	rsp.WriteAsJson(&proto.UploadAvatarResponse{
-		Uri: uploadresp.Location,
+		Uri: resp.Location,
 	})
 }
 

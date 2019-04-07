@@ -7,15 +7,14 @@
             "host": "redis:6379",
             "maxconnectioncount": 10
         },
-        "digitalocean": {
-            "spaces": {
-                "api_key": "xxx",
-                "api_secret": "yyy",
-                "region": "sgp1",
-                "endpoint": "sgp1.digitaloceanspaces.com",
-                "bucket_name": "dongfeng"
+        "aliyun": {
+            "oss": {
+                "api_key": "<<api key>>",
+                "api_secret": "<<api secret>>",
+                "endpoint": "oss-cn-shanghai.aliyuncs.com",
+                "bucket_name": "dong-feng"
             }            
-        }    
+        }
     },
     "servicenames": {
         "core_proxy": "dongfeng.svc.core.proxy.api",

@@ -8,6 +8,12 @@
   version = "v1.4.1"
 
 [[projects]]
+  name = "github.com/aliyun/aliyun-oss-go-sdk"
+  packages = ["oss"]
+  revision = "86c17b95fcd5db33628a61e492fb4a1a937d5906"
+  version = "1.9.5"
+
+[[projects]]
   branch = "master"
   name = "github.com/armon/go-metrics"
   packages = ["."]
@@ -24,12 +30,6 @@
   packages = ["."]
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
   version = "v3.2.0"
-
-[[projects]]
-  name = "github.com/dustin/go-humanize"
-  packages = ["."]
-  revision = "9f541cc9db5d55bce703bd99987c9d5cb8eea45e"
-  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/emicklei/go-restful"
@@ -105,9 +105,9 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/ilovelili/digital-ocean-client"
-  packages = ["."]
-  revision = "bd991f89b0746f5cbc055ec4b1930d323c87490c"
+  name = "github.com/ilovelili/aliyun-client"
+  packages = ["oss"]
+  revision = "e71f697c8303201d32f6754400a30cbacd1399aa"
 
 [[projects]]
   branch = "master"
@@ -149,7 +149,7 @@
   branch = "master"
   name = "github.com/lestrrat-go/jwx"
   packages = ["internal/base64","internal/option","jwa","jwk"]
-  revision = "e346d0eba260079c4fb03c5ccd0e62d92347ee03"
+  revision = "23dc777739fcbbb2cc772bb341d283ff2d6ac96d"
 
 [[projects]]
   branch = "master"
@@ -218,12 +218,6 @@
   version = "v1.1.8"
 
 [[projects]]
-  name = "github.com/minio/minio-go"
-  packages = [".","pkg/credentials","pkg/encrypt","pkg/s3signer","pkg/s3utils","pkg/set"]
-  revision = "a937bac96010803c5460f117490b21f96151c796"
-  version = "v6.0.21"
-
-[[projects]]
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
   revision = "af06845cf3004701891bf4fdb884bfe4920b3727"
@@ -286,20 +280,20 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["argon2","blake2b","ed25519","ed25519/internal/edwards25519"]
-  revision = "8e1b8d32e692162a446e97250c5d34f5a52efed6"
+  packages = ["ed25519","ed25519/internal/edwards25519"]
+  revision = "38d8ce5564a5b71b2e3a00553993f1b9a7ae852f"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = ["bpf","context","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6","publicsuffix"]
-  revision = "b630fd6fe46bcfc98f989005d8b8ec1400e60a6e"
+  packages = ["bpf","http/httpguts","http2","http2/hpack","idna","internal/iana","internal/socket","ipv4","ipv6"]
+  revision = "eb5bcb51f2a31c7d5141d810b70815c05d9c9146"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = ["cpu","unix"]
-  revision = "81d4e9dc473e5e8c933f2aaeba2a3d81efb9aed2"
+  packages = ["unix"]
+  revision = "4b34438f7a67ee5f45cc6132e2bad873a20324e9"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -308,14 +302,14 @@
   version = "v0.3.0"
 
 [[projects]]
-  name = "gopkg.in/ini.v1"
-  packages = ["."]
-  revision = "c85607071cf08ca1adaf48319cd1aa322e81d8c1"
-  version = "v1.42.0"
+  branch = "master"
+  name = "golang.org/x/time"
+  packages = ["rate"]
+  revision = "9d24e82272b4f38b78bc8cff74fa936d31ccd8ef"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e4f56c761925090448d5396844e19f0e92016715bb0b2f0f512ef43b62fef848"
+  inputs-digest = "10db82716519e96ce7834124026a8a923a41f65874f9fb545bfee1e0bce29e49"
   solver-name = "gps-cdcl"
   solver-version = 1
