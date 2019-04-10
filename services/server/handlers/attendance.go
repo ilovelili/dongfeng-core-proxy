@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
@@ -55,16 +56,33 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_attendances := []*proto.Attendance{}
+	attendancemap := make(map[string] /*year_class_date*/ []string)
 	for _, attendance := range attendances {
 		if resolveAttendance(attendance.Attendance) {
-			_attendances = append(_attendances, &proto.Attendance{
-				Year:  attendance.Year,
-				Date:  attendance.Date,
-				Class: attendance.Class,
-				Name:  attendance.Name,
-			})
+			key := fmt.Sprintf("%s_%s_%s", attendance.Year, attendance.Class, attendance.Date)
+			if v, ok := attendancemap[key]; ok {
+				attendancemap[key] = append(v, attendance.Name)
+			} else {
+				attendancemap[key] = []string{attendance.Name}
+			}
 		}
+	}
+
+	_attendances := []*proto.Attendance{}
+	for k, v := range attendancemap {
+		segments := strings.Split(k, "_")
+		if len(segments) != 3 {
+			writeError(rsp, errorcode.CoreProxyInvalidAttendanceUploadFile)
+		}
+
+		year, class, date := segments[0], segments[1], segments[2]
+		_attendances = append(_attendances, &proto.Attendance{
+			Year:  year,
+			Date:  date,
+			Class: class,
+			Names: v,
+		})
+
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
