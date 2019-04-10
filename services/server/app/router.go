@@ -34,7 +34,6 @@ func (r *Router) Route() http.Handler {
 			GET("/").
 			To(handlers.HealthCheck))
 
-	// todo: add admin role middleware
 	webservice.Route(
 		webservice.
 			GET("/dashboard").
@@ -110,6 +109,19 @@ func (r *Router) Route() http.Handler {
 			Consumes("multipart/form-data").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateTeachers))
+
+	webservice.Route(
+		webservice.
+			GET("/attendances").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetAttendances))
+
+	webservice.Route(
+		webservice.
+			POST("/attendances").
+			Consumes("multipart/form-data").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateAttendances))
 
 	webservice.Route(
 		webservice.
