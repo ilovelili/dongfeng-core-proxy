@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
@@ -75,7 +76,13 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 			writeError(rsp, errorcode.CoreProxyInvalidAttendanceUploadFile)
 		}
 
-		year, class, date := segments[0], segments[1], segments[2]
+		year, class, rawdate := segments[0], segments[1], segments[2]
+		date, ok := resolveDate(rawdate)
+		if !ok {
+			// date format wrong
+			writeError(rsp, errorcode.CoreProxyInvalidAttendanceUploadFile)
+		}
+
 		_attendances = append(_attendances, &proto.Attendance{
 			Year:  year,
 			Date:  date,
@@ -100,4 +107,13 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 
 func resolveAttendance(attendance string) bool {
 	return strings.ToLower(attendance) != "x"
+}
+
+func resolveDate(date string) (match string, ok bool) {
+	re := regexp.MustCompile(`\d{4}[-,/]\d{2}[-,/]\d{2}`)
+	if ok = re.MatchString(date); !ok {
+		return
+	}
+	match = strings.Replace(re.FindString(date), "/", "-", -1)
+	return
 }
