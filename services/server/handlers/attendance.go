@@ -22,11 +22,11 @@ type AttendanceRequestItem struct {
 
 // GetAttendances get pupils
 func GetAttendances(req *restful.Request, rsp *restful.Response) {
-	class, from, to, name := req.QueryParameter("class"), req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("name")
-
+	year, class, from, to, name := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("name")
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newcoreclient().GetAttendances(ctx(req), &proto.GetAttendanceRequest{
 		Token: idtoken,
+		Year:  year,
 		From:  from,
 		To:    to,
 		Class: class,
@@ -82,7 +82,6 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 			Class: class,
 			Names: v,
 		})
-
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
