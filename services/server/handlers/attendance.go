@@ -81,10 +81,10 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 		}
 
 		_attendances = append(_attendances, &proto.Attendance{
-			Year:  year,
-			Date:  date,
-			Class: class,
-			Names: v,
+			Year:     year,
+			Date:     date,
+			Class:    class,
+			Absences: v,
 		})
 	}
 
