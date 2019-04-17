@@ -14,11 +14,10 @@ import (
 
 // AttendanceRequestItem attendance request
 type AttendanceRequestItem struct {
-	Year       string `csv:"学年"`
-	Class      string `csv:"班级"`
-	Date       string `csv:"日期"`
-	Name       string `csv:"姓名"`
-	Attendance string `csv:"出勤"`
+	Year  string `csv:"学年"`
+	Class string `csv:"班级"`
+	Date  string `csv:"日期"`
+	Name  string `csv:"姓名"`
 }
 
 // GetAttendances get pupils
@@ -51,26 +50,24 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 	}
 	defer file.Close()
 
-	attendances := []*AttendanceRequestItem{}
-	if err := gocsv.Unmarshal(file, &attendances); err != nil {
+	absences := []*AttendanceRequestItem{}
+	if err := gocsv.Unmarshal(file, &absences); err != nil {
 		writeError(rsp, errorcode.CoreProxyInvalidAttendanceUploadFile)
 		return
 	}
 
-	attendancemap := make(map[string] /*year_class_date*/ []string)
-	for _, attendance := range attendances {
-		if resolveAttendance(attendance.Attendance) {
-			key := fmt.Sprintf("%s_%s_%s", attendance.Year, attendance.Class, attendance.Date)
-			if v, ok := attendancemap[key]; ok {
-				attendancemap[key] = append(v, attendance.Name)
-			} else {
-				attendancemap[key] = []string{attendance.Name}
-			}
+	absencemap := make(map[string] /*year_class_date*/ []string)
+	for _, absence := range absences {
+		key := fmt.Sprintf("%s_%s_%s", absence.Year, absence.Class, absence.Date)
+		if v, ok := absencemap[key]; ok {
+			absencemap[key] = append(v, absence.Name)
+		} else {
+			absencemap[key] = []string{absence.Name}
 		}
 	}
 
 	_attendances := []*proto.Attendance{}
-	for k, v := range attendancemap {
+	for k, v := range absencemap {
 		segments := strings.Split(k, "_")
 		if len(segments) != 3 {
 			writeError(rsp, errorcode.CoreProxyInvalidAttendanceUploadFile)
@@ -103,10 +100,6 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(response)
-}
-
-func resolveAttendance(attendance string) bool {
-	return strings.ToLower(attendance) != "x"
 }
 
 func resolveDate(date string) (match string, ok bool) {
