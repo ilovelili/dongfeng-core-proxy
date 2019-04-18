@@ -6,22 +6,37 @@ import "github.com/ilovelili/dongfeng-protobuf/dongfeng.proto";
 // api
 service api {
     rpc Login(dongfeng.protobuf.LoginRequest) returns(dongfeng.protobuf.LoginResponse) {};
+
     rpc Dashboard(dongfeng.protobuf.DashboardRequest) returns(dongfeng.protobuf.DashboardResponse) {};
+
     rpc UpdateUser(dongfeng.protobuf.UpdateUserRequest) returns(dongfeng.protobuf.UpdateUserResponse) {};
+
     rpc GetAttendances(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};    
+    rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
     rpc UpdateAttendances(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
-    rpc UpdateNotification(dongfeng.protobuf.UpdateNotificationsRequest) returns(dongfeng.protobuf.UpdateNotificationsResponse) {};
+
     rpc GetClasses(dongfeng.protobuf.GetClassRequest) returns(dongfeng.protobuf.GetClassResponse) {};
+    rpc UpdateClass(dongfeng.protobuf.UpdateClassRequest) returns(dongfeng.protobuf.UpdateClassResponse) {};
     rpc UpdateClasses(dongfeng.protobuf.UpdateClassRequest) returns(dongfeng.protobuf.UpdateClassResponse) {};
+
     rpc GetPupils(dongfeng.protobuf.GetPupilRequest) returns(dongfeng.protobuf.GetPupilResponse) {};
+    rpc UpdatePupil(dongfeng.protobuf.UpdatePupilRequest) returns(dongfeng.protobuf.UpdatePupilResponse) {};
     rpc UpdatePupils(dongfeng.protobuf.UpdatePupilRequest) returns(dongfeng.protobuf.UpdatePupilResponse) {};
+
     rpc GetTeachers(dongfeng.protobuf.GetTeacherRequest) returns(dongfeng.protobuf.GetTeacherResponse) {};
+    rpc UpdateTeacher(dongfeng.protobuf.UpdateTeacherRequest) returns(dongfeng.protobuf.UpdateTeacherResponse) {};
     rpc UpdateTeachers(dongfeng.protobuf.UpdateTeacherRequest) returns(dongfeng.protobuf.UpdateTeacherResponse) {};
+
     rpc UpdatePhysique(dongfeng.protobuf.UpdatePhysiqueRequest) returns(dongfeng.protobuf.UpdatePhysiqueResponse) {};
+
     rpc GetRecipe(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};
     rpc UpdateRecipe(dongfeng.protobuf.UpdateRecipeRequest) returns(dongfeng.protobuf.UpdateRecipeResponse) {};
+
     rpc GetIngredient(dongfeng.protobuf.GetIngredientRequest) returns(dongfeng.protobuf.GetIngredientResponse) {};
     rpc UpdateIngredient(dongfeng.protobuf.UpdateIngredientRequest) returns(dongfeng.protobuf.UpdateIngredientResponse) {};
+    
     rpc GetMenu(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};
     rpc GetProcurement(dongfeng.protobuf.GetProcurementRequest) returns(dongfeng.protobuf.GetProcurementResponse) {};
+
+    rpc UpdateNotification(dongfeng.protobuf.UpdateNotificationsRequest) returns(dongfeng.protobuf.UpdateNotificationsResponse) {};
 }

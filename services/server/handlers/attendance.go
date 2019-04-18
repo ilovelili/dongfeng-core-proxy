@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"strings"
@@ -14,10 +15,11 @@ import (
 
 // AttendanceRequestItem attendance request
 type AttendanceRequestItem struct {
-	Year  string `csv:"学年"`
-	Class string `csv:"班级"`
-	Date  string `csv:"日期"`
-	Name  string `csv:"姓名"`
+	Year       string `csv:"学年",json:"year"`
+	Class      string `csv:"班级",json:"class"`
+	Date       string `csv:"日期",json:"date"`
+	Name       string `csv:"姓名",json:"name"`
+	Attendance bool   `csv:"-",json:"attendance"`
 }
 
 // GetAttendances get pupils
@@ -31,6 +33,44 @@ func GetAttendances(req *restful.Request, rsp *restful.Response) {
 		To:    to,
 		Class: class,
 		Name:  name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// UpdateAttendance update single attendance
+func UpdateAttendance(req *restful.Request, rsp *restful.Response) {
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *AttendanceRequestItem
+	err := decoder.Decode(&updatereq)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidAttendanceUpdateRequestBody)
+		return
+	}
+
+	attendance := &proto.Attendance{
+		Year:        updatereq.Year,
+		Date:        updatereq.Date,
+		Class:       updatereq.Class,
+		Attendances: []string{},
+		Absences:    []string{},
+	}
+
+	if updatereq.Attendance {
+		attendance.Attendances = append(attendance.Attendances, updatereq.Name)
+	} else {
+		attendance.Absences = append(attendance.Absences, updatereq.Name)
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().UpdateAttendance(ctx(req), &proto.UpdateAttendanceRequest{
+		Token:       idtoken,
+		Attendances: []*proto.Attendance{attendance},
 	})
 
 	if err != nil {
