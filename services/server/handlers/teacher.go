@@ -10,11 +10,11 @@ import (
 
 // TeacherRequestItem teacher request
 type TeacherRequestItem struct {
-	Year  string `csv:"学年"`
-	Name  string `csv:"姓名"`
-	Class string `csv:"指导班级"`
-	Email string `csv:"邮箱"`
-	Role  string `csv:"权限"`
+	Year  string `csv:"学年" json:"-"`
+	Name  string `csv:"姓名" json:"name"`
+	Class string `csv:"指导班级" json:"class"`
+	Email string `csv:"邮箱" json:"email"`
+	Role  string `csv:"权限" json:"role"`
 }
 
 // GetTeachers get teachers
@@ -34,6 +34,11 @@ func GetTeachers(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(response)
+}
+
+// UpdateTeacher update teacher
+func UpdateTeacher(req *restful.Request, rsp *restful.Response) {
+	// tbd
 }
 
 // UpdateTeachers update teachers

@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
+
 	restful "github.com/emicklei/go-restful"
 	"github.com/gocarina/gocsv"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -10,9 +12,10 @@ import (
 
 // PupilRequestItem pupil request
 type PupilRequestItem struct {
-	Year  string `csv:"学年"`
-	Class string `csv:"班级"`
-	Name  string `csv:"姓名"`
+	ID    int64  `csv:"-" json:"id"` // using comma `csv:"-",json:"id"` is wrong
+	Year  string `csv:"学年" json:"-"`
+	Class string `csv:"班级" json:"class"`
+	Name  string `csv:"姓名" json:"name"`
 }
 
 // GetPupils get pupils
@@ -24,6 +27,36 @@ func GetPupils(req *restful.Request, rsp *restful.Response) {
 		Token: idtoken,
 		Year:  year,
 		Class: class,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// UpdatePupil update pupil
+func UpdatePupil(req *restful.Request, rsp *restful.Response) {
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *PupilRequestItem
+	err := decoder.Decode(&updatereq)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidPupilUpdateRequestBody)
+		return
+	}
+
+	pupil := &proto.Pupil{
+		Id:    updatereq.ID,
+		Name:  updatereq.Name,
+		Class: updatereq.Class,
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().UpdatePupil(ctx(req), &proto.UpdatePupilRequest{
+		Token:  idtoken,
+		Pupils: []*proto.Pupil{pupil},
 	})
 
 	if err != nil {

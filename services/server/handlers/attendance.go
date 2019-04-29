@@ -15,11 +15,11 @@ import (
 
 // AttendanceRequestItem attendance request
 type AttendanceRequestItem struct {
-	Year       string `csv:"学年",json:"year"`
-	Class      string `csv:"班级",json:"class"`
-	Date       string `csv:"日期",json:"date"`
-	Name       string `csv:"姓名",json:"name"`
-	Attendance bool   `csv:"-",json:"attendance"`
+	Year       string `csv:"学年" json:"year"`
+	Class      string `csv:"班级" json:"class"`
+	Date       string `csv:"日期" json:"date"`
+	Name       string `csv:"姓名" json:"name"`
+	Attendance bool   `csv:"-" json:"attendance"`
 }
 
 // GetAttendances get pupils
