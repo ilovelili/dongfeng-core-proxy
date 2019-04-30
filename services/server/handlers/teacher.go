@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
+
 	restful "github.com/emicklei/go-restful"
 	"github.com/gocarina/gocsv"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -10,11 +12,12 @@ import (
 
 // TeacherRequestItem teacher request
 type TeacherRequestItem struct {
+	ID    int64  `csv:"-" json:"id"`
 	Year  string `csv:"学年" json:"-"`
 	Name  string `csv:"姓名" json:"name"`
 	Class string `csv:"指导班级" json:"class"`
 	Email string `csv:"邮箱" json:"email"`
-	Role  string `csv:"权限" json:"role"`
+	Role  string `csv:"权限" json:"-"`
 }
 
 // GetTeachers get teachers
@@ -38,7 +41,33 @@ func GetTeachers(req *restful.Request, rsp *restful.Response) {
 
 // UpdateTeacher update teacher
 func UpdateTeacher(req *restful.Request, rsp *restful.Response) {
-	// tbd
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *TeacherRequestItem
+	err := decoder.Decode(&updatereq)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidTeacherUpdateRequestBody)
+		return
+	}
+
+	teacher := &proto.Teacher{
+		Id:    updatereq.ID,
+		Name:  updatereq.Name,
+		Class: updatereq.Class,
+		Email: updatereq.Email,
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().UpdateTeacher(ctx(req), &proto.UpdateTeacherRequest{
+		Token:    idtoken,
+		Teachers: []*proto.Teacher{teacher},
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
 }
 
 // UpdateTeachers update teachers
