@@ -1,104 +1,63 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
-	"regexp"
-	"strconv"
-	"strings"
 
-	excelize "github.com/360EntSecGroup-Skylar/excelize"
 	restful "github.com/emicklei/go-restful"
+	"github.com/gocarina/gocsv"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
 	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// physiqueItem for excel parsing
-type physiqueItem struct {
-	name      string
-	gender    string
-	birthdate string
-	examdate  string
-	height    float32
-	weight    float32
+// PhysiqueReqItem physique request
+type PhysiqueReqItem struct {
+	ID        int64   `csv:"-" json:"id"`
+	Name      string  `csv:"姓名" json:"-"`
+	Class     string  `csv:"班级" json:"-"`
+	Year      string  `csv:"学年" json:"-"`
+	Gender    string  `csv:"性别" json:"gender"`
+	BirthDate string  `csv:"出生日期" json:"birth_date"`
+	ExamDate  string  `csv:"体检日期" json:"exam_date"`
+	Height    float64 `csv:"身高" json:"height"`
+	Weight    float64 `csv:"体重" json:"weight"`
 }
 
-// UploadPhysique upload physique list
+// GetPhysique TBD
+func GetPhysique(req *restful.Request, rsp *restful.Response) {
+	return
+}
+
+// UploadPhysique update physique
 func UploadPhysique(req *restful.Request, rsp *restful.Response) {
-	if err := req.Request.ParseMultipartForm(32 << 20); err != nil {
-		writeError(rsp, errorcode.CoreProxyFailedToReadPhysiqueFile)
-		return
-	}
-
-	file, _, err := req.Request.FormFile("physique")
-	defer file.Close()
+	decoder := json.NewDecoder(req.Request.Body)
+	var updatereq *PhysiqueReqItem
+	err := decoder.Decode(&updatereq)
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyFailedToReadPhysiqueFile)
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUpdateRequestBody)
 		return
 	}
 
-	excel, err := excelize.OpenReader(file)
+	gender, err := resolveGender(updatereq.Gender)
 	if err != nil {
-		writeError(rsp, errorcode.CoreProxyUnsupportedMimeType)
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUpdateRequestBody)
 		return
 	}
 
-	var class string
-	physiques := []*proto.Physique{}
-
-	for _, sheet := range excel.WorkBook.Sheets.Sheet {
-		physiqueitems := []*proto.PhysiqueItem{}
-		rows := excel.GetRows(sheet.Name)
-
-		for rindex, row := range rows {
-			if rindex == 1 {
-				_class, err := parseClass(row)
-				if err != nil {
-					writeError(rsp, errorcode.CoreProxyBadFormatPhysiqueFile)
-					return
-				}
-
-				class = _class
-
-			} else if rindex > 3 {
-				// starts with number
-				if _, err := strconv.Atoi(row[0]); err == nil {
-					physiqueitem, err := parsePhysiqueItem(row)
-					if err != nil {
-						writeError(rsp, errorcode.CoreProxyBadFormatPhysiqueFile)
-						return
-					}
-
-					if physiqueitem != nil {
-						gender, err := resolveGender(physiqueitem.gender)
-						if err != nil {
-							writeError(rsp, errorcode.CoreProxyBadFormatPhysiqueFile)
-							return
-						}
-
-						physiqueitems = append(physiqueitems, &proto.PhysiqueItem{
-							Name:      physiqueitem.name,
-							Gender:    gender,
-							BirthDate: physiqueitem.birthdate,
-							ExamDate:  physiqueitem.examdate,
-							Height:    physiqueitem.height,
-							Weight:    physiqueitem.weight,
-						})
-					}
-				}
-			}
-		}
-
-		physiques = append(physiques, &proto.Physique{
-			Class: class,
-			Items: physiqueitems,
-		})
+	physique := &proto.Physique{
+		Id:        updatereq.ID,
+		Gender:    gender,
+		BirthDate: updatereq.BirthDate,
+		ExamDate:  updatereq.ExamDate,
+		Height:    updatereq.Height,
+		Weight:    updatereq.Weight,
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newphysiqueclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
+	response, err := newcoreclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
 		Token:     idtoken,
-		Physiques: physiques,
+		Physiques: []*proto.Physique{physique},
 	})
 
 	if err != nil {
@@ -109,63 +68,63 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-func parseClass(row []string) (class string, err error) {
-	// filter out empty
-	var sb strings.Builder
-	for _, col := range row {
-		if col != "" {
-			sb.WriteString(strings.Replace(col, " ", "", -1))
+// UploadPhysiques upload physiques
+func UploadPhysiques(req *restful.Request, rsp *restful.Response) {
+	file, _, err := req.Request.FormFile("file")
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyFailedToReadPhysiqueFile)
+		return
+	}
+	defer file.Close()
+
+	physiques := []*PhysiqueReqItem{}
+	if err := gocsv.Unmarshal(file, &physiques); err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
+		return
+	}
+
+	_physiques := []*proto.Physique{}
+	for _, physique := range physiques {
+		gender, err := resolveGender(physique.Gender)
+		if err != nil {
+			writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
+			return
 		}
-	}
-	rowstr := sb.String()
 
-	r := regexp.MustCompile(`班级:(.+)`)
-	matches := r.FindStringSubmatch(rowstr)
-	if len(matches) == 2 {
-		class = matches[1]
-	} else {
-		err = fmt.Errorf("invalid row")
+		_physiques = append(_physiques, &proto.Physique{
+			Name:      physique.Name,
+			Year:      physique.Year,
+			Class:     physique.Class,
+			Gender:    gender,
+			BirthDate: physique.BirthDate,
+			ExamDate:  physique.ExamDate,
+			Height:    physique.Height,
+			Weight:    physique.Weight,
+		})
 	}
 
-	return
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
+		Token:     idtoken,
+		Physiques: _physiques,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
 }
 
-func parsePhysiqueItem(row []string) (item *physiqueItem, err error) {
-	if row[0] == "" || row[0] == "0" {
-		return
-	}
-	if row[1] == "" || row[1] == "0" {
-		return
-	}
-
-	item = new(physiqueItem)
-	item.name = row[1]
-	item.gender = row[2]
-	item.birthdate = row[3]
-	item.examdate = row[4]
-
-	_height, err := strconv.ParseFloat(row[5], 32)
-	if err != nil {
-		return
-	}
-	item.height = float32(_height)
-
-	_weight, err := strconv.ParseFloat(row[6], 32)
-	if err != nil {
-		return
-	}
-	item.weight = float32(_weight)
-	return
-}
-
-func resolveGender(gender string) (g proto.PhysiqueItem_Gender, err error) {
+func resolveGender(gender string) (g proto.Physique_Gender, err error) {
 	if gender == "女" {
-		g = proto.PhysiqueItem_F
+		g = proto.Physique_F
 		return
 	}
 
 	if gender == "男" {
-		g = proto.PhysiqueItem_M
+		g = proto.Physique_M
 		return
 	}
 
