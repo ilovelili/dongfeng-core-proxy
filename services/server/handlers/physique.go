@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/gocarina/gocsv"
@@ -14,14 +13,14 @@ import (
 // PhysiqueReqItem physique request
 type PhysiqueReqItem struct {
 	ID        int64   `csv:"-" json:"id"`
-	Name      string  `csv:"姓名" json:"-"`
-	Class     string  `csv:"班级" json:"-"`
-	Year      string  `csv:"学年" json:"-"`
+	Name      string  `csv:"姓名" json:"name"`
+	Class     string  `csv:"班级" json:"class"`
+	Year      string  `csv:"学年" json:"year"`
 	Gender    string  `csv:"性别" json:"gender"`
 	BirthDate string  `csv:"出生日期" json:"birth_date"`
 	ExamDate  string  `csv:"体检日期" json:"exam_date"`
-	Height    float64 `csv:"身高" json:"height"`
-	Weight    float64 `csv:"体重" json:"weight"`
+	Height    float64 `csv:"身高" json:"height,string"`
+	Weight    float64 `csv:"体重" json:"weight,string"`
 }
 
 // GetPhysiques get physiques
@@ -44,8 +43,8 @@ func GetPhysiques(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-// UploadPhysique update physique
-func UploadPhysique(req *restful.Request, rsp *restful.Response) {
+// UpdatePhysique update physique
+func UpdatePhysique(req *restful.Request, rsp *restful.Response) {
 	decoder := json.NewDecoder(req.Request.Body)
 	var updatereq *PhysiqueReqItem
 	err := decoder.Decode(&updatereq)
@@ -54,17 +53,30 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	gender, err := resolveGender(updatereq.Gender)
-	if err != nil {
+	if gendervalid := validateGender(updatereq.Gender); !gendervalid {
 		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUpdateRequestBody)
 		return
 	}
 
+	birthDate, ok := resolveDate(updatereq.BirthDate)
+	if !ok {
+		// date format wrong
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
+	}
+
+	examDate, ok := resolveDate(updatereq.ExamDate)
+	if !ok {
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
+	}
+
 	physique := &proto.Physique{
 		Id:        updatereq.ID,
-		Gender:    gender,
-		BirthDate: updatereq.BirthDate,
-		ExamDate:  updatereq.ExamDate,
+		Year:      updatereq.Year,
+		Class:     updatereq.Class,
+		Name:      updatereq.Name,
+		Gender:    updatereq.Gender,
+		BirthDate: birthDate,
+		ExamDate:  examDate,
 		Height:    updatereq.Height,
 		Weight:    updatereq.Weight,
 	}
@@ -83,8 +95,8 @@ func UploadPhysique(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-// UploadPhysiques upload physiques
-func UploadPhysiques(req *restful.Request, rsp *restful.Response) {
+// UpdatePhysiques update physiques
+func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 	file, _, err := req.Request.FormFile("file")
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyFailedToReadPhysiqueFile)
@@ -100,26 +112,36 @@ func UploadPhysiques(req *restful.Request, rsp *restful.Response) {
 
 	_physiques := []*proto.Physique{}
 	for _, physique := range physiques {
-		gender, err := resolveGender(physique.Gender)
-		if err != nil {
+		if gendervalid := validateGender(physique.Gender); !gendervalid {
 			writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
 			return
+		}
+
+		birthDate, ok := resolveDate(physique.BirthDate)
+		if !ok {
+			// date format wrong
+			writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
+		}
+
+		examDate, ok := resolveDate(physique.ExamDate)
+		if !ok {
+			writeError(rsp, errorcode.CoreProxyInvalidPhysiqueUploadFile)
 		}
 
 		_physiques = append(_physiques, &proto.Physique{
 			Name:      physique.Name,
 			Year:      physique.Year,
 			Class:     physique.Class,
-			Gender:    gender,
-			BirthDate: physique.BirthDate,
-			ExamDate:  physique.ExamDate,
+			Gender:    physique.Gender,
+			BirthDate: birthDate,
+			ExamDate:  examDate,
 			Height:    physique.Height,
 			Weight:    physique.Weight,
 		})
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
+	response, err := newcoreclient().UpdatePhysiques(ctx(req), &proto.UpdatePhysiqueRequest{
 		Token:     idtoken,
 		Physiques: _physiques,
 	})
@@ -132,17 +154,6 @@ func UploadPhysiques(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-func resolveGender(gender string) (g proto.Physique_Gender, err error) {
-	if gender == "女" {
-		g = proto.Physique_F
-		return
-	}
-
-	if gender == "男" {
-		g = proto.Physique_M
-		return
-	}
-
-	err = fmt.Errorf("failed to parse gender")
-	return
+func validateGender(gender string) bool {
+	return gender == "女" || gender == "男"
 }

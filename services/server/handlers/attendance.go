@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"regexp"
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
@@ -140,13 +139,4 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(response)
-}
-
-func resolveDate(date string) (match string, ok bool) {
-	re := regexp.MustCompile(`\d{4}[-,/]\d{2}[-,/]\d{2}`)
-	if ok = re.MatchString(date); !ok {
-		return
-	}
-	match = strings.Replace(re.FindString(date), "/", "-", -1)
-	return
 }

@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/csv"
 	"io"
+	"regexp"
+	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-redis/redis"
@@ -78,4 +80,13 @@ func init() {
 		r.LazyQuotes = true
 		return r // Allows use dot as delimiter and use quotes in CSV
 	})
+}
+
+func resolveDate(date string) (match string, ok bool) {
+	re := regexp.MustCompile(`\d{4}[-,/]\d{2}[-,/]\d{2}`)
+	if ok = re.MatchString(date); !ok {
+		return
+	}
+	match = strings.Replace(re.FindString(date), "/", "-", -1)
+	return
 }
