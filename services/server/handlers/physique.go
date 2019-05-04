@@ -24,9 +24,24 @@ type PhysiqueReqItem struct {
 	Weight    float64 `csv:"体重" json:"weight"`
 }
 
-// GetPhysique TBD
-func GetPhysique(req *restful.Request, rsp *restful.Response) {
-	return
+// GetPhysiques get physiques
+func GetPhysiques(req *restful.Request, rsp *restful.Response) {
+	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().GetPhysiques(ctx(req), &proto.GetPhysiqueRequest{
+		Token: idtoken,
+		Year:  year,
+		Class: class,
+		Name:  name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
 }
 
 // UploadPhysique update physique

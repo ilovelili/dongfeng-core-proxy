@@ -57,7 +57,7 @@ type ApiService interface {
 	GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetTeacherResponse, error)
 	UpdateTeacher(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherResponse, error)
 	UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateTeacherResponse, error)
-	GetPhysique(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPhysiqueResponse, error)
+	GetPhysiques(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPhysiqueResponse, error)
 	UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error)
 	UpdatePhysiques(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdatePhysiqueResponse, error)
 	GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error)
@@ -237,8 +237,8 @@ func (c *apiService) UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.U
 	return out, nil
 }
 
-func (c *apiService) GetPhysique(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPhysiqueResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetPhysique", in)
+func (c *apiService) GetPhysiques(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPhysiqueResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetPhysiques", in)
 	out := new(dongfeng_protobuf.GetPhysiqueResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -355,7 +355,7 @@ type ApiHandler interface {
 	GetTeachers(context.Context, *dongfeng_protobuf.GetTeacherRequest, *dongfeng_protobuf.GetTeacherResponse) error
 	UpdateTeacher(context.Context, *dongfeng_protobuf.UpdateTeacherRequest, *dongfeng_protobuf.UpdateTeacherResponse) error
 	UpdateTeachers(context.Context, *dongfeng_protobuf.UpdateTeacherRequest, *dongfeng_protobuf.UpdateTeacherResponse) error
-	GetPhysique(context.Context, *dongfeng_protobuf.GetPhysiqueRequest, *dongfeng_protobuf.GetPhysiqueResponse) error
+	GetPhysiques(context.Context, *dongfeng_protobuf.GetPhysiqueRequest, *dongfeng_protobuf.GetPhysiqueResponse) error
 	UpdatePhysique(context.Context, *dongfeng_protobuf.UpdatePhysiqueRequest, *dongfeng_protobuf.UpdatePhysiqueResponse) error
 	UpdatePhysiques(context.Context, *dongfeng_protobuf.UpdatePhysiqueRequest, *dongfeng_protobuf.UpdatePhysiqueResponse) error
 	GetRecipe(context.Context, *dongfeng_protobuf.GetRecipeRequest, *dongfeng_protobuf.GetRecipeResponse) error
@@ -384,7 +384,7 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetTeachers(ctx context.Context, in *dongfeng_protobuf.GetTeacherRequest, out *dongfeng_protobuf.GetTeacherResponse) error
 		UpdateTeacher(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, out *dongfeng_protobuf.UpdateTeacherResponse) error
 		UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.UpdateTeacherRequest, out *dongfeng_protobuf.UpdateTeacherResponse) error
-		GetPhysique(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, out *dongfeng_protobuf.GetPhysiqueResponse) error
+		GetPhysiques(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, out *dongfeng_protobuf.GetPhysiqueResponse) error
 		UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error
 		UpdatePhysiques(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error
 		GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error
@@ -466,8 +466,8 @@ func (h *apiHandler) UpdateTeachers(ctx context.Context, in *dongfeng_protobuf.U
 	return h.ApiHandler.UpdateTeachers(ctx, in, out)
 }
 
-func (h *apiHandler) GetPhysique(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, out *dongfeng_protobuf.GetPhysiqueResponse) error {
-	return h.ApiHandler.GetPhysique(ctx, in, out)
+func (h *apiHandler) GetPhysiques(ctx context.Context, in *dongfeng_protobuf.GetPhysiqueRequest, out *dongfeng_protobuf.GetPhysiqueResponse) error {
+	return h.ApiHandler.GetPhysiques(ctx, in, out)
 }
 
 func (h *apiHandler) UpdatePhysique(ctx context.Context, in *dongfeng_protobuf.UpdatePhysiqueRequest, out *dongfeng_protobuf.UpdatePhysiqueResponse) error {
