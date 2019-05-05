@@ -154,6 +154,43 @@ func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
+// GetMasters get masters
+func GetMasters(req *restful.Request, rsp *restful.Response) {
+	id := req.QueryParameter("id")
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	var response interface{}
+	var err error
+
+	switch id {
+	case "1":
+		response, err = newcoreclient().GetAgeHeightWeightPMasters(ctx(req), &proto.GetAgeHeightWeightPMasterRequest{Token: idtoken})
+		break
+	case "2":
+		response, err = newcoreclient().GetAgeHeightWeightSDMasters(ctx(req), &proto.GetAgeHeightWeightSDMasterRequest{Token: idtoken})
+		break
+	case "3":
+		response, err = newcoreclient().GetBMIMasters(ctx(req), &proto.GetBMIMasterRequest{Token: idtoken})
+		break
+	case "4":
+		response, err = newcoreclient().GetHeightToWeightPMasters(ctx(req), &proto.GetHeightToWeightPMasterRequest{Token: idtoken})
+		break
+	case "5":
+		response, err = newcoreclient().GetHeightToWeightSDMasters(ctx(req), &proto.GetHeightToWeightSDMasterRequest{Token: idtoken})
+		break
+	default:
+		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueMasterRequest)
+		return
+	}
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
 func validateGender(gender string) bool {
 	return gender == "女" || gender == "男"
 }

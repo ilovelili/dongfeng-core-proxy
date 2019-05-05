@@ -162,6 +162,12 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			GET("/masters").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetMasters))
+
+	webservice.Route(
+		webservice.
 			GET("/ingredient/{ingredient}").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetIngredient).
