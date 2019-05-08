@@ -40,7 +40,7 @@ type UpdateRecipeItem struct {
 func GetRecipe(req *restful.Request, rsp *restful.Response) {
 	recipename := req.PathParameter("recipe")
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().GetRecipe(ctx(req), &proto.GetRecipeRequest{
+	response, err := newcoreclient().GetRecipe(ctx(req), &proto.GetRecipeRequest{
 		Token:  idtoken,
 		Recipe: recipename,
 	})
@@ -88,7 +88,7 @@ func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
+	response, err := newcoreclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
 		Token:   idtoken,
 		Recipes: recipes,
 	})

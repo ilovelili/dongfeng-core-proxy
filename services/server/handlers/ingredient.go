@@ -45,7 +45,7 @@ type UpdateIngredientRequest struct {
 func GetIngredient(req *restful.Request, rsp *restful.Response) {
 	ingredientname := req.PathParameter("ingredient")
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().GetIngredient(ctx(req), &proto.GetIngredientRequest{
+	response, err := newcoreclient().GetIngredient(ctx(req), &proto.GetIngredientRequest{
 		Token:      idtoken,
 		Ingredient: ingredientname,
 	})
@@ -98,7 +98,7 @@ func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
 	}}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().UpdateIngredient(ctx(req), &proto.UpdateIngredientRequest{
+	response, err := newcoreclient().UpdateIngredient(ctx(req), &proto.UpdateIngredientRequest{
 		Token:       idtoken,
 		Ingredients: ingredients,
 	})

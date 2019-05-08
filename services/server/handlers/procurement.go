@@ -25,7 +25,7 @@ func GetProcurement(req *restful.Request, rsp *restful.Response) {
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newnutritionclient().GetProcurement(ctx(req), &proto.GetProcurementRequest{
+	response, err := newcoreclient().GetProcurement(ctx(req), &proto.GetProcurementRequest{
 		Token:  idtoken,
 		From:   from,
 		To:     to,

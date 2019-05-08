@@ -194,11 +194,9 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/menu/{from}/{to}").
+			GET("/menus").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetMenu).
-			Param(webservice.PathParameter("from", "date from").DataType("string")).
-			Param(webservice.PathParameter("to", "date to").DataType("string")))
+			To(handlers.GetMenus))
 
 	webservice.Route(
 		webservice.
