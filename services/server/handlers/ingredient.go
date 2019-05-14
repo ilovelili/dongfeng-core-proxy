@@ -1,16 +1,12 @@
 package handlers
 
 import (
-	"encoding/json"
-
 	restful "github.com/emicklei/go-restful"
-	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
-	errorcode "github.com/ilovelili/dongfeng-error-code"
-	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// IngredientNutrition ingredient nutrition
-type IngredientNutrition struct {
+// UpdateIngredientRequest ingredient update request
+type UpdateIngredientRequest struct {
+	Ingredient        string  `json:"ingredient"`
 	Protein100g       float64 `json:"protein_100g"`
 	ProteinDaily      float64 `json:"protein_daily"`
 	Fat100g           float64 `json:"fat_100g"`
@@ -33,80 +29,73 @@ type IngredientNutrition struct {
 	VB2Daily          float64 `json:"vb2_daily"`
 	VC100g            float64 `json:"vc_100g"`
 	VCDaily           float64 `json:"vc_daily"`
-}
-
-// UpdateIngredientRequest ingredient update request
-type UpdateIngredientRequest struct {
-	Ingredient          string `json:"ingredient"`
-	IngredientNutrition `json:"nutrition"`
+	Category          string  `json:"category"`
 }
 
 // GetIngredient get ingredient
 func GetIngredient(req *restful.Request, rsp *restful.Response) {
-	ingredientname := req.PathParameter("ingredient")
-	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().GetIngredient(ctx(req), &proto.GetIngredientRequest{
-		Token:      idtoken,
-		Ingredient: ingredientname,
-	})
+	// ingredientname := req.QueryParameter("ingredient")
+	// idtoken, _ := utils.ResolveIDToken(req)
+	// response, err := newcoreclient().GetIngredient(ctx(req), &proto.GetIngredientRequest{
+	// 	Token:      idtoken,
+	// 	Ingredient: ingredientname,
+	// })
 
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
+	// if err != nil {
+	// 	writeError(rsp, errorcode.Pipe, err.Error())
+	// 	return
+	// }
 
-	rsp.WriteAsJson(response)
+	// rsp.WriteAsJson(response)
 }
 
 // UpdateIngredient update ingredient
 func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
-	decoder := json.NewDecoder(req.Request.Body)
-	var updatereq *UpdateIngredientRequest
-	err := decoder.Decode(&updatereq)
-	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidUpdateIngredientRequestBody)
-		return
-	}
+	// decoder := json.NewDecoder(req.Request.Body)
+	// var updatereq *UpdateIngredientRequest
+	// err := decoder.Decode(&updatereq)
+	// if err != nil {
+	// 	writeError(rsp, errorcode.CoreProxyInvalidUpdateIngredientRequestBody)
+	// 	return
+	// }
 
-	in := updatereq.IngredientNutrition
-	ingredients := []*proto.Ingredient{&proto.Ingredient{
-		Ingredient: updatereq.Ingredient,
-		Nutrition: &proto.IngredientNutrition{
-			Protein_100G:      in.Protein100g,
-			ProteinDaily:      in.ProteinDaily,
-			Fat_100G:          in.Fat100g,
-			FatDaily:          in.FatDaily,
-			Carbohydrate_100G: in.Carbohydrate100g,
-			CarbohydrateDaily: in.CarbohydrateDaily,
-			Heat_100G:         in.Heat100g,
-			HeatDaily:         in.HeatDaily,
-			Calcium_100G:      in.Calcium100g,
-			CalciumDaily:      in.CalciumDaily,
-			Iron_100G:         in.Iron100g,
-			IronDaily:         in.IronDaily,
-			Zinc_100G:         in.Zinc100g,
-			ZincDaily:         in.ZincDaily,
-			Va_100G:           in.VA100g,
-			VaDaily:           in.VADaily,
-			Vb1_100G:          in.VB1100g,
-			Vb1Daily:          in.VB1Daily,
-			Vb2_100G:          in.VB2100g,
-			Vb2Daily:          in.VB2Daily,
-			Vc_100G:           in.VC100g,
-			VcDaily:           in.VCDaily,
-		},
-	}}
+	// ingredients := []*proto.Ingredient{&proto.Ingredient{
+	// 	Ingredient:        updatereq.Ingredient,
+	// 	Protein_100G:      updatereq.Protein100g,
+	// 	ProteinDaily:      updatereq.ProteinDaily,
+	// 	Fat_100G:          updatereq.Fat100g,
+	// 	FatDaily:          updatereq.FatDaily,
+	// 	Carbohydrate_100G: updatereq.Carbohydrate100g,
+	// 	CarbohydrateDaily: updatereq.CarbohydrateDaily,
+	// 	Heat_100G:         updatereq.Heat100g,
+	// 	HeatDaily:         updatereq.HeatDaily,
+	// 	Calcium_100G:      updatereq.Calcium100g,
+	// 	CalciumDaily:      updatereq.CalciumDaily,
+	// 	Iron_100G:         updatereq.Iron100g,
+	// 	IronDaily:         updatereq.IronDaily,
+	// 	Zinc_100G:         updatereq.Zinc100g,
+	// 	ZincDaily:         updatereq.ZincDaily,
+	// 	Va_100G:           updatereq.VA100g,
+	// 	VaDaily:           updatereq.VADaily,
+	// 	Vb1_100G:          updatereq.VB1100g,
+	// 	Vb1Daily:          updatereq.VB1Daily,
+	// 	Vb2_100G:          updatereq.VB2100g,
+	// 	Vb2Daily:          updatereq.VB2Daily,
+	// 	Vc_100G:           updatereq.VC100g,
+	// 	VcDaily:           updatereq.VCDaily,
+	// 	Category:          updatereq.Category,
+	// }}
 
-	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdateIngredient(ctx(req), &proto.UpdateIngredientRequest{
-		Token:       idtoken,
-		Ingredients: ingredients,
-	})
+	// idtoken, _ := utils.ResolveIDToken(req)
+	// response, err := newcoreclient().UpdateIngredient(ctx(req), &proto.UpdateIngredientRequest{
+	// 	Token:       idtoken,
+	// 	Ingredients: ingredients,
+	// })
 
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
+	// if err != nil {
+	// 	writeError(rsp, errorcode.Pipe, err.Error())
+	// 	return
+	// }
 
-	rsp.WriteAsJson(response)
+	// rsp.WriteAsJson(response)
 }

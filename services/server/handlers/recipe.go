@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"encoding/json"
+	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -36,13 +36,13 @@ type UpdateRecipeItem struct {
 	RecipeNutrition `json:"nutrition"`
 }
 
-// GetRecipe get recipes
-func GetRecipe(req *restful.Request, rsp *restful.Response) {
-	recipename := req.PathParameter("recipe")
+// GetRecipes get recipes
+func GetRecipes(req *restful.Request, rsp *restful.Response) {
+	names := strings.Split(req.QueryParameter("recipes"), ",")
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newcoreclient().GetRecipe(ctx(req), &proto.GetRecipeRequest{
-		Token:  idtoken,
-		Recipe: recipename,
+		Token: idtoken,
+		Names: names,
 	})
 
 	if err != nil {
@@ -55,48 +55,48 @@ func GetRecipe(req *restful.Request, rsp *restful.Response) {
 
 // UpdateRecipe update recipe
 func UpdateRecipe(req *restful.Request, rsp *restful.Response) {
-	decoder := json.NewDecoder(req.Request.Body)
-	var updatereq *UpdateRecipeRequest
-	err := decoder.Decode(&updatereq)
-	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidUpdateRecipeRequestBody)
-		return
-	}
+	// decoder := json.NewDecoder(req.Request.Body)
+	// var updatereq *UpdateRecipeRequest
+	// err := decoder.Decode(&updatereq)
+	// if err != nil {
+	// 	writeError(rsp, errorcode.CoreProxyInvalidUpdateRecipeRequestBody)
+	// 	return
+	// }
 
-	recipes := []*proto.Recipe{}
-	for _, r := range updatereq.Recipes {
-		rn := r.RecipeNutrition
-		ingredientunitamounts := []*proto.IngredientUnitAmount{}
-		for _, ua := range r.Ingredients {
-			ingredientunitamounts = append(ingredientunitamounts, &proto.IngredientUnitAmount{
-				Ingredient: ua.Ingredient,
-				UnitAmount: ua.UnitAmount,
-			})
-		}
+	// recipes := []*proto.Recipe{}
+	// for _, r := range updatereq.Recipes {
+	// 	rn := r.RecipeNutrition
+	// 	ingredientunitamounts := []*proto.IngredientUnitAmount{}
+	// 	for _, ua := range r.Ingredients {
+	// 		ingredientunitamounts = append(ingredientunitamounts, &proto.IngredientUnitAmount{
+	// 			Ingredient: ua.Ingredient,
+	// 			UnitAmount: ua.UnitAmount,
+	// 		})
+	// 	}
 
-		recipes = append(recipes, &proto.Recipe{
-			Recipe:      r.Recipe,
-			Ingredients: ingredientunitamounts,
-			Nutrition: &proto.RecipeNutrition{
-				Carbohydrate: rn.Carbohydrate,
-				Dietaryfiber: rn.Dietaryfiber,
-				Protein:      rn.Protein,
-				Fat:          rn.Fat,
-				Heat:         rn.Heat,
-			},
-		})
-	}
+	// 	recipes = append(recipes, &proto.Recipe{
+	// 		Recipe:      r.Recipe,
+	// 		Ingredients: ingredientunitamounts,
+	// 		Nutrition: &proto.RecipeNutrition{
+	// 			Carbohydrate: rn.Carbohydrate,
+	// 			Dietaryfiber: rn.Dietaryfiber,
+	// 			Protein:      rn.Protein,
+	// 			Fat:          rn.Fat,
+	// 			Heat:         rn.Heat,
+	// 		},
+	// 	})
+	// }
 
-	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
-		Token:   idtoken,
-		Recipes: recipes,
-	})
+	// idtoken, _ := utils.ResolveIDToken(req)
+	// response, err := newcoreclient().UpdateRecipe(ctx(req), &proto.UpdateRecipeRequest{
+	// 	Token:   idtoken,
+	// 	Recipes: recipes,
+	// })
 
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
+	// if err != nil {
+	// 	writeError(rsp, errorcode.Pipe, err.Error())
+	// 	return
+	// }
 
-	rsp.WriteAsJson(response)
+	// rsp.WriteAsJson(response)
 }

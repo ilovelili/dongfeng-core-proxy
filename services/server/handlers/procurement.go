@@ -11,7 +11,7 @@ import (
 
 // GetProcurement get ingredient procurement based on unit amount and attandance
 func GetProcurement(req *restful.Request, rsp *restful.Response) {
-	from, to, id := req.PathParameter("from"), req.PathParameter("to"), req.PathParameter("id")
+	from, to, id := req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("id")
 	if id != "" && id != "0" && id != "1" && id != "2" {
 		writeError(rsp, errorcode.CoreProxyInvalidGetProcurementRequest)
 		return

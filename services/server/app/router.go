@@ -168,23 +168,15 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/ingredient/{ingredient}").
+			GET("/menus").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetIngredient).
-			Param(webservice.PathParameter("ingredient", "ingredient name").DataType("string")))
+			To(handlers.GetMenus))
 
 	webservice.Route(
 		webservice.
-			POST("/ingredient").
+			GET("/recipes").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UpdateIngredient))
-
-	webservice.Route(
-		webservice.
-			GET("/recipe/{recipe}").
-			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetRecipe).
-			Param(webservice.PathParameter("recipe", "recipe name").DataType("string")))
+			To(handlers.GetRecipes))
 
 	webservice.Route(
 		webservice.
@@ -194,18 +186,21 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/menus").
+			GET("/ingredient/{ingredient}").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetMenus))
+			To(handlers.GetIngredient))
+
+	webservice.Route(
+		webservice.
+			POST("/ingredient").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateIngredient))
 
 	webservice.Route(
 		webservice.
 			GET("/procurement/{from}/{to}/{id}").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetProcurement).
-			Param(webservice.PathParameter("from", "from").DataType("string")).
-			Param(webservice.PathParameter("to", "to").DataType("string")).
-			Param(webservice.PathParameter("id", "meal id").DataType("int")))
+			To(handlers.GetProcurement))
 
 	container.Add(webservice)
 
