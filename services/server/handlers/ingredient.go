@@ -5,38 +5,39 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/gocarina/gocsv"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
 	proto "github.com/ilovelili/dongfeng-protobuf"
 )
 
-// UpdateIngredientRequest ingredient update request
-type UpdateIngredientRequest struct {
-	Ingredient        string  `json:"ingredient" csv:"ingredient"`
-	Alias             string  `json:"alias" csv:"alias"`
-	Protein100g       float64 `json:"protein_100g" csv:"protein_100g"`
-	ProteinDaily      float64 `json:"protein_daily" csv:"protein_daily"`
-	Fat100g           float64 `json:"fat_100g" csv:"fat_100g"`
-	FatDaily          float64 `json:"fat_daily" csv:"fat_daily"`
-	Carbohydrate100g  float64 `json:"carbohydrate_100g" csv:"carbohydrate_100g"`
-	CarbohydrateDaily float64 `json:"carbohydrate_daily" csv:"carbohydrate_daily"`
-	Heat100g          float64 `json:"heat_100g" csv:"heat_100g"`
-	HeatDaily         float64 `json:"heat_daily" csv:"heat_daily"`
-	Calcium100g       float64 `json:"calcium_100g" csv:"calcium_100g"`
-	CalciumDaily      float64 `json:"calcium_daily" csv:"calcium_daily"`
-	Iron100g          float64 `json:"iron_100g" csv:"iron_100g"`
-	IronDaily         float64 `json:"iron_daily" csv:"iron_daily"`
-	Zinc100g          float64 `json:"zinc_100g" csv:"zinc_100g"`
-	ZincDaily         float64 `json:"zinc_daily" csv:"zinc_daily"`
-	VA100g            float64 `json:"va_100g" csv:"va_100g"`
-	VADaily           float64 `json:"va_daily" csv:"va_daily"`
-	VB1100g           float64 `json:"vb1_100g" csv:"vb1_100g"`
-	VB1Daily          float64 `json:"vb1_daily" csv:"vb1_daily"`
-	VB2100g           float64 `json:"vb2_100g" csv:"vb2_100g"`
-	VB2Daily          float64 `json:"vb2_daily" csv:"vb2_daily"`
-	VC100g            float64 `json:"vc_100g" csv:"vc_100g"`
-	VCDaily           float64 `json:"vc_daily" csv:"vc_daily"`
-	Category          string  `json:"category" csv:"category"`
+// IngredientRequestItem ingredient update request
+type IngredientRequestItem struct {
+	Ingredient        string  `json:"ingredient" csv:"原料"`
+	Alias             string  `json:"alias" csv:"-"`
+	Protein100g       float64 `json:"protein_100g" csv:"蛋白质(100g)"`
+	ProteinDaily      float64 `json:"protein_daily" csv:"-"`
+	Fat100g           float64 `json:"fat_100g" csv:"脂肪(100g)"`
+	FatDaily          float64 `json:"fat_daily" csv:"-"`
+	Carbohydrate100g  float64 `json:"carbohydrate_100g" csv:"碳水化合物(100g)"`
+	CarbohydrateDaily float64 `json:"carbohydrate_daily" csv:"-"`
+	Heat100g          float64 `json:"heat_100g" csv:"热量(100g)"`
+	HeatDaily         float64 `json:"heat_daily" csv:"-"`
+	Calcium100g       float64 `json:"calcium_100g" csv:"钙(100g)"`
+	CalciumDaily      float64 `json:"calcium_daily" csv:"-"`
+	Iron100g          float64 `json:"iron_100g" csv:"铁(100g)"`
+	IronDaily         float64 `json:"iron_daily" csv:"-"`
+	Zinc100g          float64 `json:"zinc_100g" csv:"锌(100g)"`
+	ZincDaily         float64 `json:"zinc_daily" csv:"-"`
+	VA100g            float64 `json:"va_100g" csv:"VA(100g)"`
+	VADaily           float64 `json:"va_daily" csv:"-"`
+	VB1100g           float64 `json:"vb1_100g" csv:"VB1(100g)"`
+	VB1Daily          float64 `json:"vb1_daily" csv:"-"`
+	VB2100g           float64 `json:"vb2_100g" csv:"VB2(100g)"`
+	VB2Daily          float64 `json:"vb2_daily" csv:"-"`
+	VC100g            float64 `json:"vc_100g" csv:"VC(100g)"`
+	VCDaily           float64 `json:"vc_daily" csv:"-"`
+	Category          string  `json:"category" csv:"类别"`
 }
 
 // GetIngredients get ingredients
@@ -59,7 +60,7 @@ func GetIngredients(req *restful.Request, rsp *restful.Response) {
 // UpdateIngredient update ingredient
 func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
 	decoder := json.NewDecoder(req.Request.Body)
-	var updatereq *UpdateIngredientRequest
+	var updatereq *IngredientRequestItem
 	err := decoder.Decode(&updatereq)
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyInvalidUpdateIngredientRequestBody)
@@ -95,9 +96,57 @@ func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
 	}}
 
 	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().UpdateIngredient(ctx(req), &proto.UpdateIngredientRequest{
+	response, err := newcoreclient().UpdateIngredients(ctx(req), &proto.UpdateIngredientRequest{
 		Token:       idtoken,
 		Ingredients: ingredients,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// UpdateIngredients update ingredients
+func UpdateIngredients(req *restful.Request, rsp *restful.Response) {
+	file, _, err := req.Request.FormFile("file")
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidUpdateIngredientRequestBody)
+		return
+	}
+	defer file.Close()
+
+	ingredients := []*IngredientRequestItem{}
+	if err := gocsv.Unmarshal(file, &ingredients); err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidUpdateIngredientRequestBody)
+		return
+	}
+
+	_ingredients := []*proto.Ingredient{}
+	for _, ingredient := range ingredients {
+		_ingredients = append(_ingredients, &proto.Ingredient{
+			Ingredient:        ingredient.Ingredient,
+			Protein_100G:      ingredient.Protein100g,
+			Fat_100G:          ingredient.Fat100g,
+			Carbohydrate_100G: ingredient.Carbohydrate100g,
+			Heat_100G:         ingredient.Heat100g,
+			Calcium_100G:      ingredient.Calcium100g,
+			Iron_100G:         ingredient.Iron100g,
+			Zinc_100G:         ingredient.Zinc100g,
+			Va_100G:           ingredient.VA100g,
+			Vb1_100G:          ingredient.VB1100g,
+			Vb2_100G:          ingredient.VB2100g,
+			Vc_100G:           ingredient.VC100g,
+			Category:          ingredient.Category,
+		})
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().UpdateIngredients(ctx(req), &proto.UpdateIngredientRequest{
+		Token:       idtoken,
+		Ingredients: _ingredients,
 	})
 
 	if err != nil {

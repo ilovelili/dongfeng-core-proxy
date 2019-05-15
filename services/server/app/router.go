@@ -198,6 +198,13 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			POST("/ingredients").
+			Consumes("multipart/form-data").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateIngredients))
+
+	webservice.Route(
+		webservice.
 			GET("/procurement/{from}/{to}/{id}").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetProcurement))
