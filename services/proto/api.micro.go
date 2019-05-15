@@ -66,10 +66,11 @@ type ApiService interface {
 	GetHeightToWeightPMasters(ctx context.Context, in *dongfeng_protobuf.GetHeightToWeightPMasterRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetHeightToWeightPMasterResponse, error)
 	GetHeightToWeightSDMasters(ctx context.Context, in *dongfeng_protobuf.GetHeightToWeightSDMasterRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetHeightToWeightSDMasterResponse, error)
 	GetMenus(ctx context.Context, in *dongfeng_protobuf.GetMenuRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetMenuResponse, error)
-	GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error)
-	GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetIngredientResponse, error)
+	GetRecipes(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error)
+	GetIngredients(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetIngredientResponse, error)
 	UpdateIngredient(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateIngredientResponse, error)
-	GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
+	UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateIngredientResponse, error)
+	GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
 	UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNotificationsResponse, error)
 }
 
@@ -331,8 +332,8 @@ func (c *apiService) GetMenus(ctx context.Context, in *dongfeng_protobuf.GetMenu
 	return out, nil
 }
 
-func (c *apiService) GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetRecipe", in)
+func (c *apiService) GetRecipes(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetRecipeResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetRecipes", in)
 	out := new(dongfeng_protobuf.GetRecipeResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -341,8 +342,8 @@ func (c *apiService) GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRec
 	return out, nil
 }
 
-func (c *apiService) GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetIngredientResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetIngredient", in)
+func (c *apiService) GetIngredients(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetIngredientResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetIngredients", in)
 	out := new(dongfeng_protobuf.GetIngredientResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -361,8 +362,18 @@ func (c *apiService) UpdateIngredient(ctx context.Context, in *dongfeng_protobuf
 	return out, nil
 }
 
-func (c *apiService) GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error) {
-	req := c.c.NewRequest(c.name, "Api.GetProcurement", in)
+func (c *apiService) UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateIngredientResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.UpdateIngredients", in)
+	out := new(dongfeng_protobuf.UpdateIngredientResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiService) GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetProcurements", in)
 	out := new(dongfeng_protobuf.GetProcurementResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -408,10 +419,11 @@ type ApiHandler interface {
 	GetHeightToWeightPMasters(context.Context, *dongfeng_protobuf.GetHeightToWeightPMasterRequest, *dongfeng_protobuf.GetHeightToWeightPMasterResponse) error
 	GetHeightToWeightSDMasters(context.Context, *dongfeng_protobuf.GetHeightToWeightSDMasterRequest, *dongfeng_protobuf.GetHeightToWeightSDMasterResponse) error
 	GetMenus(context.Context, *dongfeng_protobuf.GetMenuRequest, *dongfeng_protobuf.GetMenuResponse) error
-	GetRecipe(context.Context, *dongfeng_protobuf.GetRecipeRequest, *dongfeng_protobuf.GetRecipeResponse) error
-	GetIngredient(context.Context, *dongfeng_protobuf.GetIngredientRequest, *dongfeng_protobuf.GetIngredientResponse) error
+	GetRecipes(context.Context, *dongfeng_protobuf.GetRecipeRequest, *dongfeng_protobuf.GetRecipeResponse) error
+	GetIngredients(context.Context, *dongfeng_protobuf.GetIngredientRequest, *dongfeng_protobuf.GetIngredientResponse) error
 	UpdateIngredient(context.Context, *dongfeng_protobuf.UpdateIngredientRequest, *dongfeng_protobuf.UpdateIngredientResponse) error
-	GetProcurement(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
+	UpdateIngredients(context.Context, *dongfeng_protobuf.UpdateIngredientRequest, *dongfeng_protobuf.UpdateIngredientResponse) error
+	GetProcurements(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
 	UpdateNotifications(context.Context, *dongfeng_protobuf.UpdateNotificationsRequest, *dongfeng_protobuf.UpdateNotificationsResponse) error
 }
 
@@ -441,10 +453,11 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetHeightToWeightPMasters(ctx context.Context, in *dongfeng_protobuf.GetHeightToWeightPMasterRequest, out *dongfeng_protobuf.GetHeightToWeightPMasterResponse) error
 		GetHeightToWeightSDMasters(ctx context.Context, in *dongfeng_protobuf.GetHeightToWeightSDMasterRequest, out *dongfeng_protobuf.GetHeightToWeightSDMasterResponse) error
 		GetMenus(ctx context.Context, in *dongfeng_protobuf.GetMenuRequest, out *dongfeng_protobuf.GetMenuResponse) error
-		GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error
-		GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, out *dongfeng_protobuf.GetIngredientResponse) error
+		GetRecipes(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error
+		GetIngredients(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, out *dongfeng_protobuf.GetIngredientResponse) error
 		UpdateIngredient(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error
-		GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
+		UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error
+		GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
 		UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error
 	}
 	type Api struct {
@@ -554,20 +567,24 @@ func (h *apiHandler) GetMenus(ctx context.Context, in *dongfeng_protobuf.GetMenu
 	return h.ApiHandler.GetMenus(ctx, in, out)
 }
 
-func (h *apiHandler) GetRecipe(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error {
-	return h.ApiHandler.GetRecipe(ctx, in, out)
+func (h *apiHandler) GetRecipes(ctx context.Context, in *dongfeng_protobuf.GetRecipeRequest, out *dongfeng_protobuf.GetRecipeResponse) error {
+	return h.ApiHandler.GetRecipes(ctx, in, out)
 }
 
-func (h *apiHandler) GetIngredient(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, out *dongfeng_protobuf.GetIngredientResponse) error {
-	return h.ApiHandler.GetIngredient(ctx, in, out)
+func (h *apiHandler) GetIngredients(ctx context.Context, in *dongfeng_protobuf.GetIngredientRequest, out *dongfeng_protobuf.GetIngredientResponse) error {
+	return h.ApiHandler.GetIngredients(ctx, in, out)
 }
 
 func (h *apiHandler) UpdateIngredient(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error {
 	return h.ApiHandler.UpdateIngredient(ctx, in, out)
 }
 
-func (h *apiHandler) GetProcurement(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error {
-	return h.ApiHandler.GetProcurement(ctx, in, out)
+func (h *apiHandler) UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error {
+	return h.ApiHandler.UpdateIngredients(ctx, in, out)
+}
+
+func (h *apiHandler) GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error {
+	return h.ApiHandler.GetProcurements(ctx, in, out)
 }
 
 func (h *apiHandler) UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error {
