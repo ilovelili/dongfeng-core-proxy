@@ -57,6 +57,23 @@ func GetIngredients(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
+// GetIngredientNames get ingredient names without JWT
+func GetIngredientNames(req *restful.Request, rsp *restful.Response) {
+	query := req.QueryParameter("q")
+	response, err := newcoreclient().GetIngredientNames(ctx(req), &proto.GetIngredientNameRequest{Pattern: query})
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	if len(response.GetNames()) == 0 {
+		rsp.WriteAsJson([]string{})
+		return
+	}
+
+	rsp.WriteAsJson(response.Names)
+}
+
 // UpdateIngredient update ingredient
 func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
 	decoder := json.NewDecoder(req.Request.Body)

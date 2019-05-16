@@ -180,15 +180,15 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			POST("/recipe").
-			Filter(middlewares.JwtAuthenticate).
-			To(handlers.UpdateRecipe))
-
-	webservice.Route(
-		webservice.
 			GET("/ingredients").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetIngredients))
+
+	// shame on it since front end autocomplete package doesn't allow headers so can't pass JWT
+	webservice.Route(
+		webservice.
+			GET("/ingredientnames").
+			To(handlers.GetIngredientNames))
 
 	webservice.Route(
 		webservice.

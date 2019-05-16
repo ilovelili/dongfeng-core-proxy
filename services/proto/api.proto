@@ -39,10 +39,10 @@ service api {
 
     rpc GetMenus(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};    
     
-    rpc GetRecipes(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};
-    // rpc UpdateRecipe(dongfeng.protobuf.UpdateRecipeRequest) returns(dongfeng.protobuf.UpdateRecipeResponse) {};
+    rpc GetRecipes(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};    
 
     rpc GetIngredients(dongfeng.protobuf.GetIngredientRequest) returns(dongfeng.protobuf.GetIngredientResponse) {};
+    rpc GetIngredientNames(dongfeng.protobuf.GetIngredientNameRequest) returns(dongfeng.protobuf.GetIngredientNameResponse) {};    
     rpc UpdateIngredients(dongfeng.protobuf.UpdateIngredientRequest) returns(dongfeng.protobuf.UpdateIngredientResponse) {};
     
     rpc GetProcurements(dongfeng.protobuf.GetProcurementRequest) returns(dongfeng.protobuf.GetProcurementResponse) {};
