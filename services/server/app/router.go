@@ -205,13 +205,26 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/procurement/{from}/{to}/{id}").
+			GET("/procurement").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetProcurement))
+
+	webservice.Route(
+		webservice.
+			GET("/profile").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetProfile))
+
+	webservice.Route(
+		webservice.
+			POST("/profile").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateProfile))
 
 	container.Add(webservice)
 
 	// Add container filter to respond to OPTIONS
 	container.Filter(container.OPTIONSFilter)
+
 	return container
 }
