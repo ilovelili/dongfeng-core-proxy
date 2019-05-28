@@ -12,13 +12,14 @@ import (
 
 // GetProfile get profile
 func GetProfile(req *restful.Request, rsp *restful.Response) {
-	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
+	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newcoreclient().GetProfile(ctx(req), &proto.GetProfileRequest{
 		Token: idtoken,
 		Year:  year,
 		Class: class,
 		Name:  name,
+		Date:  date,
 	})
 
 	if err != nil {
@@ -35,9 +36,28 @@ func GetProfile(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(result)
 }
 
+// GetProfiles get profiles
+func GetProfiles(req *restful.Request, rsp *restful.Response) {
+	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().GetProfiles(ctx(req), &proto.GetProfilesRequest{
+		Token: idtoken,
+		Year:  year,
+		Class: class,
+		Name:  name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
 // UpdateProfile update profile
 func UpdateProfile(req *restful.Request, rsp *restful.Response) {
-	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
+	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
 	body, err := ioutil.ReadAll(req.Request.Body)
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyInvalidPupilUpdateRequestBody)
@@ -50,6 +70,7 @@ func UpdateProfile(req *restful.Request, rsp *restful.Response) {
 		Year:    year,
 		Class:   class,
 		Name:    name,
+		Date:    date,
 		Profile: string(body),
 	})
 

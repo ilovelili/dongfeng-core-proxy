@@ -217,6 +217,12 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			GET("/profiles").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetProfiles))
+
+	webservice.Route(
+		webservice.
 			POST("/profile").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateProfile))

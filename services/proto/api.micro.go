@@ -72,6 +72,7 @@ type ApiService interface {
 	UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateIngredientResponse, error)
 	GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
 	GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfileResponse, error)
+	GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfilesResponse, error)
 	UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
 	UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNotificationsResponse, error)
 }
@@ -394,6 +395,16 @@ func (c *apiService) GetProfile(ctx context.Context, in *dongfeng_protobuf.GetPr
 	return out, nil
 }
 
+func (c *apiService) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfilesResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetProfiles", in)
+	out := new(dongfeng_protobuf.GetProfilesResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *apiService) UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error) {
 	req := c.c.NewRequest(c.name, "Api.UpdateProfile", in)
 	out := new(dongfeng_protobuf.UpdateProfileResponse)
@@ -447,6 +458,7 @@ type ApiHandler interface {
 	UpdateIngredients(context.Context, *dongfeng_protobuf.UpdateIngredientRequest, *dongfeng_protobuf.UpdateIngredientResponse) error
 	GetProcurements(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
 	GetProfile(context.Context, *dongfeng_protobuf.GetProfileRequest, *dongfeng_protobuf.GetProfileResponse) error
+	GetProfiles(context.Context, *dongfeng_protobuf.GetProfilesRequest, *dongfeng_protobuf.GetProfilesResponse) error
 	UpdateProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
 	UpdateNotifications(context.Context, *dongfeng_protobuf.UpdateNotificationsRequest, *dongfeng_protobuf.UpdateNotificationsResponse) error
 }
@@ -483,6 +495,7 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		UpdateIngredients(ctx context.Context, in *dongfeng_protobuf.UpdateIngredientRequest, out *dongfeng_protobuf.UpdateIngredientResponse) error
 		GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
 		GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, out *dongfeng_protobuf.GetProfileResponse) error
+		GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, out *dongfeng_protobuf.GetProfilesResponse) error
 		UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
 		UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error
 	}
@@ -615,6 +628,10 @@ func (h *apiHandler) GetProcurements(ctx context.Context, in *dongfeng_protobuf.
 
 func (h *apiHandler) GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, out *dongfeng_protobuf.GetProfileResponse) error {
 	return h.ApiHandler.GetProfile(ctx, in, out)
+}
+
+func (h *apiHandler) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, out *dongfeng_protobuf.GetProfilesResponse) error {
+	return h.ApiHandler.GetProfiles(ctx, in, out)
 }
 
 func (h *apiHandler) UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error {
