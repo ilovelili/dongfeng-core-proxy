@@ -187,7 +187,7 @@ func (r *Router) Route() http.Handler {
 	// shame on it since front end autocomplete package doesn't allow headers so can't pass JWT
 	webservice.Route(
 		webservice.
-			GET("/ingredientnames").
+			GET("/ingredient/names").
 			To(handlers.GetIngredientNames))
 
 	webservice.Route(
@@ -208,6 +208,16 @@ func (r *Router) Route() http.Handler {
 			GET("/procurement").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetProcurement))
+
+	webservice.Route(
+		webservice.
+			GET("/profile/names").
+			To(handlers.GetProfileNames))
+
+	webservice.Route(
+		webservice.
+			GET("/profile/dates").
+			To(handlers.GetProfileDates))
 
 	webservice.Route(
 		webservice.

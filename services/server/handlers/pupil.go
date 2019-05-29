@@ -12,7 +12,7 @@ import (
 
 // PupilRequestItem pupil request
 type PupilRequestItem struct {
-	ID    int64  `csv:"-" json:"id"` // using comma `csv:"-",json:"id"` is wrong
+	ID    int64  `csv:"-" json:"id"`
 	Year  string `csv:"学年" json:"-"`
 	Class string `csv:"班级" json:"class"`
 	Name  string `csv:"姓名" json:"name"`
