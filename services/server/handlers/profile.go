@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"io/ioutil"
+	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -66,52 +67,9 @@ func GetProfiles(req *restful.Request, rsp *restful.Response) {
 	rsp.WriteAsJson(response)
 }
 
-// GetProfileNames get profile names
-func GetProfileNames(req *restful.Request, rsp *restful.Response) {	year, class, name, date := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("q"), req.QueryParameter("date")
-	response, err := newcoreclient().GetProfileNames(ctx(req), &proto.GetProfileNamesRequest{
-		Year:  year,
-		Class: class,
-		Name:  name,
-		Date:  date,
-	})
-
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
-
-	if len(response.Names) == 0 {
-		rsp.WriteAsJson([]string{})
-	} else {
-		rsp.WriteAsJson(response.Names)
-	}
-}
-
-// GetProfileDates get profile dates
-func GetProfileDates(req *restful.Request, rsp *restful.Response) {
-	year, class, name, date := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("name"), req.QueryParameter("q")
-	response, err := newcoreclient().GetProfileDates(ctx(req), &proto.GetProfileDatesRequest{
-		Year:  year,
-		Class: class,
-		Name:  name,
-		Date:  date,
-	})
-
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
-
-	if len(response.Dates) == 0 {
-		rsp.WriteAsJson("[]")
-	} else {
-		rsp.WriteAsJson(response.Dates)
-	}
-}
-
 // UpdateProfile update profile
 func UpdateProfile(req *restful.Request, rsp *restful.Response) {
-	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
+	class, year, name, date, enabled := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date"), req.QueryParameter("enabled")
 	body, err := ioutil.ReadAll(req.Request.Body)
 	if err != nil {
 		writeError(rsp, errorcode.CoreProxyInvalidPupilUpdateRequestBody)
@@ -126,6 +84,7 @@ func UpdateProfile(req *restful.Request, rsp *restful.Response) {
 		Name:    name,
 		Date:    date,
 		Profile: string(body),
+		Enabled: resolveEnabled(enabled),
 	})
 
 	if err != nil {
@@ -134,4 +93,9 @@ func UpdateProfile(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(response)
+}
+
+func resolveEnabled(enabled string) bool {
+	str := strings.ToLower(enabled)
+	return str == "true" || str == "1"
 }
