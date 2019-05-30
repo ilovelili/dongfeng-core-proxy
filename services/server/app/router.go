@@ -223,6 +223,18 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			POST("/profile/create").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.CreateProfile))
+
+	webservice.Route(
+		webservice.
+			POST("/profile/delete").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.DeleteProfile))
+
+	webservice.Route(
+		webservice.
 			POST("/profile").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateProfile))

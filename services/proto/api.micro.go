@@ -73,7 +73,9 @@ type ApiService interface {
 	GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
 	GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfileResponse, error)
 	GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfilesResponse, error)
+	CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
 	UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
+	DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
 	UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateNotificationsResponse, error)
 }
 
@@ -405,8 +407,28 @@ func (c *apiService) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetP
 	return out, nil
 }
 
+func (c *apiService) CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.CreateProfile", in)
+	out := new(dongfeng_protobuf.UpdateProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *apiService) UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error) {
 	req := c.c.NewRequest(c.name, "Api.UpdateProfile", in)
+	out := new(dongfeng_protobuf.UpdateProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiService) DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.DeleteProfile", in)
 	out := new(dongfeng_protobuf.UpdateProfileResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -459,7 +481,9 @@ type ApiHandler interface {
 	GetProcurements(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
 	GetProfile(context.Context, *dongfeng_protobuf.GetProfileRequest, *dongfeng_protobuf.GetProfileResponse) error
 	GetProfiles(context.Context, *dongfeng_protobuf.GetProfilesRequest, *dongfeng_protobuf.GetProfilesResponse) error
+	CreateProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
 	UpdateProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
+	DeleteProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
 	UpdateNotifications(context.Context, *dongfeng_protobuf.UpdateNotificationsRequest, *dongfeng_protobuf.UpdateNotificationsResponse) error
 }
 
@@ -496,7 +520,9 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
 		GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, out *dongfeng_protobuf.GetProfileResponse) error
 		GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, out *dongfeng_protobuf.GetProfilesResponse) error
+		CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
 		UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
+		DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
 		UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error
 	}
 	type Api struct {
@@ -634,8 +660,16 @@ func (h *apiHandler) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetP
 	return h.ApiHandler.GetProfiles(ctx, in, out)
 }
 
+func (h *apiHandler) CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error {
+	return h.ApiHandler.CreateProfile(ctx, in, out)
+}
+
 func (h *apiHandler) UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error {
 	return h.ApiHandler.UpdateProfile(ctx, in, out)
+}
+
+func (h *apiHandler) DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error {
+	return h.ApiHandler.DeleteProfile(ctx, in, out)
 }
 
 func (h *apiHandler) UpdateNotifications(ctx context.Context, in *dongfeng_protobuf.UpdateNotificationsRequest, out *dongfeng_protobuf.UpdateNotificationsResponse) error {
