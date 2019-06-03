@@ -73,6 +73,8 @@ type ApiService interface {
 	GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProcurementResponse, error)
 	GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfileResponse, error)
 	GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetProfilesResponse, error)
+	GetPrevProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPrevOrNextProfileResponse, error)
+	GetNextProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPrevOrNextProfileResponse, error)
 	CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
 	UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
 	DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error)
@@ -407,6 +409,26 @@ func (c *apiService) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetP
 	return out, nil
 }
 
+func (c *apiService) GetPrevProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPrevOrNextProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetPrevProfile", in)
+	out := new(dongfeng_protobuf.GetPrevOrNextProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiService) GetNextProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.GetPrevOrNextProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "Api.GetNextProfile", in)
+	out := new(dongfeng_protobuf.GetPrevOrNextProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *apiService) CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, opts ...client.CallOption) (*dongfeng_protobuf.UpdateProfileResponse, error) {
 	req := c.c.NewRequest(c.name, "Api.CreateProfile", in)
 	out := new(dongfeng_protobuf.UpdateProfileResponse)
@@ -481,6 +503,8 @@ type ApiHandler interface {
 	GetProcurements(context.Context, *dongfeng_protobuf.GetProcurementRequest, *dongfeng_protobuf.GetProcurementResponse) error
 	GetProfile(context.Context, *dongfeng_protobuf.GetProfileRequest, *dongfeng_protobuf.GetProfileResponse) error
 	GetProfiles(context.Context, *dongfeng_protobuf.GetProfilesRequest, *dongfeng_protobuf.GetProfilesResponse) error
+	GetPrevProfile(context.Context, *dongfeng_protobuf.GetPrevOrNextProfileRequest, *dongfeng_protobuf.GetPrevOrNextProfileResponse) error
+	GetNextProfile(context.Context, *dongfeng_protobuf.GetPrevOrNextProfileRequest, *dongfeng_protobuf.GetPrevOrNextProfileResponse) error
 	CreateProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
 	UpdateProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
 	DeleteProfile(context.Context, *dongfeng_protobuf.UpdateProfileRequest, *dongfeng_protobuf.UpdateProfileResponse) error
@@ -520,6 +544,8 @@ func RegisterApiHandler(s server.Server, hdlr ApiHandler, opts ...server.Handler
 		GetProcurements(ctx context.Context, in *dongfeng_protobuf.GetProcurementRequest, out *dongfeng_protobuf.GetProcurementResponse) error
 		GetProfile(ctx context.Context, in *dongfeng_protobuf.GetProfileRequest, out *dongfeng_protobuf.GetProfileResponse) error
 		GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, out *dongfeng_protobuf.GetProfilesResponse) error
+		GetPrevProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, out *dongfeng_protobuf.GetPrevOrNextProfileResponse) error
+		GetNextProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, out *dongfeng_protobuf.GetPrevOrNextProfileResponse) error
 		CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
 		UpdateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
 		DeleteProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error
@@ -658,6 +684,14 @@ func (h *apiHandler) GetProfile(ctx context.Context, in *dongfeng_protobuf.GetPr
 
 func (h *apiHandler) GetProfiles(ctx context.Context, in *dongfeng_protobuf.GetProfilesRequest, out *dongfeng_protobuf.GetProfilesResponse) error {
 	return h.ApiHandler.GetProfiles(ctx, in, out)
+}
+
+func (h *apiHandler) GetPrevProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, out *dongfeng_protobuf.GetPrevOrNextProfileResponse) error {
+	return h.ApiHandler.GetPrevProfile(ctx, in, out)
+}
+
+func (h *apiHandler) GetNextProfile(ctx context.Context, in *dongfeng_protobuf.GetPrevOrNextProfileRequest, out *dongfeng_protobuf.GetPrevOrNextProfileResponse) error {
+	return h.ApiHandler.GetNextProfile(ctx, in, out)
 }
 
 func (h *apiHandler) CreateProfile(ctx context.Context, in *dongfeng_protobuf.UpdateProfileRequest, out *dongfeng_protobuf.UpdateProfileResponse) error {

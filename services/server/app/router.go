@@ -211,6 +211,18 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			GET("/profile/prev").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetPrevProfile))
+
+	webservice.Route(
+		webservice.
+			GET("/profile/next").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetNextProfile))
+
+	webservice.Route(
+		webservice.
 			GET("/profile").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetProfile))

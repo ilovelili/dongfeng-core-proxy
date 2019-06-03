@@ -23,7 +23,7 @@ type ProfileRequestItem struct {
 func GetProfile(req *restful.Request, rsp *restful.Response) {
 	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
 	if class == "" || year == "" || name == "" || date == "" {
-		writeError(rsp, errorcode.CoreProxyInvalidProfileUpdateRequest)
+		writeError(rsp, errorcode.CoreProxyInvalidProfileGetRequest)
 		return
 	}
 
@@ -54,6 +54,56 @@ func GetProfile(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(result)
+}
+
+// GetPrevProfile get prev profile
+func GetPrevProfile(req *restful.Request, rsp *restful.Response) {
+	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
+	if class == "" || year == "" || name == "" || date == "" {
+		writeError(rsp, errorcode.CoreProxyInvalidProfileGetRequest)
+		return
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().GetPrevProfile(ctx(req), &proto.GetPrevOrNextProfileRequest{
+		Token: idtoken,
+		Year:  year,
+		Class: class,
+		Name:  name,
+		Date:  date,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// GetNextProfile get next profile
+func GetNextProfile(req *restful.Request, rsp *restful.Response) {
+	class, year, name, date := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name"), req.QueryParameter("date")
+	if class == "" || year == "" || name == "" || date == "" {
+		writeError(rsp, errorcode.CoreProxyInvalidProfileGetRequest)
+		return
+	}
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().GetNextProfile(ctx(req), &proto.GetPrevOrNextProfileRequest{
+		Token: idtoken,
+		Year:  year,
+		Class: class,
+		Name:  name,
+		Date:  date,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
 }
 
 // GetProfiles get profiles

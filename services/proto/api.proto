@@ -47,8 +47,10 @@ service api {
     
     rpc GetProcurements(dongfeng.protobuf.GetProcurementRequest) returns(dongfeng.protobuf.GetProcurementResponse) {};
 
-    rpc GetProfile(dongfeng.protobuf.GetProfileRequest) returns(dongfeng.protobuf.GetProfileResponse) {};
-    rpc GetProfiles(dongfeng.protobuf.GetProfilesRequest) returns(dongfeng.protobuf.GetProfilesResponse) {};    
+    rpc GetProfile(dongfeng.protobuf.GetProfileRequest) returns(dongfeng.protobuf.GetProfileResponse) {};    
+    rpc GetProfiles(dongfeng.protobuf.GetProfilesRequest) returns(dongfeng.protobuf.GetProfilesResponse) {};
+    rpc GetPrevProfile(dongfeng.protobuf.GetPrevOrNextProfileRequest) returns(dongfeng.protobuf.GetPrevOrNextProfileResponse) {};
+    rpc GetNextProfile(dongfeng.protobuf.GetPrevOrNextProfileRequest) returns(dongfeng.protobuf.GetPrevOrNextProfileResponse) {};
     rpc CreateProfile(dongfeng.protobuf.UpdateProfileRequest) returns(dongfeng.protobuf.UpdateProfileResponse) {};
     rpc UpdateProfile(dongfeng.protobuf.UpdateProfileRequest) returns(dongfeng.protobuf.UpdateProfileResponse) {};
     rpc DeleteProfile(dongfeng.protobuf.UpdateProfileRequest) returns(dongfeng.protobuf.UpdateProfileResponse) {};
