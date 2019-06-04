@@ -251,6 +251,12 @@ func (r *Router) Route() http.Handler {
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateProfile))
 
+	webservice.Route(
+		webservice.
+			POST("/ebook").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateEbook))
+
 	container.Add(webservice)
 
 	// Add container filter to respond to OPTIONS
