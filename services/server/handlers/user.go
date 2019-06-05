@@ -57,8 +57,8 @@ func UploadAvatar(req *restful.Request, rsp *restful.Response) {
 	aliyunsvc.SetEndPoint(config.OSS.Endpoint)
 	aliyunsvc.SetBucket(config.OSS.BucketName)
 	opts := &oss.UploadOptions{
-		Public:   true,
-		FileName: localfilename,
+		Public:     true,
+		ObjectName: localfilename,
 	}
 
 	resp := aliyunsvc.Upload(opts)
