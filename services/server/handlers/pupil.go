@@ -13,7 +13,7 @@ import (
 // PupilRequestItem pupil request
 type PupilRequestItem struct {
 	ID    int64  `csv:"-" json:"id"`
-	Year  string `csv:"学年" json:"-"`
+	Year  string `csv:"学年" json:"year"`
 	Class string `csv:"班级" json:"class"`
 	Name  string `csv:"姓名" json:"name"`
 }
@@ -51,6 +51,7 @@ func UpdatePupil(req *restful.Request, rsp *restful.Response) {
 		Id:    updatereq.ID,
 		Name:  updatereq.Name,
 		Class: updatereq.Class,
+		Year:  updatereq.Year,
 	}
 
 	idtoken, _ := utils.ResolveIDToken(req)
