@@ -20,6 +20,28 @@ type EbookRequestItem struct {
 	CSS    string   `json:"css"`
 }
 
+// GetEbooks get ebooks
+func GetEbooks(req *restful.Request, rsp *restful.Response) {
+	year, class, name, from, to := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("name"), req.QueryParameter("from"), req.QueryParameter("to")
+
+	idtoken, _ := utils.ResolveIDToken(req)
+	response, err := newcoreclient().GetEbooks(ctx(req), &proto.GetEbooksRequest{
+		Token: idtoken,
+		Year:  year,
+		Class: class,
+		Name:  name,
+		From:  from,
+		To:    to,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
 // UpdateEbook update ebook
 func UpdateEbook(req *restful.Request, rsp *restful.Response) {
 	decoder := json.NewDecoder(req.Request.Body)

@@ -253,6 +253,12 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			GET("/ebooks").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetEbooks))
+
+	webservice.Route(
+		webservice.
 			POST("/ebook").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateEbook))
