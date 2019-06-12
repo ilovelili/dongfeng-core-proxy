@@ -22,7 +22,7 @@ type EbookRequestItem struct {
 
 // GetEbooks get ebooks
 func GetEbooks(req *restful.Request, rsp *restful.Response) {
-	year, class, name, from, to := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("name"), req.QueryParameter("from"), req.QueryParameter("to")
+	year, class, name := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("name")
 
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newcoreclient().GetEbooks(ctx(req), &proto.GetEbooksRequest{
@@ -30,8 +30,6 @@ func GetEbooks(req *restful.Request, rsp *restful.Response) {
 		Year:  year,
 		Class: class,
 		Name:  name,
-		From:  from,
-		To:    to,
 	})
 
 	if err != nil {
