@@ -69,28 +69,3 @@ func UpdateEbook(req *restful.Request, rsp *restful.Response) {
 
 	rsp.WriteAsJson(response)
 }
-
-// CreateEbook create ebook by merging pdf files
-func CreateEbook(req *restful.Request, rsp *restful.Response) {
-	decoder := json.NewDecoder(req.Request.Body)
-	var createreq *EbookRequestItem
-	err := decoder.Decode(&createreq)
-	if err != nil {
-		writeError(rsp, errorcode.CoreProxyInvalidEbookUpdateRequest)
-		return
-	}
-
-	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().CreateEbook(ctx(req), &proto.CreateEbookRequest{
-		Token: idtoken,
-		Class: createreq.Class,
-		Name:  createreq.Name,
-	})
-
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
-
-	rsp.WriteAsJson(response)
-}
