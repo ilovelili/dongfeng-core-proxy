@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"strconv"
-
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
 	errorcode "github.com/ilovelili/dongfeng-error-code"
@@ -11,25 +9,13 @@ import (
 
 // GetProcurement get ingredient procurement based on unit amount and attandance
 func GetProcurement(req *restful.Request, rsp *restful.Response) {
-	from, to, id := req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("id")
-	if id != "" && id != "0" && id != "1" && id != "2" {
-		writeError(rsp, errorcode.CoreProxyInvalidGetProcurementRequest)
-		return
-	}
-
-	var _id int64
-	if id == "" {
-		_id = -1
-	} else {
-		_id, _ = strconv.ParseInt(id, 10, 64)
-	}
+	from, to := req.QueryParameter("from"), req.QueryParameter("to")
 
 	idtoken, _ := utils.ResolveIDToken(req)
 	response, err := newcoreclient().GetProcurements(ctx(req), &proto.GetProcurementRequest{
-		Token:  idtoken,
-		From:   from,
-		To:     to,
-		MealId: _id,
+		Token: idtoken,
+		From:  from,
+		To:    to,
 	})
 
 	if err != nil {
