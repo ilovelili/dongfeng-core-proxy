@@ -205,9 +205,15 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/procurement").
+			GET("/procurements").
 			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetProcurement))
+			To(handlers.GetProcurements))
+
+	webservice.Route(
+		webservice.
+			POST("/procurement").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateProcurement))
 
 	webservice.Route(
 		webservice.
