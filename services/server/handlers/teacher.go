@@ -92,7 +92,7 @@ func UpdateTeachers(req *restful.Request, rsp *restful.Response) {
 			Name:  teacher.Name,
 			Class: teacher.Class,
 			Email: teacher.Email,
-			Role:  resolveRole(teacher.Role),
+			Role:  teacher.Role,
 		})
 	}
 
@@ -108,11 +108,4 @@ func UpdateTeachers(req *restful.Request, rsp *restful.Response) {
 	}
 
 	rsp.WriteAsJson(response)
-}
-
-func resolveRole(rawrole string) string {
-	if rawrole == "管理员" {
-		return "admin"
-	}
-	return "teacher"
 }
