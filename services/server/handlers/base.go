@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"io"
 	"regexp"
-	"strings"
+	"fmt"	
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-redis/redis"
@@ -73,10 +73,16 @@ func init() {
 }
 
 func resolveDate(date string) (match string, ok bool) {
-	re := regexp.MustCompile(`\d{4}[-,/]\d{2}[-,/]\d{2}`)
+	re := regexp.MustCompile(`(\d{4})[-,/](\d{1,2})[-,/](\d{1,2})`)
 	if ok = re.MatchString(date); !ok {
 		return
 	}
-	match = strings.Replace(re.FindString(date), "/", "-", -1)
-	return
+
+	matches := re.FindStringSubmatch(date)
+	if len(matches) != 4 {
+		return date, false
+	}
+
+	year, month, day := matches[1], fmt.Sprintf("%02s", matches[2]), fmt.Sprintf("%02s", matches[3])
+	return fmt.Sprintf("%s-%s-%s", year, month, day), true
 }
