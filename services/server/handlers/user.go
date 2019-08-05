@@ -82,9 +82,9 @@ func UpdateUser(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateUser(ctx(req), &proto.UpdateUserRequest{
-		Token:  idtoken,
+		Pid:    pid,
 		Name:   updatereq.Name,
 		Avatar: updatereq.Avatar,
 	})

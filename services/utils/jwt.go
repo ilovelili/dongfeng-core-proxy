@@ -6,8 +6,8 @@ import (
 	restful "github.com/emicklei/go-restful"
 )
 
-// ResolveIDToken resolve id_token saved in header
-func ResolveIDToken(req *restful.Request) (idtoken string, valid bool) {
+// ResolveHeaderInfo resolve id_token saved in header
+func ResolveHeaderInfo(req *restful.Request) (idtoken, pid string, valid bool) {
 	valid = true
 	idtokensegments := strings.Split(req.HeaderParameter("Authorization"), "Bearer ")
 	if len(idtokensegments) != 2 {
@@ -16,5 +16,6 @@ func ResolveIDToken(req *restful.Request) (idtoken string, valid bool) {
 	}
 
 	idtoken = idtokensegments[1]
+	pid = req.HeaderParameter("X-PID")
 	return
 }

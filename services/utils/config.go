@@ -52,10 +52,10 @@ func GetConfig() *Config {
 	return instance
 }
 
-// Auth auth0 fields
+// Auth authing fields
 type Auth struct {
-	// https://auth0.com/docs/jwks
-	JWKS string `json:"jwks"`
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 }
 
 // Redis redis config

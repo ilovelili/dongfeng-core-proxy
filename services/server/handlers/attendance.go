@@ -24,9 +24,9 @@ type AttendanceRequestItem struct {
 // GetAttendances get pupils
 func GetAttendances(req *restful.Request, rsp *restful.Response) {
 	year, class, from, to, name := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("name")
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetAttendances(ctx(req), &proto.GetAttendanceRequest{
-		Token: idtoken,
+		Pid:   pid,
 		Year:  year,
 		From:  from,
 		To:    to,
@@ -66,9 +66,9 @@ func UpdateAttendance(req *restful.Request, rsp *restful.Response) {
 		attendance.Absences = append(attendance.Absences, updatereq.Name)
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateAttendance(ctx(req), &proto.UpdateAttendanceRequest{
-		Token:       idtoken,
+		Pid:         pid,
 		Attendances: []*proto.Attendance{attendance},
 	})
 
@@ -127,9 +127,9 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateAttendances(ctx(req), &proto.UpdateAttendanceRequest{
-		Token:       idtoken,
+		Pid:         pid,
 		Attendances: _attendances,
 	})
 

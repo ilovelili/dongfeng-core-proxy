@@ -24,9 +24,9 @@ func UpdateNotifications(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateNotifications(ctx(req), &proto.UpdateNotificationsRequest{
-		Token:         idtoken,
+		Pid: pid,
 		Notifications: updatereq.IDs,
 	})
 

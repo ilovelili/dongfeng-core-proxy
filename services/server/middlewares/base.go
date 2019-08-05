@@ -9,7 +9,6 @@ import (
 
 var (
 	config      = utils.GetConfig()
-	jwks        = config.Auth.JWKS
 	redisclient = redis.NewClient(&redis.Options{
 		Addr:     config.Redis.Host,
 		Password: config.Redis.Password,

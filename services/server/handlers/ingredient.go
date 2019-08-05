@@ -43,9 +43,9 @@ type IngredientRequestItem struct {
 // GetIngredients get ingredients
 func GetIngredients(req *restful.Request, rsp *restful.Response) {
 	ingredients := strings.Split(req.QueryParameter("ingredients"), ",")
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetIngredients(ctx(req), &proto.GetIngredientRequest{
-		Token:       idtoken,
+		Pid:         pid,
 		Ingredients: ingredients,
 	})
 
@@ -112,9 +112,9 @@ func UpdateIngredient(req *restful.Request, rsp *restful.Response) {
 		Category:          updatereq.Category,
 	}}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateIngredients(ctx(req), &proto.UpdateIngredientRequest{
-		Token:       idtoken,
+		Pid:         pid,
 		Ingredients: ingredients,
 	})
 
@@ -160,9 +160,9 @@ func UpdateIngredients(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateIngredients(ctx(req), &proto.UpdateIngredientRequest{
-		Token:       idtoken,
+		Pid:         pid,
 		Ingredients: _ingredients,
 	})
 

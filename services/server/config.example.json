@@ -1,6 +1,7 @@
 {
     "auth": {
-        "jwks": "https://mju.auth0.com/.well-known/jwks.json"
+        "client_id": "",
+        "client_secret": ""
     },
     "services": {  
         "redis": {            

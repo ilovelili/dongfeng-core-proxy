@@ -22,9 +22,9 @@ type PupilRequestItem struct {
 func GetPupils(req *restful.Request, rsp *restful.Response) {
 	class, year := req.QueryParameter("class"), req.QueryParameter("year")
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetPupils(ctx(req), &proto.GetPupilRequest{
-		Token: idtoken,
+		Pid: pid,
 		Year:  year,
 		Class: class,
 	})
@@ -54,9 +54,9 @@ func UpdatePupil(req *restful.Request, rsp *restful.Response) {
 		Year:  updatereq.Year,
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePupil(ctx(req), &proto.UpdatePupilRequest{
-		Token:  idtoken,
+		Pid: pid,
 		Pupils: []*proto.Pupil{pupil},
 	})
 
@@ -92,9 +92,9 @@ func UpdatePupils(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePupils(ctx(req), &proto.UpdatePupilRequest{
-		Token:  idtoken,
+		Pid: pid,
 		Pupils: _pupils,
 	})
 

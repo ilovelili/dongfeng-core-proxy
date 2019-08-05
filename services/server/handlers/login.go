@@ -11,8 +11,10 @@ import (
 
 // Login login
 func Login(req *restful.Request, rsp *restful.Response) {
-	idtoken, _ := utils.ResolveIDToken(req)
-	response, err := newcoreclient().Login(ctx(req), &proto.LoginRequest{Token: idtoken})
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	response, err := newcoreclient().Login(ctx(req), &proto.LoginRequest{
+		Pid: pid,
+	})
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())
 		return
@@ -23,7 +25,7 @@ func Login(req *restful.Request, rsp *restful.Response) {
 
 // Logout logout
 func Logout(req *restful.Request, rsp *restful.Response) {
-	idtoken, _ := utils.ResolveIDToken(req)
+	idtoken,  _, _ := utils.ResolveHeaderInfo(req)
 	// save token to blacklist
 	err := redisclient.Set(fmt.Sprintf("%s_%s", sessionkeyprefix, idtoken), "_" /*value does not matter*/, 0 /* no ttl */).Err()
 	if err != nil {

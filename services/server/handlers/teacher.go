@@ -24,9 +24,9 @@ type TeacherRequestItem struct {
 func GetTeachers(req *restful.Request, rsp *restful.Response) {
 	class, year := req.QueryParameter("class"), req.QueryParameter("year")
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetTeachers(ctx(req), &proto.GetTeacherRequest{
-		Token: idtoken,
+		Pid: pid,
 		Year:  year,
 		Class: class,
 	})
@@ -56,9 +56,9 @@ func UpdateTeacher(req *restful.Request, rsp *restful.Response) {
 		Email: updatereq.Email,
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateTeacher(ctx(req), &proto.UpdateTeacherRequest{
-		Token:    idtoken,
+		Pid: pid,
 		Teachers: []*proto.Teacher{teacher},
 	})
 
@@ -96,9 +96,9 @@ func UpdateTeachers(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateTeachers(ctx(req), &proto.UpdateTeacherRequest{
-		Token:    idtoken,
+		Pid: pid,
 		Teachers: _teachers,
 	})
 

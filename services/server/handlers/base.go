@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"encoding/csv"
+	"fmt"
 	"io"
 	"regexp"
-	"fmt"	
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-redis/redis"
@@ -46,14 +46,12 @@ func newcoreclient() api.ApiService {
 
 func ctx(req *restful.Request) context.Context {
 	ip := sharedlib.ResolveRemoteIP(req.Request)
-	jwks := config.Auth.JWKS
 	ua := req.HeaderParameter("user-agent")
 
 	// Set arbitrary headers in context
 	return metadata.NewContext(req.Request.Context(), map[string]string{
-		sharedlib.MetaDataIP:   ip,
-		sharedlib.MetaDataJwks: jwks,
-		sharedlib.UserAgent:    ua,
+		sharedlib.MetaDataIP: ip,
+		sharedlib.UserAgent:  ua,
 	})
 }
 

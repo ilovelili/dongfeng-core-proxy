@@ -39,9 +39,9 @@ type UpdateRecipeItem struct {
 // GetRecipes get recipes
 func GetRecipes(req *restful.Request, rsp *restful.Response) {
 	names := strings.Split(req.QueryParameter("recipes"), ",")
-	idtoken, _ := utils.ResolveIDToken(req)
+	_,  pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetRecipes(ctx(req), &proto.GetRecipeRequest{
-		Token: idtoken,
+		Pid: pid,
 		Names: names,
 	})
 
