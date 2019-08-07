@@ -270,15 +270,6 @@ func (r *Router) Route() http.Handler {
 			To(handlers.UpdateEbook))
 
 	container.Add(webservice)
-
-	cors := restful.CrossOriginResourceSharing{
-		AllowedHeaders: []string{"Content-Type", "Accept", "Authorization"},
-		AllowedMethods: []string{"GET", "POST"},
-		AllowedDomains: []string{"http://localhost:8080", "http://localhost:4040"},
-		CookiesAllowed: false,
-		Container:      container}
-	container.Filter(cors.Filter)
-
 	container.Filter(container.OPTIONSFilter)
 
 	return container
