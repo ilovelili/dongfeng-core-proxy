@@ -15,9 +15,9 @@ func GetMenus(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetMenus(ctx(req), &proto.GetMenuRequest{
-		Pid: pid,
+		Pid:              pid,
 		From:             from,
 		To:               to,
 		BreakfastOrLunch: resolveBreakfastOrLunch(breakfast_or_lunch),

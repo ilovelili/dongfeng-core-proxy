@@ -26,9 +26,9 @@ type PhysiqueReqItem struct {
 // GetPhysiques get physiques
 func GetPhysiques(req *restful.Request, rsp *restful.Response) {
 	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetPhysiques(ctx(req), &proto.GetPhysiqueRequest{
-		Pid: pid,
+		Pid:   pid,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -80,9 +80,9 @@ func UpdatePhysique(req *restful.Request, rsp *restful.Response) {
 		Weight:    updatereq.Weight,
 	}
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
-		Pid: pid,
+		Pid:       pid,
 		Physiques: []*proto.Physique{physique},
 	})
 
@@ -139,9 +139,9 @@ func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePhysiques(ctx(req), &proto.UpdatePhysiqueRequest{
-		Pid: pid,
+		Pid:       pid,
 		Physiques: _physiques,
 	})
 
@@ -157,7 +157,7 @@ func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 func GetMasters(req *restful.Request, rsp *restful.Response) {
 	id := req.QueryParameter("id")
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	var response interface{}
 	var err error
 

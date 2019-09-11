@@ -19,11 +19,11 @@ type ProcurementRequestItem struct {
 func GetProcurements(req *restful.Request, rsp *restful.Response) {
 	from, to := req.QueryParameter("from"), req.QueryParameter("to")
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProcurements(ctx(req), &proto.GetProcurementRequest{
-		Pid: pid,
-		From:  from,
-		To:    to,
+		Pid:  pid,
+		From: from,
+		To:   to,
 	})
 
 	if err != nil {
@@ -44,9 +44,9 @@ func UpdateProcurement(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_,  pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateProcurement(ctx(req), &proto.UpdateProcurementRequest{
-		Pid: pid,
+		Pid:    pid,
 		Id:     updatereq.ID,
 		Amount: updatereq.Amount,
 	})
