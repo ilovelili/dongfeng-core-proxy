@@ -31,6 +31,11 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
+			HEAD("/").
+			To(handlers.HealthCheck))
+
+	webservice.Route(
+		webservice.
 			GET("/").
 			To(handlers.HealthCheck))
 
