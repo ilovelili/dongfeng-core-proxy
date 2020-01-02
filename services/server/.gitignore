@@ -8,3 +8,4 @@ config.prod.json
 
 server
 __debug_bin
+dongfeng-core-proxy
