@@ -6,7 +6,6 @@ require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.0.1+incompatible // indirect
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/emicklei/go-restful v2.9.6+incompatible
-	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gocarina/gocsv v0.0.0-20190802110148-150c53a64ab6
 	github.com/golang/protobuf v1.3.2
 	github.com/hashicorp/golang-lru v0.5.3 // indirect

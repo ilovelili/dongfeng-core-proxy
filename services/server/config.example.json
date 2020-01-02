@@ -3,11 +3,7 @@
         "client_id": "",
         "client_secret": ""
     },
-    "services": {  
-        "redis": {            
-            "host": "redis:6379",
-            "maxconnectioncount": 10
-        },
+    "services": {
         "aliyun": {
             "oss": {
                 "api_key": "<<api key>>",

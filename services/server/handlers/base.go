@@ -8,7 +8,6 @@ import (
 	"regexp"
 
 	restful "github.com/emicklei/go-restful"
-	"github.com/go-redis/redis"
 	"github.com/gocarina/gocsv"
 	api "github.com/ilovelili/dongfeng-core-proxy/services/proto"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -29,15 +28,8 @@ func NewResponse(message string) *Response {
 }
 
 var (
-	config      = utils.GetConfig()
-	redisclient = redis.NewClient(&redis.Options{
-		Addr:     config.Redis.Host,
-		Password: config.Redis.Password,
-	})
+	config = utils.GetConfig()
 )
-
-// sessionkey string used as Redis session store key
-const sessionkeyprefix = "session"
 
 func newcoreclient() api.ApiService {
 	cli := client.NewClient(client.RequestTimeout(config.ServiceMeta.GetDefaultRequestTimeout()))

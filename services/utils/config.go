@@ -58,13 +58,6 @@ type Auth struct {
 	ClientSecret string `json:"client_secret"`
 }
 
-// Redis redis config
-type Redis struct {
-	Host     string `json:"host"`
-	Password string `json:"password,omitempty"`
-	Size     int    `json:"maxconnectioncount"`
-}
-
 // OSS sso sevice config
 type OSS struct {
 	APIKey     string `json:"api_key"`
@@ -80,7 +73,6 @@ type Aliyun struct {
 
 // Services external services like Mysql
 type Services struct {
-	Redis  `json:"redis"`
 	Aliyun `json:"aliyun"`
 }
 
@@ -104,14 +96,6 @@ type Config struct {
 	Services     `json:"services"`
 	ServiceNames `json:"servicenames"`
 	ServiceMeta  `json:"servicemeta"`
-}
-
-// GetMaxConnectionCount get redis max connection count
-func (r *Redis) GetMaxConnectionCount() int {
-	if r.Size == 0 {
-		return 100
-	}
-	return r.Size
 }
 
 // GetRegistryTTL get registry ttl
