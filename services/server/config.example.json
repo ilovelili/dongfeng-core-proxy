@@ -11,6 +11,13 @@
                 "endpoint": "oss-cn-shanghai.aliyuncs.com",
                 "bucket_name": "dong-feng"
             }            
+        },
+        "mysql": {
+            "host": "db:3306",
+            "database": "dongfeng_zhonglou",
+            "user": "dongfeng",
+            "password": "password",
+            "allow_debug": true
         }
     },
     "servicenames": {

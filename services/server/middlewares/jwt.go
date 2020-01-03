@@ -7,11 +7,6 @@ import (
 	sharedlib "github.com/ilovelili/dongfeng-shared-lib"
 )
 
-// UserVerification user verification is used to check token mismatch
-type UserVerification struct {
-	Token string
-}
-
 // JwtAuthenticate JWT auth middleware.
 func JwtAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful.FilterChain) {
 	idtoken, _, valid := utils.ResolveHeaderInfo(req)
