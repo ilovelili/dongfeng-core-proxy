@@ -41,7 +41,7 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			POST("/role").
+			GET("/role").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetRole))
 
