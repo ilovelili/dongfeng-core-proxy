@@ -71,19 +71,9 @@ type Aliyun struct {
 	OSS `json:"oss"`
 }
 
-// MySQL mysql config
-type MySQL struct {
-	Host       string `json:"host"`
-	DataBase   string `json:"database"`
-	User       string `json:"user"`
-	Password   string `json:"password"`
-	AllowDebug bool   `json:"allow_debug"`
-}
-
 // Services external services like Mysql
 type Services struct {
 	Aliyun `json:"aliyun"`
-	MySQL  `json:"mysql"`
 }
 
 // ServiceNames servicename config
