@@ -12,7 +12,7 @@ require (
 	github.com/ilovelili/aliyun-client v0.0.0-20190605074008-4fbaa377d984
 	github.com/ilovelili/dongfeng-error-code v0.0.0-20190618065903-9bcc1dd6022c
 	github.com/ilovelili/dongfeng-logger v0.0.0-20190403091018-f20598e7c461
-	github.com/ilovelili/dongfeng-protobuf v0.0.0-20200108081804-c600a5b918f1
+	github.com/ilovelili/dongfeng-protobuf v0.0.0-20200108141805-4a2fd3c90e20
 	github.com/ilovelili/dongfeng-shared-lib v0.0.0-20190805031022-0b50afc09411
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/micro/go-micro v1.8.1
