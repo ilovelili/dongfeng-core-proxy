@@ -274,6 +274,12 @@ func (r *Router) Route() http.Handler {
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateEbook))
 
+	webservice.Route(
+		webservice.
+			GET("/profiletemplates").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetProfileTemplates))
+
 	container.Add(webservice)
 	container.Filter(container.OPTIONSFilter)
 
