@@ -282,7 +282,7 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			POST("/profiletemplates").
+			POST("/profiletemplate").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateProfileTemplate))
 

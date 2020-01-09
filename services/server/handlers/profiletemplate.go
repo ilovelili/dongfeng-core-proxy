@@ -42,8 +42,9 @@ func UpdateProfileTemplate(req *restful.Request, rsp *restful.Response) {
 
 	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateProfileTemplate(ctx(req), &proto.UpdateProfileTemplateRequest{
-		Pid:  pid,
-		Name: profiletemplatereq.Name,
+		Pid:     pid,
+		Name:    profiletemplatereq.Name,
+		Enabled: profiletemplatereq.Enabled,
 	})
 
 	if err != nil {
