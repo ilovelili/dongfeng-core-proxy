@@ -15,7 +15,24 @@ type ProfileTemplateReqItem struct {
 	Enabled bool   `json:"enabled"`
 }
 
-// GetProfileTemplates get ingredients
+// GetProfileTemplate get template
+func GetProfileTemplate(req *restful.Request, rsp *restful.Response) {
+	name := req.QueryParameter("name")
+	_, pid, _ := utils.ResolveHeaderInfo(req)
+	response, err := newcoreclient().GetProfileTemplate(ctx(req), &proto.GetProfileTemplateRequest{
+		Pid:  pid,
+		Name: name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// GetProfileTemplates get templates
 func GetProfileTemplates(req *restful.Request, rsp *restful.Response) {
 	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProfileTemplates(ctx(req), &proto.GetProfileTemplatesRequest{

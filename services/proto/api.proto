@@ -11,7 +11,7 @@ service api {
 
     rpc UpdateUser(dongfeng.protobuf.UpdateUserRequest) returns(dongfeng.protobuf.UpdateUserResponse) {};
 
-    rpc GetAttendances(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};    
+    rpc GetAttendances(dongfeng.protobuf.GetAttendanceRequest) returns(dongfeng.protobuf.GetAttendanceResponse) {};
     rpc UpdateAttendance(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
     rpc UpdateAttendances(dongfeng.protobuf.UpdateAttendanceRequest) returns(dongfeng.protobuf.UpdateAttendanceResponse) {};
 
@@ -37,18 +37,18 @@ service api {
     rpc GetHeightToWeightPMasters(dongfeng.protobuf.GetHeightToWeightPMasterRequest) returns(dongfeng.protobuf.GetHeightToWeightPMasterResponse) {};
     rpc GetHeightToWeightSDMasters(dongfeng.protobuf.GetHeightToWeightSDMasterRequest) returns(dongfeng.protobuf.GetHeightToWeightSDMasterResponse) {};
 
-    rpc GetMenus(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};    
+    rpc GetMenus(dongfeng.protobuf.GetMenuRequest) returns(dongfeng.protobuf.GetMenuResponse) {};
     
-    rpc GetRecipes(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};    
+    rpc GetRecipes(dongfeng.protobuf.GetRecipeRequest) returns(dongfeng.protobuf.GetRecipeResponse) {};
 
     rpc GetIngredients(dongfeng.protobuf.GetIngredientRequest) returns(dongfeng.protobuf.GetIngredientResponse) {};
-    rpc GetIngredientNames(dongfeng.protobuf.GetIngredientNameRequest) returns(dongfeng.protobuf.GetIngredientNameResponse) {};    
+    rpc GetIngredientNames(dongfeng.protobuf.GetIngredientNameRequest) returns(dongfeng.protobuf.GetIngredientNameResponse) {};
     rpc UpdateIngredients(dongfeng.protobuf.UpdateIngredientRequest) returns(dongfeng.protobuf.UpdateIngredientResponse) {};
     
     rpc GetProcurements(dongfeng.protobuf.GetProcurementRequest) returns(dongfeng.protobuf.GetProcurementResponse) {};
     rpc UpdateProcurement(dongfeng.protobuf.UpdateProcurementRequest) returns(dongfeng.protobuf.UpdateProcurementResponse) {};
 
-    rpc GetProfile(dongfeng.protobuf.GetProfileRequest) returns(dongfeng.protobuf.GetProfileResponse) {};    
+    rpc GetProfile(dongfeng.protobuf.GetProfileRequest) returns(dongfeng.protobuf.GetProfileResponse) {};
     rpc GetProfiles(dongfeng.protobuf.GetProfilesRequest) returns(dongfeng.protobuf.GetProfilesResponse) {};
     rpc GetPrevProfile(dongfeng.protobuf.GetPrevOrNextProfileRequest) returns(dongfeng.protobuf.GetPrevOrNextProfileResponse) {};
     rpc GetNextProfile(dongfeng.protobuf.GetPrevOrNextProfileRequest) returns(dongfeng.protobuf.GetPrevOrNextProfileResponse) {};
@@ -57,12 +57,13 @@ service api {
     rpc DeleteProfile(dongfeng.protobuf.UpdateProfileRequest) returns(dongfeng.protobuf.UpdateProfileResponse) {};
 
     rpc GetEbooks(dongfeng.protobuf.GetEbooksRequest) returns(dongfeng.protobuf.GetEbooksResponse) {};
-    rpc UpdateEbook(dongfeng.protobuf.UpdateEbookRequest) returns(dongfeng.protobuf.UpdateEbookResponse) {};    
+    rpc UpdateEbook(dongfeng.protobuf.UpdateEbookRequest) returns(dongfeng.protobuf.UpdateEbookResponse) {};
 
     rpc UpdateNotifications(dongfeng.protobuf.UpdateNotificationsRequest) returns(dongfeng.protobuf.UpdateNotificationsResponse) {};
 
     rpc GetRole(dongfeng.protobuf.GetRoleRequest) returns(dongfeng.protobuf.GetRoleResponse) {};
     
+    rpc GetProfileTemplate(dongfeng.protobuf.GetProfileTemplateRequest) returns(dongfeng.protobuf.GetProfileTemplateResponse) {};
     rpc GetProfileTemplates(dongfeng.protobuf.GetProfileTemplatesRequest) returns(dongfeng.protobuf.GetProfileTemplatesResponse) {};
     rpc UpdateProfileTemplate(dongfeng.protobuf.UpdateProfileTemplateRequest) returns(dongfeng.protobuf.UpdateProfileTemplateResponse) {};
 }
