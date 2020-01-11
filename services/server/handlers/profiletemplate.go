@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"io/ioutil"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/ilovelili/dongfeng-core-proxy/services/utils"
@@ -13,23 +14,6 @@ import (
 type ProfileTemplateReqItem struct {
 	Name    string `json:"name"`
 	Enabled bool   `json:"enabled"`
-}
-
-// GetProfileTemplate get template
-func GetProfileTemplate(req *restful.Request, rsp *restful.Response) {
-	name := req.QueryParameter("name")
-	_, pid, _ := utils.ResolveHeaderInfo(req)
-	response, err := newcoreclient().GetProfileTemplate(ctx(req), &proto.GetProfileTemplateRequest{
-		Pid:  pid,
-		Name: name,
-	})
-
-	if err != nil {
-		writeError(rsp, errorcode.Pipe, err.Error())
-		return
-	}
-
-	rsp.WriteAsJson(response)
 }
 
 // GetProfileTemplates get templates
@@ -62,6 +46,60 @@ func UpdateProfileTemplate(req *restful.Request, rsp *restful.Response) {
 		Pid:     pid,
 		Name:    profiletemplatereq.Name,
 		Enabled: profiletemplatereq.Enabled,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	rsp.WriteAsJson(response)
+}
+
+// GetProfileTemplateDetail get profile template detail by grapejs
+func GetProfileTemplateDetail(req *restful.Request, rsp *restful.Response) {
+	name := req.QueryParameter("name")
+	_, pid, _ := utils.ResolveHeaderInfo(req)
+	response, err := newcoreclient().GetProfileTemplate(ctx(req), &proto.GetProfileTemplateRequest{
+		Pid:  pid,
+		Name: name,
+	})
+
+	if err != nil {
+		writeError(rsp, errorcode.Pipe, err.Error())
+		return
+	}
+
+	// not found
+	if response.GetProfile() == "" {
+		rsp.WriteAsJson(response.GetProfile())
+		return
+	}
+
+	var result interface{}
+	err = json.Unmarshal([]byte(response.GetProfile()), &result)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyFailedToUnmarshalGrowthProfileData)
+	}
+
+	rsp.WriteAsJson(result)
+}
+
+// UpdateProfileTemplateDetail update profile template detail by grapejs
+func UpdateProfileTemplateDetail(req *restful.Request, rsp *restful.Response) {
+	name := req.QueryParameter("name")
+	body, err := ioutil.ReadAll(req.Request.Body)
+	if err != nil {
+		writeError(rsp, errorcode.CoreProxyInvalidProfileTemplateUpdateRequestBody)
+		return
+	}
+
+	_, pid, _ := utils.ResolveHeaderInfo(req)
+	response, err := newcoreclient().UpdateProfileTemplate(ctx(req), &proto.UpdateProfileTemplateRequest{
+		Pid:     pid,
+		Name:    name,
+		Profile: string(body),
+		Enabled: true,
 	})
 
 	if err != nil {

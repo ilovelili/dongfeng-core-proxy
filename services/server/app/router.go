@@ -276,12 +276,6 @@ func (r *Router) Route() http.Handler {
 
 	webservice.Route(
 		webservice.
-			GET("/profiletemplate").
-			Filter(middlewares.JwtAuthenticate).
-			To(handlers.GetProfileTemplate))
-
-	webservice.Route(
-		webservice.
 			GET("/profiletemplates").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.GetProfileTemplates))
@@ -291,6 +285,18 @@ func (r *Router) Route() http.Handler {
 			POST("/profiletemplate").
 			Filter(middlewares.JwtAuthenticate).
 			To(handlers.UpdateProfileTemplate))
+
+	webservice.Route(
+		webservice.
+			GET("/profiletemplatedetail").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.GetProfileTemplateDetail))
+
+	webservice.Route(
+		webservice.
+			POST("/profiletemplatedetail").
+			Filter(middlewares.JwtAuthenticate).
+			To(handlers.UpdateProfileTemplateDetail))
 
 	container.Add(webservice)
 	container.Filter(container.OPTIONSFilter)
