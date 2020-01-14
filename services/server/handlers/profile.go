@@ -12,11 +12,12 @@ import (
 
 // ProfileRequestItem profile request
 type ProfileRequestItem struct {
-	Year    string `json:"year"`
-	Class   string `json:"class"`
-	Name    string `json:"name"`
-	Date    string `json:"date"`
-	Enabled bool   `json:"enabled,string"`
+	Year     string `json:"year"`
+	Class    string `json:"class"`
+	Name     string `json:"name"`
+	Date     string `json:"date"`
+	Template string `json:"template"`
+	Enabled  bool   `json:"enabled,string"`
 }
 
 // GetProfile get profile
@@ -192,11 +193,12 @@ func CreateProfile(req *restful.Request, rsp *restful.Response) {
 
 	_, pid, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().CreateProfile(ctx(req), &proto.UpdateProfileRequest{
-		Pid:   pid,
-		Year:  updatereq.Year,
-		Class: updatereq.Class,
-		Name:  updatereq.Name,
-		Date:  updatereq.Date,
+		Pid:          pid,
+		Year:         updatereq.Year,
+		Class:        updatereq.Class,
+		Name:         updatereq.Name,
+		Date:         updatereq.Date,
+		TemplateName: updatereq.Template,
 	})
 
 	if err != nil {
