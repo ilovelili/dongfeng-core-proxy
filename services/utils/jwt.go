@@ -16,7 +16,7 @@ func ResolveHeaderInfo(req *restful.Request) (idtoken, pid, email string, valid 
 	}
 
 	idtoken = idtokensegments[1]
-	pid = req.HeaderParameter("X-PID")
-	email = req.HeaderParameter("X-EMAIL")
+	pid = req.HeaderParameter("x-pid")
+	email = req.HeaderParameter("x-email")
 	return
 }
