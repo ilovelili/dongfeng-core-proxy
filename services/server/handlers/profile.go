@@ -28,9 +28,10 @@ func GetProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProfile(ctx(req), &proto.GetProfileRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -65,9 +66,10 @@ func GetPrevProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetPrevProfile(ctx(req), &proto.GetPrevOrNextProfileRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -90,9 +92,10 @@ func GetNextProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetNextProfile(ctx(req), &proto.GetPrevOrNextProfileRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -110,9 +113,10 @@ func GetNextProfile(req *restful.Request, rsp *restful.Response) {
 // GetProfiles get profiles
 func GetProfiles(req *restful.Request, rsp *restful.Response) {
 	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProfiles(ctx(req), &proto.GetProfilesRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -135,9 +139,10 @@ func UpdateProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateProfile(ctx(req), &proto.UpdateProfileRequest{
 		Pid:     pid,
+		Email:   email,
 		Year:    year,
 		Class:   class,
 		Name:    name,
@@ -164,9 +169,10 @@ func DeleteProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().DeleteProfile(ctx(req), &proto.UpdateProfileRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  updatereq.Year,
 		Class: updatereq.Class,
 		Name:  updatereq.Name,
@@ -191,9 +197,10 @@ func CreateProfile(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().CreateProfile(ctx(req), &proto.UpdateProfileRequest{
 		Pid:          pid,
+		Email:        email,
 		Year:         updatereq.Year,
 		Class:        updatereq.Class,
 		Name:         updatereq.Name,

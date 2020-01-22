@@ -15,9 +15,10 @@ type ClassRequestItem struct {
 
 // GetClasses get class list
 func GetClasses(req *restful.Request, rsp *restful.Response) {
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetClasses(ctx(req), &proto.GetClassRequest{
-		Pid: pid,
+		Pid:   pid,
+		Email: email,
 	})
 
 	if err != nil {
@@ -50,9 +51,10 @@ func UpdateClasses(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateClasses(ctx(req), &proto.UpdateClassRequest{
 		Pid:     pid,
+		Email:   email,
 		Classes: _classes,
 	})
 

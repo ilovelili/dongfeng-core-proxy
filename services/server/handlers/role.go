@@ -9,9 +9,10 @@ import (
 
 // GetRole get role
 func GetRole(req *restful.Request, rsp *restful.Response) {
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetRole(ctx(req), &proto.GetRoleRequest{
-		Pid: pid,
+		Pid:   pid,
+		Email: email,
 	})
 
 	if err != nil {

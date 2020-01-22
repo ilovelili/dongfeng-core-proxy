@@ -18,9 +18,10 @@ type ProfileTemplateReqItem struct {
 
 // GetProfileTemplates get templates
 func GetProfileTemplates(req *restful.Request, rsp *restful.Response) {
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProfileTemplates(ctx(req), &proto.GetProfileTemplatesRequest{
-		Pid: pid,
+		Pid:   pid,
+		Email: email,
 	})
 
 	if err != nil {
@@ -41,9 +42,10 @@ func UpdateProfileTemplate(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateProfileTemplate(ctx(req), &proto.UpdateProfileTemplateRequest{
 		Pid:     pid,
+		Email:   email,
 		Name:    profiletemplatereq.Name,
 		Enabled: profiletemplatereq.Enabled,
 	})
@@ -59,10 +61,11 @@ func UpdateProfileTemplate(req *restful.Request, rsp *restful.Response) {
 // GetProfileTemplateDetail get profile template detail by grapejs
 func GetProfileTemplateDetail(req *restful.Request, rsp *restful.Response) {
 	name := req.QueryParameter("name")
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetProfileTemplate(ctx(req), &proto.GetProfileTemplateRequest{
-		Pid:  pid,
-		Name: name,
+		Pid:   pid,
+		Email: email,
+		Name:  name,
 	})
 
 	if err != nil {
@@ -94,9 +97,10 @@ func UpdateProfileTemplateDetail(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateProfileTemplate(ctx(req), &proto.UpdateProfileTemplateRequest{
 		Pid:     pid,
+		Email:   email,
 		Name:    name,
 		Profile: string(body),
 		Enabled: true,

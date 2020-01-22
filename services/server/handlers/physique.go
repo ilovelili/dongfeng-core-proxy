@@ -26,9 +26,10 @@ type PhysiqueReqItem struct {
 // GetPhysiques get physiques
 func GetPhysiques(req *restful.Request, rsp *restful.Response) {
 	class, year, name := req.QueryParameter("class"), req.QueryParameter("year"), req.QueryParameter("name")
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetPhysiques(ctx(req), &proto.GetPhysiqueRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -80,9 +81,10 @@ func UpdatePhysique(req *restful.Request, rsp *restful.Response) {
 		Weight:    updatereq.Weight,
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePhysique(ctx(req), &proto.UpdatePhysiqueRequest{
 		Pid:       pid,
+		Email:     email,
 		Physiques: []*proto.Physique{physique},
 	})
 
@@ -139,9 +141,10 @@ func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdatePhysiques(ctx(req), &proto.UpdatePhysiqueRequest{
 		Pid:       pid,
+		Email:     email,
 		Physiques: _physiques,
 	})
 
@@ -157,25 +160,40 @@ func UpdatePhysiques(req *restful.Request, rsp *restful.Response) {
 func GetMasters(req *restful.Request, rsp *restful.Response) {
 	id := req.QueryParameter("id")
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	var response interface{}
 	var err error
 
 	switch id {
 	case "1":
-		response, err = newcoreclient().GetAgeHeightWeightPMasters(ctx(req), &proto.GetAgeHeightWeightPMasterRequest{Pid: pid})
+		response, err = newcoreclient().GetAgeHeightWeightPMasters(ctx(req), &proto.GetAgeHeightWeightPMasterRequest{
+			Pid:   pid,
+			Email: email,
+		})
 		break
 	case "2":
-		response, err = newcoreclient().GetAgeHeightWeightSDMasters(ctx(req), &proto.GetAgeHeightWeightSDMasterRequest{Pid: pid})
+		response, err = newcoreclient().GetAgeHeightWeightSDMasters(ctx(req), &proto.GetAgeHeightWeightSDMasterRequest{
+			Pid:   pid,
+			Email: email,
+		})
 		break
 	case "3":
-		response, err = newcoreclient().GetBMIMasters(ctx(req), &proto.GetBMIMasterRequest{Pid: pid})
+		response, err = newcoreclient().GetBMIMasters(ctx(req), &proto.GetBMIMasterRequest{
+			Pid:   pid,
+			Email: email,
+		})
 		break
 	case "4":
-		response, err = newcoreclient().GetHeightToWeightPMasters(ctx(req), &proto.GetHeightToWeightPMasterRequest{Pid: pid})
+		response, err = newcoreclient().GetHeightToWeightPMasters(ctx(req), &proto.GetHeightToWeightPMasterRequest{
+			Pid:   pid,
+			Email: email,
+		})
 		break
 	case "5":
-		response, err = newcoreclient().GetHeightToWeightSDMasters(ctx(req), &proto.GetHeightToWeightSDMasterRequest{Pid: pid})
+		response, err = newcoreclient().GetHeightToWeightSDMasters(ctx(req), &proto.GetHeightToWeightSDMasterRequest{
+			Pid:   pid,
+			Email: email,
+		})
 		break
 	default:
 		writeError(rsp, errorcode.CoreProxyInvalidPhysiqueMasterRequest)

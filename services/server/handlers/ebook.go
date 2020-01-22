@@ -24,9 +24,10 @@ type EbookRequestItem struct {
 func GetEbooks(req *restful.Request, rsp *restful.Response) {
 	year, class, name := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("name")
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetEbooks(ctx(req), &proto.GetEbooksRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 		Name:  name,
@@ -50,9 +51,10 @@ func UpdateEbook(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateEbook(ctx(req), &proto.UpdateEbookRequest{
 		Pid:    pid,
+		Email:  email,
 		Year:   updatereq.Year,
 		Class:  updatereq.Class,
 		Name:   updatereq.Name,

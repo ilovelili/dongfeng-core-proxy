@@ -24,9 +24,10 @@ type AttendanceRequestItem struct {
 // GetAttendances get pupils
 func GetAttendances(req *restful.Request, rsp *restful.Response) {
 	year, class, from, to, name := req.QueryParameter("year"), req.QueryParameter("class"), req.QueryParameter("from"), req.QueryParameter("to"), req.QueryParameter("name")
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetAttendances(ctx(req), &proto.GetAttendanceRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		From:  from,
 		To:    to,
@@ -66,9 +67,10 @@ func UpdateAttendance(req *restful.Request, rsp *restful.Response) {
 		attendance.Absences = append(attendance.Absences, updatereq.Name)
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateAttendance(ctx(req), &proto.UpdateAttendanceRequest{
 		Pid:         pid,
+		Email:       email,
 		Attendances: []*proto.Attendance{attendance},
 	})
 
@@ -127,9 +129,10 @@ func UpdateAttendances(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateAttendances(ctx(req), &proto.UpdateAttendanceRequest{
 		Pid:         pid,
+		Email:       email,
 		Attendances: _attendances,
 	})
 

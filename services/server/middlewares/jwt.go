@@ -9,7 +9,7 @@ import (
 
 // JwtAuthenticate JWT auth middleware.
 func JwtAuthenticate(req *restful.Request, rsp *restful.Response, chain *restful.FilterChain) {
-	idtoken, _, valid := utils.ResolveHeaderInfo(req)
+	idtoken, _, _, valid := utils.ResolveHeaderInfo(req)
 	if !valid {
 		writeError(rsp, errorcode.GenericNotAuthorized)
 		return

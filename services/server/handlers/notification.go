@@ -24,9 +24,10 @@ func UpdateNotifications(req *restful.Request, rsp *restful.Response) {
 		return
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateNotifications(ctx(req), &proto.UpdateNotificationsRequest{
 		Pid:           pid,
+		Email:         email,
 		Notifications: updatereq.IDs,
 	})
 

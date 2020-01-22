@@ -9,9 +9,10 @@ import (
 
 // Login login
 func Login(req *restful.Request, rsp *restful.Response) {
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().Login(ctx(req), &proto.LoginRequest{
-		Pid: pid,
+		Pid:   pid,
+		Email: email,
 	})
 	if err != nil {
 		writeError(rsp, errorcode.Pipe, err.Error())

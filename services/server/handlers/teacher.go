@@ -24,9 +24,10 @@ type TeacherRequestItem struct {
 func GetTeachers(req *restful.Request, rsp *restful.Response) {
 	class, year := req.QueryParameter("class"), req.QueryParameter("year")
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().GetTeachers(ctx(req), &proto.GetTeacherRequest{
 		Pid:   pid,
+		Email: email,
 		Year:  year,
 		Class: class,
 	})
@@ -56,9 +57,10 @@ func UpdateTeacher(req *restful.Request, rsp *restful.Response) {
 		Email: updatereq.Email,
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateTeacher(ctx(req), &proto.UpdateTeacherRequest{
 		Pid:      pid,
+		Email:    email,
 		Teachers: []*proto.Teacher{teacher},
 	})
 
@@ -96,9 +98,10 @@ func UpdateTeachers(req *restful.Request, rsp *restful.Response) {
 		})
 	}
 
-	_, pid, _ := utils.ResolveHeaderInfo(req)
+	_, pid, email, _ := utils.ResolveHeaderInfo(req)
 	response, err := newcoreclient().UpdateTeachers(ctx(req), &proto.UpdateTeacherRequest{
 		Pid:      pid,
+		Email:    email,
 		Teachers: _teachers,
 	})
 
